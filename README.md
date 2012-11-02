@@ -38,20 +38,19 @@ Chrome & ie must download chromeDriver & IEDriverServer.
 	var JWebDriver = require('jwebdriver');
 
 	JWebDriver.config({
-		'logMode': 'all',
-		'host': '127.0.0.1',
-		'port': 4444
+	    'logMode': 'all',
+	    'host': '127.0.0.1',
+	    'port': 4444
 	});
 
-	var wd = new JWebDriver({'browserName':'firefox'}, function(browser, $){
-		browser.url('https://github.com/');
-	});
+	var wd = new JWebDriver({'browserName': 'firefox'});
 
 	wd.run(function(browser, $){
-		browser.url('http://www.google.com/');
-		browser.waitFor('#lst-ib');
-		$('#lst-ib').val('mp3').submit();
-		browser.close();
+	    browser.url('http://www.baidu.com/');
+	    browser.waitFor('#kw');
+	    $('#kw').val('mp3').submit();
+	    browser.sleep(1000);
+	    browser.close();
 	});
 
 Document
