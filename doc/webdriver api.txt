@@ -1,0 +1,178 @@
+官方文档：http://code.google.com/p/selenium/wiki/JsonWireProtocol
+
+Capabilities JSON Object：
+	browserName						浏览器名(chrome|firefox|htmlunit|internet explorer|iphone)
+	version							版本号
+	platform						操作系统(WINDOWS|XP|VISTA|MAC|LINUX|UNIX)
+	javascriptEnabled				JS是否被禁用
+	takesScreenshot					是否允许截图
+	handlesAlerts					是否能与弹出窗口交互
+	databaseEnabled					是否支持数据库
+	locationContextEnabled			是否能访问location上下文
+	applicationCacheEnabled			是否支持应用缓存
+	browserConnectionEnabled		是否能查询网络连接状态
+	cssSelectorsEnabled				是否支持CSS选择器
+	webStorageEnabled				是否支持storage
+	rotatable						是否支持旋转
+	acceptSslCerts					是否支持SSL证书
+	nativeEvents					是否支持事件模拟
+	proxy							代理服务器设置
+
+
+Proxy JSON Object：
+	proxyType						代理类型：direct(直接连接),manual(手动设置),pac(自动代理),system(使用系统连接)
+	proxyAutoconfigUrl				PAC地址
+	ftpProxy						FTP代理地址
+	httpProxy						HTTP代理地址
+	sslProxy						SSL代理地址
+
+Cookie JSON Object：
+	name	 string	 cookie名字
+	value	 string	 cookie值
+	path	 string	 路径(可选)
+	domain	 string	 域名(可选)
+	secure	 boolean	是否加密(可选)
+	expiry	 number	 过期时间(可选)
+
+Responses：
+	sessionId						会话ID
+	status							状态码
+	value							响应值
+
+Response Status Codes：
+	0	Success						成功
+	7	NoSuchElement				无对应对象
+	8	NoSuchFrame					无frame
+	9	UnknownCommand				未知命令
+	10	StaleElementReference		旧对象引用
+	11	ElementNotVisible			对象不可见
+	12	InvalidElementState			对象不可用
+	13	UnknownError				未知错误
+	15	ElementIsNotSelectable		对象不可选择
+	17	JavaScriptError				JS错误
+	19	XPathLookupError			XPath查询错误
+	21	Timeout						超时
+	23	NoSuchWindow				无指定窗口
+	24	InvalidCookieDomain			无效Cookie域名
+	25	UnableToSetCookie			无法设置Cookie
+	26	UnexpectedAlertOpen			意外Alert弹出
+	27	NoAlertOpenError			无Alert弹出错误
+	28	ScriptTimeout				代码执行超时
+	29	InvalidElementCoordinates	无效对象坐标
+	30	IMENotAvailable				不支持输入法
+	31	IMEEngineActivationFailed	输入法设置失败
+	32	InvalidSelector				无效选择器(Xpath,CSS)
+	33	SessionNotCreatedException	会话没有建立
+	34	MoveTargetOutOfBounds		对象移动溢出
+
+Commond：
+	/state												返回服务器状态
+	/session											新建会话
+	/sessions											返回所有会话列表
+	/session/:sessionId									查询、删除会话
+	/session/:sessionId/timeouts						设置特殊类型超时：script,implicit,page load
+	/session/:sessionId/timeouts/async_script			设置代码异步超时
+	/session/:sessionId/timeouts/implicit_wait			设置获取对象超时
+	
+	导航
+	/session/:sessionId/url								获取、设置URL
+	/session/:sessionId/forward							前进
+	/session/:sessionId/back							后退
+	/session/:sessionId/refresh							刷新
+	
+	执行代码
+	/session/:sessionId/execute							执行同步JS代码
+	/session/:sessionId/execute_async					执行异步JS代码
+	
+	截图
+	/session/:sessionId/screenshot						获取网页截图
+	
+	输入法
+	/session/:sessionId/ime/available_engines			返回可用输入法列表
+	/session/:sessionId/ime/active_engine				返回当前输入法
+	/session/:sessionId/ime/activated					返回输入法开启状态
+	/session/:sessionId/ime/deactivate					关闭输入法
+	/session/:sessionId/ime/activate					开启输入法
+	
+	窗口控制
+	/session/:sessionId/window_handle					返回当前window句柄
+	/session/:sessionId/window_handles					返回所有window句柄
+	/session/:sessionId/frame							设置焦点到指定frame
+	/session/:sessionId/window							设置焦点、关闭指定window
+	/session/:sessionId/window/:windowHandle/size		获取、设置窗口大小
+	/session/:sessionId/window/:windowHandle/position	获取、设置窗口坐标
+	/session/:sessionId/window/:windowHandle/maximize	设置窗口为最大化
+	
+	cookie
+	/session/:sessionId/cookie							返回、删除所有COOKIE，添加COOKIE
+	/session/:sessionId/cookie/:name					删除指定COOKIE
+	
+	/session/:sessionId/source							返回网页源代码
+	/session/:sessionId/title							返回网页标题
+	
+	/session/:sessionId/element							返回对象，定位类型：css selector|xpath|tag name|id|name|class name|link text|partial link text
+	/session/:sessionId/elements						返回多个对象
+	/session/:sessionId/element/active					返回当前焦点所在的对象
+	/session/:sessionId/keys							发送按键序列到当前焦点对象
+	
+	/session/:sessionId/element/:id						返回指定对象
+	/session/:sessionId/element/:id/element				返回指定对象下的匹配对象
+	/session/:sessionId/element/:id/elements			返回指定对象下的所有匹配对象
+	/session/:sessionId/element/:id/click				点击指定对象
+	/session/:sessionId/element/:id/submit				提交指定对象（可在FORM或者内部对象上使用）
+	/session/:sessionId/element/:id/text				返回对象的可视文本
+	/session/:sessionId/element/:id/value				发送按键序列到指定对象
+	/session/:sessionId/element/:id/name				返回指定对象的tag name
+	/session/:sessionId/element/:id/clear				清空指定对象的value值(input text,textarea)
+	/session/:sessionId/element/:id/selected			返回指定对象选中状态(OPTION|checkbox|radiobutton)
+	/session/:sessionId/element/:id/enabled				返回指定对象的启用状态
+	/session/:sessionId/element/:id/attribute/:name		返回指定对象的某个属性值
+	/session/:sessionId/element/:id/equals/:other		检测两个ID值是否引用了同一个对象
+	/session/:sessionId/element/:id/displayed			返回指定对象可视状态
+	/session/:sessionId/element/:id/location			返回指定对象的绝对屏幕坐标
+	/session/:sessionId/element/:id/location_in_view	返回指定对象的相对屏幕坐标
+	/session/:sessionId/element/:id/size				返回指定对象的宽高
+	/session/:sessionId/element/:id/css/:propertyName	返回指定对象的CSS值
+	
+	
+	
+	/session/:sessionId/alert_text						返回或设置alert文本(alert|confirm|prompt)
+	/session/:sessionId/accept_alert					确认alert
+	/session/:sessionId/dismiss_alert					取消alert
+	
+	鼠标
+	/session/:sessionId/click							单击鼠标
+	/session/:sessionId/doubleclick						双击鼠标
+	/session/:sessionId/buttondown						按下鼠标({LEFT = 0, MIDDLE = 1 , RIGHT = 2})
+	/session/:sessionId/moveto							移动鼠标位置
+	/session/:sessionId/buttonup						抬起鼠标
+	
+	触摸
+	/session/:sessionId/orientation						返回、设置屏幕方向(LANDSCAPE：横屏|PORTRAIT：坚屏)
+	
+	/session/:sessionId/touch/click						触摸单击
+	/session/:sessionId/touch/doubleclick				触摸双击
+	/session/:sessionId/touch/longclick					长时间单击
+	/session/:sessionId/touch/down						触摸按下
+	/session/:sessionId/touch/up						触摸抬起
+	/session/:sessionId/touch/move						触摸移动
+	/session/:sessionId/touch/scroll					触摸滚动	
+	/session/:sessionId/touch/flick						
+	
+	/session/:sessionId/location						返回、设置geo location
+	
+	/session/:sessionId/local_storage					返回、删除所有local_storage，添加本地存储
+	/session/:sessionId/local_storage/size				返回local_storage里的数量统计
+	/session/:sessionId/local_storage/key/:key			返回、删除指定local_storage
+	
+	/session/:sessionId/session_storage					返回、删除所有session_storage，添加本地存储
+	/session/:sessionId/session_storage/size			返回session_storage里的数量统计
+	/session/:sessionId/session_storage/key/:key		返回、删除指定session_storage
+	
+	/session/:sessionId/log								返回指定类型的所有日志(client|driver|browser|server)
+	/session/:sessionId/log/types						返回可用的日志类型
+	
+	
+	
+
+	
