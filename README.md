@@ -3,7 +3,7 @@ jWebDriver
 
 A webdriver client for Node.js
 
-jsCoverage: [87%](http://yaniswang.com/jwebdriver/coverage.html)
+jsCoverage: [87%](http://yaniswang.com/jWebDriver/coverage.html)
 
 Features
 ================
@@ -57,7 +57,7 @@ Chrome & ie must download chromeDriver & IEDriverServer.
 Document
 ================
 
-1. Api Doc: [http://yaniswang.com/jwebdriver/api/](http://yaniswang.com/jwebdriver/api/)
+1. Api Doc: [http://yaniswang.com/jWebDriver/api/](http://yaniswang.com/jWebDriver/api/)
 
 License
 ================
