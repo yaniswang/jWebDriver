@@ -1,6 +1,8 @@
 jWebDriver
 ================
 
+![jWebDriver logo](https://raw.github.com/yaniswang/jWebDriver/master/logo.png)
+
 A webdriver client for Node.js
 
 jsCoverage: [87%](http://yaniswang.com/jWebDriver/coverage.html)
