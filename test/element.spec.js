@@ -1,5 +1,5 @@
 
-var JWebDriver = require('../lib/jwebdriver');
+var JWebDriver = require('../');
 
 JWebDriver.config({
 	'logMode': 'silent',
@@ -38,7 +38,7 @@ function runBrowserTest(browserName){
 				var content = '<!DOCTYPE HTML><html><head><meta charset="UTF-8"><title>test</title><style>html,body{margin:0;padding:0;}</style></head>';
 				switch(req.url){
 					case '/test1.html':
-						content += '<form action="test2.html" id="form" style="border:5px solid #000;"><input type="text" id="kw" data-test="attrok" onclick="this.value=\'onclick\'"><input type="file" id="file"><input type="submit" id="submit"><input type="checkbox" id="check1" checked="checked"><input type="checkbox" id="check2"><input type="reset" id="reset" disabled="disabled"></form><div id="pp" style="position:absolute;left:101px;top:102px;width:51px;height:52px;">a<a href="test2.html">b</a>c</div><div id="hidediv1" style="display:none">hidediv1</div><div id="hidediv2" style="visibility:hidden">hidediv2</div>';
+						content += '<div id="formdiv"><form action="test2.html" id="form" style="border:5px solid #000;"><input type="text" id="kw" data-test="attrok" onclick="this.value=\'onclick\'"><input type="file" id="file"><input type="submit" id="submit"><input type="checkbox" id="check1" checked="checked"><input type="checkbox" id="check2"><input type="reset" id="reset" disabled="disabled"></form></div><div id="pp" style="position:absolute;left:101px;top:102px;width:51px;height:52px;">a<a href="test2.html">b</a>c</div><div id="hidediv1" style="display:none">hidediv1</div><div id="hidediv2" style="visibility:hidden">hidediv2</div>';
 						break;
 					case '/test2.html':
 						content += 'test2.html';
@@ -53,6 +53,15 @@ function runBrowserTest(browserName){
 				if(readyCount === 2){
 					done();
 				}
+			});
+
+		});
+
+		it('should find sub element', function(done){
+
+			wd.run(function(browser, $){
+				$('#formdiv').find('#kw')._id.should.be.a('string');
+				done();
 			});
 
 		});
@@ -172,6 +181,7 @@ function runBrowserTest(browserName){
 			wd.run(function(browser, $){
 				var kw = $('#kw');
 				kw.click();
+				browser.sleep(300);
 				kw.val().should.equal('onclick')
 				done();
 			});

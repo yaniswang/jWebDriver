@@ -2,14 +2,15 @@
   "name": "jwebdriver",
   "version": "0.9.1",
   "description": "A webdriver client for node.js",
-  "main": "lib/jwebdriver.js",
+  "main": "./index",
   "dependencies": {
     "fibers": "*",
     "xtend": "*"
   },
   "devDependencies": {
     "mocha": "*",
-    "should": "*"
+    "should": "*",
+    "jscover": "*"
   },
   "scripts": {
     "test": "mocha"

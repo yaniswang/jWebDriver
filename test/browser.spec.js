@@ -1,5 +1,5 @@
 
-var JWebDriver = require('../lib/jwebdriver');
+var JWebDriver = require('../');
 
 JWebDriver.config({
 	'logMode': 'silent',
@@ -37,7 +37,7 @@ function runBrowserTest(browserName){
 				var content = '<!DOCTYPE HTML><html><head><meta charset="UTF-8"><title>testtitle</title></head>';
 				switch(req.url){
 					case '/test1.html':
-						content += '<p><input type="text" id="kw" onclick="this.value=1" ondblclick="this.value=2" onmousedown="this.value=3"><input type="button" id="alert" onclick="alert(123)" value="alert"></p>';
+						content += '<p style="padding:20px;"><input type="text" id="kw" onclick="this.value=1" ondblclick="this.value=2"><input type="text" id="testmouse" onmousedown="this.value=3" onmouseup="this.value=4"><input type="button" id="alert" onclick="alert(123)" value="alert"></p>';
 						break;
 					case '/test2.html':
 						content += 'test2.html';
@@ -125,6 +125,7 @@ function runBrowserTest(browserName){
 			wd.run(function(browser, $){
 				browser.exec('return document.title;').should.equal('testtitle');
 				browser.exec('return arguments[0];','123').should.equal('123');
+				browser.exec('return arguments[0].tagName;',$('#kw')).should.equal('INPUT');
 				browser.exec('return arguments[1];',['123','321']).should.equal('321');
 				browser.setTimeout('ascript', 50);
 				browser.exec('var callback = arguments[arguments.length-1];setTimeout(function(){callback(document.title);},10);', true).should.equal('testtitle');
@@ -141,7 +142,7 @@ function runBrowserTest(browserName){
 
 			wd.run(function(browser, $){
 				$('#alert').click();
-				browser.sleep(100);
+				browser.sleep(500);
 				browser.getAlert().should.equal('123');
 				browser.closeAlert();
 				done();
@@ -183,12 +184,16 @@ function runBrowserTest(browserName){
 			wd.run(function(browser, $){
 				var kw = $('#kw');
 				browser.mousemove(kw);
-				browser.click();
+				browser.click().sleep(200);
 				kw.val().should.equal('1');
-				browser.dblclick();
+				browser.dblclick().sleep(200);
 				kw.val().should.equal('2');
-				browser.mousedown();
-				kw.val().should.equal('3');
+				var testmouse = $('#testmouse');
+				browser.mousemove(testmouse).sleep(100);
+				browser.mousedown().sleep(200);
+				testmouse.val().should.equal('3');
+				browser.mouseup().sleep(200);
+				testmouse.val().should.equal('4');
 				done();
 			});
 
@@ -198,7 +203,8 @@ function runBrowserTest(browserName){
 
 			wd.run(function(browser, $){
 				($('#wait')._id === undefined).should.true;
-				browser.exec('document.body.innerHTML=\'<input type="text" id="wait">\';');
+				browser.exec('setTimeout(function(){document.body.innerHTML=\'<input type="text" id="wait">\';},500);return 1;');
+				browser.waitFor('#wait');
 				$('#wait')._id.should.be.a('string');
 				done();
 			});
