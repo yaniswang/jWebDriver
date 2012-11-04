@@ -1,0 +1,1137 @@
+{
+    "project": {
+        "name": "jWebDriver API",
+        "description": "A webdriver client for Node.js",
+        "version": "0.9.1",
+        "url": "http://yaniswang.com/jwebdriver/",
+        "logo": "logo.png"
+    },
+    "files": {
+        "lib\\browser.js": {
+            "name": "lib\\browser.js",
+            "modules": {},
+            "classes": {
+                "Browser": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib\\element.js": {
+            "name": "lib\\element.js",
+            "modules": {},
+            "classes": {
+                "Element": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib\\jwebdriver.js": {
+            "name": "lib\\jwebdriver.js",
+            "modules": {},
+            "classes": {
+                "JWebDriver": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {},
+    "classes": {
+        "Browser": {
+            "name": "Browser",
+            "shortname": "Browser",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "lib\\browser.js",
+            "line": 1,
+            "description": "This class is used for control browser.\n<p>\nBrowser类用来实例化一个对象，以绑定目标浏览器并调用接口进行控制。\n</p>"
+        },
+        "Element": {
+            "name": "Element",
+            "shortname": "Element",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "lib\\element.js",
+            "line": 1,
+            "description": "This class is used for control element.\n<p>\n此类用来和页面对象进行交互。\n</p>"
+        },
+        "JWebDriver": {
+            "name": "JWebDriver",
+            "shortname": "JWebDriver",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "lib\\jwebdriver.js",
+            "line": 1,
+            "description": "A webdriver client for Node.js\n<p>\n此对象是jwebdriver组件的入口，主要用来初始化及同步运行测试代码。\n</p>\n<pre>\nvar JWebDriver = require('jwebdriver');\nJWebDriver.config({\n\t'logMode': 'all',\n\t'host': 'localhost',\n\t'port': 4444\n});\nvar wd = new JWebDriver({'browserName':'chrome'});\nwd.run(function(browser, $){\n\tbrowser.url(\"http://www.baidu.com/\");\n\tvar kw = $('#kw');\n\tkw.val('mp3').submit();\n\tbrowser.close();\n});\n</pre>"
+        }
+    },
+    "classitems": [
+        {
+            "file": "lib\\browser.js",
+            "line": 155,
+            "description": "初始化浏览器对象",
+            "itemtype": "method",
+            "name": "_init",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "config",
+                    "description": "jWebDriver config",
+                    "type": "Object"
+                },
+                {
+                    "name": "options",
+                    "description": "浏览器初始化参数",
+                    "type": "Object"
+                },
+                {
+                    "name": "callback",
+                    "description": "回调函数",
+                    "type": "Function"
+                }
+            ],
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 179,
+            "description": "输出日志",
+            "itemtype": "method",
+            "name": "log",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "message",
+                    "description": "日志消息",
+                    "type": "String"
+                },
+                {
+                    "name": "content",
+                    "description": "日志具体内容",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "当前Browser对象实例",
+                "type": "Browser"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 203,
+            "description": "执行webdriver命令",
+            "itemtype": "method",
+            "name": "doCommand",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "cmd",
+                    "description": "命令名称",
+                    "type": "String"
+                },
+                {
+                    "name": "data",
+                    "description": "命令数据",
+                    "type": "Object"
+                },
+                {
+                    "name": "callback",
+                    "description": "回调函数，如果省略此参数，则为同步模式，直接返回结果",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "webdriver返回的JSON对象",
+                "type": "Object"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 284,
+            "description": "发起HTTP请求到webdriver的接口",
+            "itemtype": "method",
+            "name": "_doRequest",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "requestOptions",
+                    "description": "HTTP请求参数",
+                    "type": "Object"
+                },
+                {
+                    "name": "data",
+                    "description": "HTTP BODY",
+                    "type": "Object"
+                },
+                {
+                    "name": "callback",
+                    "description": "回调函数，活力回调函数则为同步返回模式",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "HTTP响应字符串",
+                "type": "String"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 371,
+            "description": "延迟一定时间",
+            "itemtype": "method",
+            "name": "sleep",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "ms",
+                    "description": "需要延迟的时间，单位毫秒",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "当前Browser对象实例",
+                "type": "Browser"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 387,
+            "description": "结束浏览器会话",
+            "itemtype": "method",
+            "name": "close",
+            "access": "public",
+            "tagname": "",
+            "return": {
+                "description": "当前Browser对象实例",
+                "type": "Browser"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 399,
+            "description": "设置操作超时时间\n<p>\n注：script包括同步和异步两种代码\n</p>",
+            "itemtype": "method",
+            "name": "setTimeout",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "type",
+                    "description": "操作类型(script|ascript|implicit|page load)",
+                    "type": "String"
+                },
+                {
+                    "name": "ms",
+                    "description": "超时时间",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "当前Browser对象实例",
+                "type": "Browser"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 421,
+            "description": "打开或者返回当前URL",
+            "itemtype": "method",
+            "name": "url",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "url",
+                    "description": "需要打开的URL网址，若省略此参数则返回当前浏览器URL",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "若打开URL则返回当前Browser对象实例，否则返回URL地址",
+                "type": "String|Browser"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 439,
+            "description": "控制浏览器回到后一个URL",
+            "itemtype": "method",
+            "name": "forward",
+            "access": "public",
+            "tagname": "",
+            "return": {
+                "description": "当前Browser对象实例",
+                "type": "Browser"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 451,
+            "description": "控制浏览器回到前一个URL",
+            "itemtype": "method",
+            "name": "back",
+            "access": "public",
+            "tagname": "",
+            "return": {
+                "description": "当前Browser对象实例",
+                "type": "Browser"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 463,
+            "description": "刷新当前页面",
+            "itemtype": "method",
+            "name": "refresh",
+            "access": "public",
+            "tagname": "",
+            "return": {
+                "description": "当前Browser对象实例",
+                "type": "Browser"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 475,
+            "description": "返回当前页面title",
+            "itemtype": "method",
+            "name": "title",
+            "access": "public",
+            "tagname": "",
+            "return": {
+                "description": "页面title",
+                "type": "String"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 485,
+            "description": "返回当前页面源代码",
+            "itemtype": "method",
+            "name": "source",
+            "access": "public",
+            "tagname": "",
+            "return": {
+                "description": "页面源代码",
+                "type": "String"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 495,
+            "description": "返回当前页面下所有cookie",
+            "itemtype": "method",
+            "name": "getCookies",
+            "access": "public",
+            "tagname": "",
+            "return": {
+                "description": "cookie对象数组",
+                "type": "Array"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 505,
+            "description": "添加cookie到当前页面\n<p>\n这里可以查看WebDriver官方定义的<a href=\"http://code.google.com/p/selenium/wiki/JsonWireProtocol#Cookie_JSON_Object\" target=\"_blank\">cookie对象</a>\n</p>",
+            "itemtype": "method",
+            "name": "addCookie",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "cookie",
+                    "description": "cookie对象",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "当前Browser对象实例",
+                "type": "Browser"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 521,
+            "description": "删除cookie",
+            "itemtype": "method",
+            "name": "delCookies",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "cookie name",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "当前Browser对象实例",
+                "type": "Browser"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 539,
+            "description": "执行Javascript脚本",
+            "itemtype": "method",
+            "name": "exec",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "script",
+                    "description": "Javascript代码",
+                    "type": "String"
+                },
+                {
+                    "name": "args",
+                    "description": "传递给脚本的参数，此参数可省略",
+                    "type": "Array|Object",
+                    "optional": true
+                },
+                {
+                    "name": "bAsync",
+                    "description": "是否异步",
+                    "type": "Boolean"
+                }
+            ],
+            "return": {
+                "description": "Javascript脚本的返回值",
+                "type": "Object"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 570,
+            "description": "获取弹出窗口的文本(alert, confirm, prompt)",
+            "itemtype": "method",
+            "name": "getAlert",
+            "access": "public",
+            "tagname": "",
+            "return": {
+                "description": "弹出窗口的文本",
+                "type": "String"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 580,
+            "description": "输入prompt中的值",
+            "itemtype": "method",
+            "name": "setAlert",
+            "access": "public",
+            "tagname": "",
+            "return": {
+                "description": "当前Browser对象实例",
+                "type": "Browser"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 592,
+            "description": "关闭弹出窗口",
+            "itemtype": "method",
+            "name": "closeAlert",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "btn",
+                    "description": "点击哪个按钮关闭窗口：ok|cancel,默认cancel",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "当前Browser对象实例",
+                "type": "Browser"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 605,
+            "description": "获取或保存当前网页截图\n<p>\nfilePath为可选项，若有则保存到文件\n</p>",
+            "itemtype": "method",
+            "name": "getScreenshot",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "filePath",
+                    "description": "保存截图的文件路径",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "Base64格式的网页截图",
+                "type": "String"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 623,
+            "description": "获取按键映射后的字符数组",
+            "itemtype": "method",
+            "name": "_getKeyArray",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "str",
+                    "description": "原始字符串",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "经过映射后的字符数组",
+                "type": "Array"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 638,
+            "description": "发送按键序列到当前焦点对象上",
+            "itemtype": "method",
+            "name": "sendKeys",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "str",
+                    "description": "原始字符串",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "当前Browser对象实例",
+                "type": "Browser"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 651,
+            "description": "在当前光标处触发单击事件",
+            "itemtype": "method",
+            "name": "click",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "mouseBtn",
+                    "description": "鼠标按钮类型：left|middle|right",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "当前Browser对象实例",
+                "type": "Browser"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 670,
+            "description": "在当前光标处触发双击事件",
+            "itemtype": "method",
+            "name": "dblclick",
+            "access": "public",
+            "tagname": "",
+            "return": {
+                "description": "当前Browser对象实例",
+                "type": "Browser"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 682,
+            "description": "在当前光标处触发鼠标左键按下",
+            "itemtype": "method",
+            "name": "mousedown",
+            "access": "public",
+            "tagname": "",
+            "return": {
+                "description": "当前Browser对象实例",
+                "type": "Browser"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 694,
+            "description": "移动到指定对象中间或坐标点",
+            "itemtype": "method",
+            "name": "mousemove",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "X坐标或Element对象或{x,y}",
+                    "type": "Number|Element|Object"
+                },
+                {
+                    "name": "y",
+                    "description": "y坐标",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "当前Browser对象实例",
+                "type": "Browser"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 719,
+            "description": "在当前光标处触发鼠标左键按起",
+            "itemtype": "method",
+            "name": "mouseup",
+            "access": "public",
+            "tagname": "",
+            "return": {
+                "description": "当前Browser对象实例",
+                "type": "Browser"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 731,
+            "description": "拖放",
+            "itemtype": "method",
+            "name": "dragDrop",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "from",
+                    "description": "源对象或源坐标({x,y})",
+                    "type": "Element|Object"
+                },
+                {
+                    "name": "to",
+                    "description": "目标对象或目标坐标({x,y})",
+                    "type": "Element|Object"
+                }
+            ],
+            "return": {
+                "description": "当前Browser对象实例",
+                "type": "Browser"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 745,
+            "description": "等待对象出现或消失",
+            "itemtype": "method",
+            "name": "waitFor",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "using",
+                    "description": "对象选择类型，留空默认为：css selector(class name|css selector|id|name|link text|partial link text|tag name|xpath)",
+                    "type": "String",
+                    "optional": true
+                },
+                {
+                    "name": "value",
+                    "description": "对象选择值",
+                    "type": "String"
+                },
+                {
+                    "name": "bExist",
+                    "description": "测试目标是对象存在或不存在",
+                    "type": "Boolean",
+                    "optional": true
+                },
+                {
+                    "name": "timeout",
+                    "description": "等待超时时间，单位毫秒，默认30000毫秒",
+                    "type": "Number",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "当前Browser对象实例",
+                "type": "Browser"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 801,
+            "description": "返回Element对象实例",
+            "itemtype": "method",
+            "name": "$",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "using",
+                    "description": "对象选择类型，留空默认为：css selector(class name|css selector|id|name|link text|partial link text|tag name|xpath)",
+                    "type": "String",
+                    "optional": true
+                },
+                {
+                    "name": "value",
+                    "description": "对象选择值",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Element的实例对象",
+                "type": "Element"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\element.js",
+            "line": 16,
+            "description": "初始化Element对象",
+            "itemtype": "method",
+            "name": "_init",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "browser",
+                    "description": "Element所在的Browser对象实例",
+                    "type": "Browser"
+                },
+                {
+                    "name": "using",
+                    "description": "对象选择类型，留空默认为：css selector(class name|css selector|id|name|link text|partial link text|tag name|xpath)",
+                    "type": "String",
+                    "optional": true
+                },
+                {
+                    "name": "value",
+                    "description": "对象选择值",
+                    "type": "String"
+                }
+            ],
+            "class": "Element"
+        },
+        {
+            "file": "lib\\element.js",
+            "line": 48,
+            "description": "在对应对象上执行Element命令",
+            "itemtype": "method",
+            "name": "_doElementCommand",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "cmd",
+                    "description": "命令",
+                    "type": "String"
+                },
+                {
+                    "name": "data",
+                    "description": "命令需要的数据",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "命令执行结果",
+                "type": "Object"
+            },
+            "class": "Element"
+        },
+        {
+            "file": "lib\\element.js",
+            "line": 64,
+            "description": "返回官方JSON格式的Element对象",
+            "itemtype": "method",
+            "name": "toJson",
+            "access": "public",
+            "tagname": "",
+            "return": {
+                "description": "官方Element对象{ELEMENT}",
+                "type": "Object"
+            },
+            "class": "Element"
+        },
+        {
+            "file": "lib\\element.js",
+            "line": 74,
+            "description": "查找对象下的对象",
+            "itemtype": "method",
+            "name": "find",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "using",
+                    "description": "对象选择类型，留空默认为：css selector(class name|css selector|id|name|link text|partial link text|tag name|xpath)",
+                    "type": "String",
+                    "optional": true
+                },
+                {
+                    "name": "value",
+                    "description": "对象选择值",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Element的实例对象",
+                "type": "Element"
+            },
+            "class": "Element"
+        },
+        {
+            "file": "lib\\element.js",
+            "line": 99,
+            "description": "返回DOM属性值",
+            "itemtype": "method",
+            "name": "attr",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "属性名称",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "属性值",
+                "type": "String"
+            },
+            "class": "Element"
+        },
+        {
+            "file": "lib\\element.js",
+            "line": 110,
+            "description": "返回DOM的CSS属性值",
+            "itemtype": "method",
+            "name": "css",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "CSS名称",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "CSS值",
+                "type": "String"
+            },
+            "class": "Element"
+        },
+        {
+            "file": "lib\\element.js",
+            "line": 121,
+            "description": "返回或设置value值",
+            "itemtype": "method",
+            "name": "val",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "str",
+                    "description": "value值，此值省略时为取value值",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "返回value值或者当前Element实例",
+                "type": "String|Element"
+            },
+            "class": "Element"
+        },
+        {
+            "file": "lib\\element.js",
+            "line": 139,
+            "description": "清空value值",
+            "itemtype": "method",
+            "name": "clear",
+            "access": "public",
+            "tagname": "",
+            "return": {
+                "description": "返回当前Element实例",
+                "type": "Element"
+            },
+            "class": "Element"
+        },
+        {
+            "file": "lib\\element.js",
+            "line": 151,
+            "description": "返回当前对象可视文本",
+            "itemtype": "method",
+            "name": "text",
+            "access": "public",
+            "tagname": "",
+            "return": {
+                "description": "返回的可视文本",
+                "type": "String"
+            },
+            "class": "Element"
+        },
+        {
+            "file": "lib\\element.js",
+            "line": 161,
+            "description": "当前对象是否可视",
+            "itemtype": "method",
+            "name": "visible",
+            "access": "public",
+            "tagname": "",
+            "return": {
+                "description": "当前对象的可视状态",
+                "type": "Boolean"
+            },
+            "class": "Element"
+        },
+        {
+            "file": "lib\\element.js",
+            "line": 171,
+            "description": "当前对象的坐标",
+            "itemtype": "method",
+            "name": "offset",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "bInView",
+                    "description": "是否相对坐标",
+                    "type": "Boolean"
+                }
+            ],
+            "return": {
+                "description": "返回{x,y}格式的对象",
+                "type": "Object"
+            },
+            "class": "Element"
+        },
+        {
+            "file": "lib\\element.js",
+            "line": 182,
+            "description": "当前对象的大小",
+            "itemtype": "method",
+            "name": "size",
+            "access": "public",
+            "tagname": "",
+            "return": {
+                "description": "返回{width,height}格式的对象",
+                "type": "Object"
+            },
+            "class": "Element"
+        },
+        {
+            "file": "lib\\element.js",
+            "line": 192,
+            "description": "当前对象是否可用状态",
+            "itemtype": "method",
+            "name": "enabled",
+            "access": "public",
+            "tagname": "",
+            "return": {
+                "description": "当前对象的可用状态",
+                "type": "Boolean"
+            },
+            "class": "Element"
+        },
+        {
+            "file": "lib\\element.js",
+            "line": 202,
+            "description": "当前对象是否处于被选择状态\n适用于以下对象：option,checkbox,radio",
+            "itemtype": "method",
+            "name": "selected",
+            "access": "public",
+            "tagname": "",
+            "return": {
+                "description": "当前对象是否被选择",
+                "type": "Boolean"
+            },
+            "class": "Element"
+        },
+        {
+            "file": "lib\\element.js",
+            "line": 213,
+            "description": "提前对象所在的表单",
+            "itemtype": "method",
+            "name": "submit",
+            "access": "public",
+            "tagname": "",
+            "return": {
+                "description": "返回当前Element实例",
+                "type": "Element"
+            },
+            "class": "Element"
+        },
+        {
+            "file": "lib\\element.js",
+            "line": 225,
+            "description": "单击当前对象",
+            "itemtype": "method",
+            "name": "click",
+            "access": "public",
+            "tagname": "",
+            "return": {
+                "description": "返回当前Element实例",
+                "type": "Element"
+            },
+            "class": "Element"
+        },
+        {
+            "file": "lib\\element.js",
+            "line": 237,
+            "description": "发送键盘按键序列到当前对象上",
+            "itemtype": "method",
+            "name": "sendKeys",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "str",
+                    "description": "键盘按钮序列",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "返回当前Element实例",
+                "type": "Element"
+            },
+            "class": "Element"
+        },
+        {
+            "file": "lib\\element.js",
+            "line": 250,
+            "description": "比较两个Element是否指向同一个DOM对象",
+            "itemtype": "method",
+            "name": "equals",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "$element",
+                    "description": "需要比较的Element对象实例",
+                    "type": "Element"
+                }
+            ],
+            "return": {
+                "description": "是否指向同一个DOM对象",
+                "type": "Boolean"
+            },
+            "class": "Element"
+        },
+        {
+            "file": "lib\\jwebdriver.js",
+            "line": 42,
+            "description": "设置全局配置\n<p>\n设置JWebDriver全局配置，后续所有实例共享此配置\n</p>\n<pre>\nJWebDriver.config({\n\t'logMode': 'all',\n\t'host': 'localhost',\n\t'port': 4444\n});\n</pre>",
+            "itemtype": "method",
+            "name": "config",
+            "static": 1,
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "选项参数",
+                    "type": "Object"
+                }
+            ],
+            "class": "JWebDriver"
+        },
+        {
+            "file": "lib\\jwebdriver.js",
+            "line": 65,
+            "description": "初始化函数",
+            "itemtype": "method",
+            "name": "_init",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "初始化选项",
+                    "type": "Object"
+                },
+                {
+                    "name": "callback",
+                    "description": "回调函数",
+                    "type": "Function"
+                }
+            ],
+            "class": "JWebDriver"
+        },
+        {
+            "file": "lib\\jwebdriver.js",
+            "line": 87,
+            "description": "加入任务队列\n<p>\n若当前队列为空，则直接运行\n</p>",
+            "itemtype": "method",
+            "name": "run",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "func",
+                    "description": "需要运行的函数",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "当前JWebDriver对象实例",
+                "type": "JWebDriver"
+            },
+            "class": "JWebDriver"
+        },
+        {
+            "file": "lib\\jwebdriver.js",
+            "line": 107,
+            "description": "运行队列中的任务",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "_run",
+            "class": "JWebDriver"
+        }
+    ]
+}
