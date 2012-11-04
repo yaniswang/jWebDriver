@@ -56,7 +56,7 @@ Chrome & ie must download chromeDriver & IEDriverServer.
 Document
 ================
 
-to do...
+1. Api Doc: [http://yaniswang.com/jwebdriver/api/](http://yaniswang.com/jwebdriver/api/)
 
 License
 ================
