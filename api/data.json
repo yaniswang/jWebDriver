@@ -71,7 +71,7 @@
             "extension_for": [],
             "file": "lib\\jwebdriver.js",
             "line": 1,
-            "description": "A webdriver client for Node.js\n<p>\n此对象是jwebdriver组件的入口，主要用来初始化及同步运行测试代码。\n</p>\n<pre>\nvar JWebDriver = require('jwebdriver');\nJWebDriver.config({\n\t'host': 'localhost',\n\t'port': 4444\n});\nvar wd = new JWebDriver({'browserName':'chrome'});\nwd.run(function(browser, $){\n\tbrowser.url(\"http://www.baidu.com/\");\n\tvar kw = $('#kw');\n\tkw.val('mp3').submit();\n\tbrowser.close();\n});\n</pre>"
+            "description": "A webdriver client for Node.js\n<p>\n此对象是jwebdriver组件的入口，主要用来初始化及同步运行测试代码。\n</p>\n<pre>\nvar JWebDriver = require('jwebdriver');\nJWebDriver.config({\n\t'logMode': 'all',\n\t'host': 'localhost',\n\t'port': 4444\n});\nvar wd = new JWebDriver({'browserName':'chrome'});\nwd.run(function(browser, $){\n\tbrowser.url(\"http://www.baidu.com/\");\n\tvar kw = $('#kw');\n\tkw.val('mp3').submit();\n\tbrowser.close();\n});\n</pre>"
         }
     },
     "classitems": [
@@ -1064,8 +1064,8 @@
         },
         {
             "file": "lib\\jwebdriver.js",
-            "line": 41,
-            "description": "设置全局配置\n<p>\n设置JWebDriver全局配置，后续所有实例共享此配置\n</p>\n<pre>\nJWebDriver.config({\n\t'host': 'localhost',\n\t'port': 4444\n});\n</pre>",
+            "line": 42,
+            "description": "设置全局配置\n<p>\n设置JWebDriver全局配置，后续所有实例共享此配置\n</p>\n<pre>\nJWebDriver.config({\n\t'logMode': 'all',\n\t'host': 'localhost',\n\t'port': 4444\n});\n</pre>",
             "itemtype": "method",
             "name": "config",
             "static": 1,
@@ -1082,7 +1082,7 @@
         },
         {
             "file": "lib\\jwebdriver.js",
-            "line": 63,
+            "line": 65,
             "description": "初始化函数",
             "itemtype": "method",
             "name": "_init",
@@ -1104,7 +1104,7 @@
         },
         {
             "file": "lib\\jwebdriver.js",
-            "line": 85,
+            "line": 87,
             "description": "加入任务队列\n<p>\n若当前队列为空，则直接运行\n</p>",
             "itemtype": "method",
             "name": "run",
@@ -1125,7 +1125,7 @@
         },
         {
             "file": "lib\\jwebdriver.js",
-            "line": 105,
+            "line": 107,
             "description": "运行队列中的任务",
             "access": "private",
             "tagname": "",

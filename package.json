@@ -5,11 +5,12 @@
   "main": "lib/jwebdriver.js",
   "dependencies": {
     "fibers": "*",
-    "xtend": "*",
+    "xtend": "*"
+  },
+  "devDependencies": {
     "mocha": "*",
     "should": "*"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "mocha"
   },
