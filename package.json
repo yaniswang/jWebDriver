@@ -17,16 +17,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/yaniswang/jwebdriver.git"
+    "url": "git://github.com/yaniswang/jWebDriver.git"
   },
   "bugs": {
-    "url": "https://github.com/yaniswang/jwebdriver/issues"
+    "url": "https://github.com/yaniswang/jWebDriver/issues"
   },
   "keywords": [
     "jwebdriver",
     "webdriver",
     "test",
-    "selenium"
+    "selenium",
+    "Javascript"
   ],
   "author": "Yanis Wang",
   "license": "MIT"
