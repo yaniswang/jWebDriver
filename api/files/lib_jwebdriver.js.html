@@ -15,11 +15,11 @@
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
             
-                <h1><img src="logo.png" title="jWebDriver API"></h1>
+                <h1><img src="https:&#x2F;&#x2F;raw.github.com&#x2F;yaniswang&#x2F;jWebDriver&#x2F;master&#x2F;logo_s.png" title="jWebDriver API"></h1>
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 0.9.1</em>
+            <em>API Docs for: 0.9.2</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -209,7 +209,7 @@ JWebDriver.prototype = {
 				self._bRun = true;
 				var browser = self.browser;
 				func(browser, function(){
-					return browser.$.apply(browser, arguments);
+					return browser.element.apply(browser, arguments);
 				});
 				self._bRun = false;
 				&#x2F;&#x2F;继续运行下个任务

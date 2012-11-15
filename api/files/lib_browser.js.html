@@ -15,11 +15,11 @@
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
             
-                <h1><img src="logo.png" title="jWebDriver API"></h1>
+                <h1><img src="https:&#x2F;&#x2F;raw.github.com&#x2F;yaniswang&#x2F;jWebDriver&#x2F;master&#x2F;logo_s.png" title="jWebDriver API"></h1>
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 0.9.1</em>
+            <em>API Docs for: 0.9.2</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -266,6 +266,7 @@ Browser.prototype = {
 			&#x27;desiredCapabilities&#x27;: extend({}, defaultOptions, options)
 		};
 		self.doCommand(&#x27;setSession&#x27;, sessionOptions, callback);
+		self.windowHandle = &#x27;current&#x27;;
 	},
 
 	&#x2F;**
@@ -430,7 +431,6 @@ Browser.prototype = {
 		        		}
 		        	}
 		        	catch(e){
-		        		console.log(responseStr)
 		        		self.log(colors.red + &#x27;GET SESSION ID FAILED&#x27; + colors.reset);
 		        		throw &#x27;GET SESSION ID FAILED&#x27;;
 		        	}
@@ -477,14 +477,125 @@ Browser.prototype = {
 	},
 
 	&#x2F;**
-	 * 结束浏览器会话
+	 * 返回窗口句柄
+	 * @method window
+	 * @public
+	 * @param  {Boolean} [bAll] 是否返回所有窗口，设置为true返回所有窗口
+	 * @return {String|Array}       单个或数组形式的窗口句柄
+	 *&#x2F;
+	window: function(bAll){
+		return this.doCommand(bAll === true?&#x27;getWindows&#x27;:&#x27;getWindow&#x27;);
+	},
+
+	&#x2F;**
+	 * 切换到另一个Window或Frame
+	 * @method switchTo
+	 * @public
+	 * @param  {String|Element|Number} [target] 要切换的目标窗口句柄、Frame对象(Element)、Frame在页面中的序号(Number)，如果省略此参数则切换到主窗口
+	 * @return {Browser}	当前Browser对象实例
+	 *&#x2F;
+	switchTo: function(target){
+		var self = this;
+		if(typeof target === &#x27;string&#x27;){
+			self.windowHandle = target;
+			self.doCommand(&#x27;switchWindow&#x27;,{name: target});
+		}
+		else if(target instanceof Element){
+			self.doCommand(&#x27;switchFrame&#x27;,{id: target.toJson()});
+		}
+		else if(target === undefined){
+			self.doCommand(&#x27;switchFrame&#x27;,{id: null});
+		}
+		return self;
+	},
+
+	&#x2F;**
+	 * 返回或者设置当前窗口的大小
+	 * @method size
+	 * @public
+	 * @param  {Number|Object} [width]  宽度或者大小对象({width,height})
+	 * @param  {Number} [height] 高度
+	 * @return {Object|Browser}        如果无宽度和高度参数，则返回当前大小对象，否则返回当前Browser实例
+	 *&#x2F;
+	size: function(width, height){
+		var self = this,
+			windowHandle = self.windowHandle;
+		if(width === undefined){
+			&#x2F;&#x2F;返回首个窗口的大小
+			return self.doCommand(&#x27;getWindowSize&#x27;, {&#x27;pathValues&#x27;: {&#x27;windowHandle&#x27;: windowHandle}});
+		}
+		else if(width.width !== undefined){
+			height = width.height;
+			width = width.width;
+		}
+		self.doCommand(&#x27;setWindowSize&#x27;, {
+			&#x27;pathValues&#x27;: {&#x27;windowHandle&#x27;: windowHandle},
+			&#x27;width&#x27;: width,
+			&#x27;height&#x27;: height
+		});
+		return self;
+	},
+
+	&#x2F;**
+	 * 最大化当前窗口
+	 * @method maximize
+	 * @public
+	 * @return {Browser}	当前Browser对象实例
+	 *&#x2F;
+	maximize: function(){
+		var self = this;
+		self.doCommand(&#x27;maximizeWindow&#x27;, {&#x27;pathValues&#x27;: {&#x27;windowHandle&#x27;: self.windowHandle}});
+		return self;
+	},
+
+	&#x2F;**
+	 * 返回或者设置当前窗口的坐标
+	 * @method offset
+	 * @public
+	 * @param  {Number|Object} [x]  x坐标或者坐标对象({x,y})
+	 * @param  {Number} [y] y坐标
+	 * @return {Object|Browser}        如果无x坐标和y坐标参数，则返回当前坐标对象，否则返回当前Browser实例
+	 *&#x2F;
+	offset: function(x, y){
+		var self = this,
+			windowHandle = self.windowHandle;
+		if(x === undefined){
+			&#x2F;&#x2F;返回首个窗口的大小
+			return self.doCommand(&#x27;getWindowOffset&#x27;, {&#x27;pathValues&#x27;: {&#x27;windowHandle&#x27;: windowHandle}});
+		}
+		else if(x.x !== undefined){
+			y = x.y;
+			x = x.x;
+		}
+		self.doCommand(&#x27;setWindowOffset&#x27;, {
+			&#x27;pathValues&#x27;: {&#x27;windowHandle&#x27;: windowHandle},
+			&#x27;x&#x27;: x,
+			&#x27;y&#x27;: y
+		});
+		return self;
+	},
+
+	&#x2F;**
+	 * 关闭当前窗口
 	 * @method close
 	 * @public
 	 * @return {Browser}	当前Browser对象实例
 	 *&#x2F;
 	close: function(){
 		var self = this;
-		self.doCommand(&#x27;delSession&#x27;)
+		self.doCommand(&#x27;closeWindow&#x27;);
+		return self;
+	},
+
+	&#x2F;**
+	 * 结束浏览器会话
+	 * @method end
+	 * @public
+	 * @return {Browser}	当前Browser对象实例
+	 *&#x2F;
+	end: function(){
+		var self = this;
+		self.doCommand(&#x27;delSession&#x27;);
 		return self;
 	},
 
@@ -634,7 +745,7 @@ Browser.prototype = {
 	 * @public
 	 * @param  {String} script Javascript代码
 	 * @param  {Array|Object} [args]   传递给脚本的参数，此参数可省略
-	 * @param  {Boolean} bAsync 是否异步
+	 * @param  {Boolean} bAsync 是否异步，如果是异步必需要调用callback返回，否则一直阻塞
 	 * @return {Object}        Javascript脚本的返回值
 	 *&#x2F;
 	exec: function(script, args, bAsync){
@@ -677,7 +788,7 @@ Browser.prototype = {
 	 *&#x2F;
 	setAlert: function(str){
 		var self = this;
-		self.doCommand(&#x27;setAlert&#x27;, {text: str});
+		self.doCommand(&#x27;setAlert&#x27;, {&#x27;text&#x27;: str});
 		return self;
 	},
 
@@ -804,6 +915,10 @@ Browser.prototype = {
 			data.xoffset = x;
 			data.yoffset = y;
 		}
+		if(data.element === undefined){
+			data.xoffset = Math.round(data.xoffset);
+			data.yoffset = Math.round(data.yoffset);
+		}
 		self.doCommand(&#x27;mousemove&#x27;, data);
 		return self;
 	},
@@ -892,15 +1007,17 @@ Browser.prototype = {
 
 	&#x2F;**
 	 * 返回Element对象实例
-	 * @method $
+	 * @method element
 	 * @public
 	 * @param  {String} [using] 对象选择类型，留空默认为：css selector(class name|css selector|id|name|link text|partial link text|tag name|xpath)
-	 * @param  {String} value 对象选择值
-	 * @return {Element}       Element的实例对象
+	 * @param  {String} [value] 对象选择值，留空返回当前焦点所在对象
+	 * @return {Element}       Element的实例对象，如果对象不存在，返回false
 	 *&#x2F;
-	$: function(using, value){
-		return new Element(this, using, value);
+	element: function(using, value){
+		var element = new Element(this, using, value);
+		return element._id === undefined ? false : element;
 	}
+
 }
 
 module.exports = Browser;

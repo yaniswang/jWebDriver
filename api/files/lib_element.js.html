@@ -15,11 +15,11 @@
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
             
-                <h1><img src="logo.png" title="jWebDriver API"></h1>
+                <h1><img src="https:&#x2F;&#x2F;raw.github.com&#x2F;yaniswang&#x2F;jWebDriver&#x2F;master&#x2F;logo_s.png" title="jWebDriver API"></h1>
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 0.9.1</em>
+            <em>API Docs for: 0.9.2</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -111,7 +111,7 @@ Element.prototype = {
 	 * @private
 	 * @param  {Browser} browser Element所在的Browser对象实例
 	 * @param  {String} [using]   对象选择类型，留空默认为：css selector(class name|css selector|id|name|link text|partial link text|tag name|xpath)
-	 * @param  {String} value   对象选择值
+	 * @param  {String} [value]   对象选择值，留空返回当前焦点所在对象
 	 *&#x2F;
 	_init: function(browser, using, value){
 		var self = this;
@@ -121,7 +121,7 @@ Element.prototype = {
 			value = using;
 			using = &#x27;css selector&#x27;;
 		}
-		if(value === &#x27;active&#x27;){
+		if(value === undefined){
 			self._id = browser.doCommand(&#x27;getActiveElement&#x27;).ELEMENT;
 		}
 		else if(using === &#x27;element&#x27;){
@@ -178,7 +178,7 @@ Element.prototype = {
 			value = using;
 			using = &#x27;css selector&#x27;;
 		}
-		var response = self._doElementCommand(&#x27;findElement&#x27;, {&#x27;using&#x27;: using,&#x27;value&#x27;: value})
+		var response = self._doElementCommand(&#x27;findElement&#x27;, {&#x27;using&#x27;: using,&#x27;value&#x27;: value}),
 			id = response.ELEMENT;
 		if(id){
 			return new Element(self.browser, &#x27;element&#x27;, id);

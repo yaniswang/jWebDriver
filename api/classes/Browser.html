@@ -15,11 +15,11 @@
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
             
-                <h1><img src="logo.png" title="jWebDriver API"></h1>
+                <h1><img src="https:&#x2F;&#x2F;raw.github.com&#x2F;yaniswang&#x2F;jWebDriver&#x2F;master&#x2F;logo_s.png" title="jWebDriver API"></h1>
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 0.9.1</em>
+            <em>API Docs for: 0.9.2</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -137,13 +137,6 @@ Browser类用来实例化一个对象，以绑定目标浏览器并调用接口�
 
                     <ul class="index-list methods">
                         
-                            <li class="index-item method public">
-                                <a href="#method_$">$</a>
-
-                                
-                                
-                            </li>
-                        
                             <li class="index-item method private">
                                 <a href="#method__doRequest">_doRequest</a>
 
@@ -229,6 +222,20 @@ Browser类用来实例化一个对象，以绑定目标浏览器并调用接口�
                             </li>
                         
                             <li class="index-item method public">
+                                <a href="#method_element">element</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method public">
+                                <a href="#method_end">end</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method public">
                                 <a href="#method_exec">exec</a>
 
                                 
@@ -271,6 +278,13 @@ Browser类用来实例化一个对象，以绑定目标浏览器并调用接口�
                             </li>
                         
                             <li class="index-item method public">
+                                <a href="#method_maximize">maximize</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method public">
                                 <a href="#method_mousedown">mousedown</a>
 
                                 
@@ -286,6 +300,13 @@ Browser类用来实例化一个对象，以绑定目标浏览器并调用接口�
                         
                             <li class="index-item method public">
                                 <a href="#method_mouseup">mouseup</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method public">
+                                <a href="#method_offset">offset</a>
 
                                 
                                 
@@ -320,6 +341,13 @@ Browser类用来实例化一个对象，以绑定目标浏览器并调用接口�
                             </li>
                         
                             <li class="index-item method public">
+                                <a href="#method_size">size</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method public">
                                 <a href="#method_sleep">sleep</a>
 
                                 
@@ -328,6 +356,13 @@ Browser类用来实例化一个对象，以绑定目标浏览器并调用接口�
                         
                             <li class="index-item method public">
                                 <a href="#method_source">source</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method public">
+                                <a href="#method_switchTo">switchTo</a>
 
                                 
                                 
@@ -354,6 +389,13 @@ Browser类用来实例化一个对象，以绑定目标浏览器并调用接口�
                                 
                             </li>
                         
+                            <li class="index-item method public">
+                                <a href="#method_window">window</a>
+
+                                
+                                
+                            </li>
+                        
                     </ul>
                 </div>
             
@@ -368,134 +410,6 @@ Browser类用来实例化一个对象，以绑定目标浏览器并调用接口�
         
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
-
-                
-                    <div id="method_$" class="method item public">
-    <h3 class="name"><code>$</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code class="optional">[using]</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>value</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type"><a href="..\classes\Element.html" class="crosslink">Element</a></span>
-        </span>
-    
-
-    
-
-    
-        <span class="flag public">public</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l801"><code>lib\browser.js:801</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>返回Element对象实例</p>
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name optional">[using]</code>
-                        <span class="type">String</span>
-                        <span class="flag optional" title="This parameter is optional.">optional</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>对象选择类型，留空默认为：css selector(class name|css selector|id|name|link text|partial link text|tag name|xpath)</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">value</code>
-                        <span class="type">String</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>对象选择值</p>
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type"><a href="..\classes\Element.html" class="crosslink">Element</a></span>:
-                    
-                    Element的实例对象
-                
-            </div>
-        </div>
-    
-
-    
-</div>
 
                 
                     <div id="method__doRequest" class="method item private">
@@ -558,7 +472,7 @@ Browser类用来实例化一个对象，以绑定目标浏览器并调用接口�
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l284"><code>lib\browser.js:284</code></a>
+        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l285"><code>lib\browser.js:285</code></a>
         
         </p>
 
@@ -695,7 +609,7 @@ Browser类用来实例化一个对象，以绑定目标浏览器并调用接口�
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l623"><code>lib\browser.js:623</code></a>
+        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l734"><code>lib\browser.js:734</code></a>
         
         </p>
 
@@ -932,7 +846,7 @@ Browser类用来实例化一个对象，以绑定目标浏览器并调用接口�
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l505"><code>lib\browser.js:505</code></a>
+        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l616"><code>lib\browser.js:616</code></a>
         
         </p>
 
@@ -1032,7 +946,7 @@ Browser类用来实例化一个对象，以绑定目标浏览器并调用接口�
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l451"><code>lib\browser.js:451</code></a>
+        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l562"><code>lib\browser.js:562</code></a>
         
         </p>
 
@@ -1115,7 +1029,7 @@ Browser类用来实例化一个对象，以绑定目标浏览器并调用接口�
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l651"><code>lib\browser.js:651</code></a>
+        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l762"><code>lib\browser.js:762</code></a>
         
         </p>
 
@@ -1211,7 +1125,7 @@ Browser类用来实例化一个对象，以绑定目标浏览器并调用接口�
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l387"><code>lib\browser.js:387</code></a>
+        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l486"><code>lib\browser.js:486</code></a>
         
         </p>
 
@@ -1222,7 +1136,7 @@ Browser类用来实例化一个对象，以绑定目标浏览器并调用接口�
     </div>
 
     <div class="description">
-        <p>结束浏览器会话</p>
+        <p>关闭当前窗口</p>
     </div>
 
     
@@ -1294,7 +1208,7 @@ Browser类用来实例化一个对象，以绑定目标浏览器并调用接口�
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l592"><code>lib\browser.js:592</code></a>
+        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l703"><code>lib\browser.js:703</code></a>
         
         </p>
 
@@ -1391,7 +1305,7 @@ Browser类用来实例化一个对象，以绑定目标浏览器并调用接口�
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l670"><code>lib\browser.js:670</code></a>
+        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l781"><code>lib\browser.js:781</code></a>
         
         </p>
 
@@ -1474,7 +1388,7 @@ Browser类用来实例化一个对象，以绑定目标浏览器并调用接口�
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l521"><code>lib\browser.js:521</code></a>
+        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l632"><code>lib\browser.js:632</code></a>
         
         </p>
 
@@ -1592,7 +1506,7 @@ Browser类用来实例化一个对象，以绑定目标浏览器并调用接口�
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l203"><code>lib\browser.js:203</code></a>
+        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l204"><code>lib\browser.js:204</code></a>
         
         </p>
 
@@ -1735,7 +1649,7 @@ Browser类用来实例化一个对象，以绑定目标浏览器并调用接口�
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l731"><code>lib\browser.js:731</code></a>
+        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l846"><code>lib\browser.js:846</code></a>
         
         </p>
 
@@ -1787,6 +1701,208 @@ Browser类用来实例化一个对象，以绑定目标浏览器并调用接口�
             
             </ul>
         </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="..\classes\Browser.html" class="crosslink">Browser</a></span>:
+                    
+                    当前Browser对象实例
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_element" class="method item public">
+    <h3 class="name"><code>element</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code class="optional">[using]</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[value]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="..\classes\Element.html" class="crosslink">Element</a></span>
+        </span>
+    
+
+    
+
+    
+        <span class="flag public">public</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l916"><code>lib\browser.js:916</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>返回Element对象实例</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[using]</code>
+                        <span class="type">String</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>对象选择类型，留空默认为：css selector(class name|css selector|id|name|link text|partial link text|tag name|xpath)</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[value]</code>
+                        <span class="type">String</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>对象选择值，留空返回当前焦点所在对象</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="..\classes\Element.html" class="crosslink">Element</a></span>:
+                    
+                    Element的实例对象，如果对象不存在，返回false
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_end" class="method item public">
+    <h3 class="name"><code>end</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="..\classes\Browser.html" class="crosslink">Browser</a></span>
+        </span>
+    
+
+    
+
+    
+        <span class="flag public">public</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l498"><code>lib\browser.js:498</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>结束浏览器会话</p>
+    </div>
+
     
 
     
@@ -1868,7 +1984,7 @@ Browser类用来实例化一个对象，以绑定目标浏览器并调用接口�
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l539"><code>lib\browser.js:539</code></a>
+        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l650"><code>lib\browser.js:650</code></a>
         
         </p>
 
@@ -1928,7 +2044,7 @@ Browser类用来实例化一个对象，以绑定目标浏览器并调用接口�
                     
 
                     <div class="param-description">
-                        <p>是否异步</p>
+                        <p>是否异步，如果是异步必需要调用callback返回，否则一直阻塞</p>
                     </div>
 
                     
@@ -1995,7 +2111,7 @@ Browser类用来实例化一个对象，以绑定目标浏览器并调用接口�
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l439"><code>lib\browser.js:439</code></a>
+        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l550"><code>lib\browser.js:550</code></a>
         
         </p>
 
@@ -2068,7 +2184,7 @@ Browser类用来实例化一个对象，以绑定目标浏览器并调用接口�
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l570"><code>lib\browser.js:570</code></a>
+        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l681"><code>lib\browser.js:681</code></a>
         
         </p>
 
@@ -2141,7 +2257,7 @@ Browser类用来实例化一个对象，以绑定目标浏览器并调用接口�
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l495"><code>lib\browser.js:495</code></a>
+        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l606"><code>lib\browser.js:606</code></a>
         
         </p>
 
@@ -2224,7 +2340,7 @@ Browser类用来实例化一个对象，以绑定目标浏览器并调用接口�
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l605"><code>lib\browser.js:605</code></a>
+        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l716"><code>lib\browser.js:716</code></a>
         
         </p>
 
@@ -2341,7 +2457,7 @@ filePath为可选项，若有则保存到文件
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l179"><code>lib\browser.js:179</code></a>
+        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l180"><code>lib\browser.js:180</code></a>
         
         </p>
 
@@ -2414,6 +2530,79 @@ filePath为可选项，若有则保存到文件
 </div>
 
                 
+                    <div id="method_maximize" class="method item public">
+    <h3 class="name"><code>maximize</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="..\classes\Browser.html" class="crosslink">Browser</a></span>
+        </span>
+    
+
+    
+
+    
+        <span class="flag public">public</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l447"><code>lib\browser.js:447</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>最大化当前窗口</p>
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="..\classes\Browser.html" class="crosslink">Browser</a></span>:
+                    
+                    当前Browser对象实例
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
                     <div id="method_mousedown" class="method item public">
     <h3 class="name"><code>mousedown</code></h3>
 
@@ -2452,7 +2641,7 @@ filePath为可选项，若有则保存到文件
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l682"><code>lib\browser.js:682</code></a>
+        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l793"><code>lib\browser.js:793</code></a>
         
         </p>
 
@@ -2541,7 +2730,7 @@ filePath为可选项，若有则保存到文件
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l694"><code>lib\browser.js:694</code></a>
+        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l805"><code>lib\browser.js:805</code></a>
         
         </p>
 
@@ -2652,7 +2841,7 @@ filePath为可选项，若有则保存到文件
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l719"><code>lib\browser.js:719</code></a>
+        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l834"><code>lib\browser.js:834</code></a>
         
         </p>
 
@@ -2678,6 +2867,135 @@ filePath为可选项，若有则保存到文件
                         <span class="type"><a href="..\classes\Browser.html" class="crosslink">Browser</a></span>:
                     
                     当前Browser对象实例
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_offset" class="method item public">
+    <h3 class="name"><code>offset</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code class="optional">[x]</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[y]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Object | <a href="..\classes\Browser.html" class="crosslink">Browser</a></span>
+        </span>
+    
+
+    
+
+    
+        <span class="flag public">public</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l459"><code>lib\browser.js:459</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>返回或者设置当前窗口的坐标</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[x]</code>
+                        <span class="type">Number | Object</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>x坐标或者坐标对象({x,y})</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[y]</code>
+                        <span class="type">Number</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>y坐标</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Object | <a href="..\classes\Browser.html" class="crosslink">Browser</a></span>:
+                    
+                    如果无x坐标和y坐标参数，则返回当前坐标对象，否则返回当前Browser实例
                 
             </div>
         </div>
@@ -2725,7 +3043,7 @@ filePath为可选项，若有则保存到文件
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l463"><code>lib\browser.js:463</code></a>
+        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l574"><code>lib\browser.js:574</code></a>
         
         </p>
 
@@ -2808,7 +3126,7 @@ filePath为可选项，若有则保存到文件
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l638"><code>lib\browser.js:638</code></a>
+        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l749"><code>lib\browser.js:749</code></a>
         
         </p>
 
@@ -2904,7 +3222,7 @@ filePath为可选项，若有则保存到文件
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l580"><code>lib\browser.js:580</code></a>
+        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l691"><code>lib\browser.js:691</code></a>
         
         </p>
 
@@ -2993,7 +3311,7 @@ filePath为可选项，若有则保存到文件
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l399"><code>lib\browser.js:399</code></a>
+        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l510"><code>lib\browser.js:510</code></a>
         
         </p>
 
@@ -3061,6 +3379,135 @@ filePath为可选项，若有则保存到文件
                         <span class="type"><a href="..\classes\Browser.html" class="crosslink">Browser</a></span>:
                     
                     当前Browser对象实例
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_size" class="method item public">
+    <h3 class="name"><code>size</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code class="optional">[width]</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[height]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Object | <a href="..\classes\Browser.html" class="crosslink">Browser</a></span>
+        </span>
+    
+
+    
+
+    
+        <span class="flag public">public</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l420"><code>lib\browser.js:420</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>返回或者设置当前窗口的大小</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[width]</code>
+                        <span class="type">Number | Object</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>宽度或者大小对象({width,height})</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[height]</code>
+                        <span class="type">Number</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>高度</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Object | <a href="..\classes\Browser.html" class="crosslink">Browser</a></span>:
+                    
+                    如果无宽度和高度参数，则返回当前大小对象，否则返回当前Browser实例
                 
             </div>
         </div>
@@ -3214,7 +3661,7 @@ filePath为可选项，若有则保存到文件
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l485"><code>lib\browser.js:485</code></a>
+        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l596"><code>lib\browser.js:596</code></a>
         
         </p>
 
@@ -3240,6 +3687,113 @@ filePath为可选项，若有则保存到文件
                         <span class="type">String</span>:
                     
                     页面源代码
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_switchTo" class="method item public">
+    <h3 class="name"><code>switchTo</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code class="optional">[target]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="..\classes\Browser.html" class="crosslink">Browser</a></span>
+        </span>
+    
+
+    
+
+    
+        <span class="flag public">public</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l398"><code>lib\browser.js:398</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>切换到另一个Window或Frame</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[target]</code>
+                        <span class="type">String | <a href="..\classes\Element.html" class="crosslink">Element</a> | Number</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>要切换的目标窗口句柄、Frame对象(Element)、Frame在页面中的序号(Number)，如果省略此参数则切换到主窗口</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="..\classes\Browser.html" class="crosslink">Browser</a></span>:
+                    
+                    当前Browser对象实例
                 
             </div>
         </div>
@@ -3287,7 +3841,7 @@ filePath为可选项，若有则保存到文件
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l475"><code>lib\browser.js:475</code></a>
+        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l586"><code>lib\browser.js:586</code></a>
         
         </p>
 
@@ -3370,7 +3924,7 @@ filePath为可选项，若有则保存到文件
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l421"><code>lib\browser.js:421</code></a>
+        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l532"><code>lib\browser.js:532</code></a>
         
         </p>
 
@@ -3495,7 +4049,7 @@ filePath为可选项，若有则保存到文件
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l745"><code>lib\browser.js:745</code></a>
+        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l860"><code>lib\browser.js:860</code></a>
         
         </p>
 
@@ -3592,6 +4146,113 @@ filePath为可选项，若有则保存到文件
                         <span class="type"><a href="..\classes\Browser.html" class="crosslink">Browser</a></span>:
                     
                     当前Browser对象实例
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_window" class="method item public">
+    <h3 class="name"><code>window</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code class="optional">[bAll]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">String | Array</span>
+        </span>
+    
+
+    
+
+    
+        <span class="flag public">public</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;lib_browser.js.html#l387"><code>lib\browser.js:387</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>返回窗口句柄</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[bAll]</code>
+                        <span class="type">Boolean</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>是否返回所有窗口，设置为true返回所有窗口</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">String | Array</span>:
+                    
+                    单个或数组形式的窗口句柄
                 
             </div>
         </div>
