@@ -3,7 +3,7 @@
     "description": "A webdriver client for Node.js",
     "version": "0.9.1",
     "url": "http://yaniswang.com/jwebdriver/",
-    "logo": "logo.png",
+    "logo": "https://raw.github.com/yaniswang/jWebDriver/master/logo_s.png",
     "options": {
 		"paths": "./lib",
         "outdir": "./api"

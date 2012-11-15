@@ -4,7 +4,7 @@
         "description": "A webdriver client for Node.js",
         "version": "0.9.1",
         "url": "http://yaniswang.com/jwebdriver/",
-        "logo": "logo.png"
+        "logo": "https://raw.github.com/yaniswang/jWebDriver/master/logo_s.png"
     },
     "files": {
         "lib\\browser.js": {
@@ -104,7 +104,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 179,
+            "line": 180,
             "description": "输出日志",
             "itemtype": "method",
             "name": "log",
@@ -130,7 +130,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 203,
+            "line": 204,
             "description": "执行webdriver命令",
             "itemtype": "method",
             "name": "doCommand",
@@ -162,7 +162,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 284,
+            "line": 285,
             "description": "发起HTTP请求到webdriver的接口",
             "itemtype": "method",
             "name": "_doRequest",
@@ -216,7 +216,121 @@
         {
             "file": "lib\\browser.js",
             "line": 387,
-            "description": "结束浏览器会话",
+            "description": "返回窗口句柄",
+            "itemtype": "method",
+            "name": "window",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "bAll",
+                    "description": "是否返回所有窗口，设置为true返回所有窗口",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "单个或数组形式的窗口句柄",
+                "type": "String|Array"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 398,
+            "description": "切换到另一个Window或Frame",
+            "itemtype": "method",
+            "name": "switchTo",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "target",
+                    "description": "要切换的目标窗口句柄、Frame对象(Element)、Frame在页面中的序号(Number)，如果省略此参数则切换到主窗口",
+                    "type": "String|Element|Number",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "当前Browser对象实例",
+                "type": "Browser"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 420,
+            "description": "返回或者设置当前窗口的大小",
+            "itemtype": "method",
+            "name": "size",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "width",
+                    "description": "宽度或者大小对象({width,height})",
+                    "type": "Number|Object",
+                    "optional": true
+                },
+                {
+                    "name": "height",
+                    "description": "高度",
+                    "type": "Number",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "如果无宽度和高度参数，则返回当前大小对象，否则返回当前Browser实例",
+                "type": "Object|Browser"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 447,
+            "description": "最大化当前窗口",
+            "itemtype": "method",
+            "name": "maximize",
+            "access": "public",
+            "tagname": "",
+            "return": {
+                "description": "当前Browser对象实例",
+                "type": "Browser"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 459,
+            "description": "返回或者设置当前窗口的坐标",
+            "itemtype": "method",
+            "name": "offset",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "x坐标或者坐标对象({x,y})",
+                    "type": "Number|Object",
+                    "optional": true
+                },
+                {
+                    "name": "y",
+                    "description": "y坐标",
+                    "type": "Number",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "如果无x坐标和y坐标参数，则返回当前坐标对象，否则返回当前Browser实例",
+                "type": "Object|Browser"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 486,
+            "description": "关闭当前窗口",
             "itemtype": "method",
             "name": "close",
             "access": "public",
@@ -229,7 +343,21 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 399,
+            "line": 498,
+            "description": "结束浏览器会话",
+            "itemtype": "method",
+            "name": "end",
+            "access": "public",
+            "tagname": "",
+            "return": {
+                "description": "当前Browser对象实例",
+                "type": "Browser"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib\\browser.js",
+            "line": 510,
             "description": "设置操作超时时间\n<p>\n注：script包括同步和异步两种代码\n</p>",
             "itemtype": "method",
             "name": "setTimeout",
@@ -255,7 +383,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 421,
+            "line": 532,
             "description": "打开或者返回当前URL",
             "itemtype": "method",
             "name": "url",
@@ -277,7 +405,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 439,
+            "line": 550,
             "description": "控制浏览器回到后一个URL",
             "itemtype": "method",
             "name": "forward",
@@ -291,7 +419,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 451,
+            "line": 562,
             "description": "控制浏览器回到前一个URL",
             "itemtype": "method",
             "name": "back",
@@ -305,7 +433,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 463,
+            "line": 574,
             "description": "刷新当前页面",
             "itemtype": "method",
             "name": "refresh",
@@ -319,7 +447,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 475,
+            "line": 586,
             "description": "返回当前页面title",
             "itemtype": "method",
             "name": "title",
@@ -333,7 +461,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 485,
+            "line": 596,
             "description": "返回当前页面源代码",
             "itemtype": "method",
             "name": "source",
@@ -347,7 +475,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 495,
+            "line": 606,
             "description": "返回当前页面下所有cookie",
             "itemtype": "method",
             "name": "getCookies",
@@ -361,7 +489,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 505,
+            "line": 616,
             "description": "添加cookie到当前页面\n<p>\n这里可以查看WebDriver官方定义的<a href=\"http://code.google.com/p/selenium/wiki/JsonWireProtocol#Cookie_JSON_Object\" target=\"_blank\">cookie对象</a>\n</p>",
             "itemtype": "method",
             "name": "addCookie",
@@ -382,7 +510,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 521,
+            "line": 632,
             "description": "删除cookie",
             "itemtype": "method",
             "name": "delCookies",
@@ -403,7 +531,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 539,
+            "line": 650,
             "description": "执行Javascript脚本",
             "itemtype": "method",
             "name": "exec",
@@ -423,7 +551,7 @@
                 },
                 {
                     "name": "bAsync",
-                    "description": "是否异步",
+                    "description": "是否异步，如果是异步必需要调用callback返回，否则一直阻塞",
                     "type": "Boolean"
                 }
             ],
@@ -435,7 +563,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 570,
+            "line": 681,
             "description": "获取弹出窗口的文本(alert, confirm, prompt)",
             "itemtype": "method",
             "name": "getAlert",
@@ -449,7 +577,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 580,
+            "line": 691,
             "description": "输入prompt中的值",
             "itemtype": "method",
             "name": "setAlert",
@@ -463,7 +591,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 592,
+            "line": 703,
             "description": "关闭弹出窗口",
             "itemtype": "method",
             "name": "closeAlert",
@@ -485,7 +613,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 605,
+            "line": 716,
             "description": "获取或保存当前网页截图\n<p>\nfilePath为可选项，若有则保存到文件\n</p>",
             "itemtype": "method",
             "name": "getScreenshot",
@@ -507,7 +635,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 623,
+            "line": 734,
             "description": "获取按键映射后的字符数组",
             "itemtype": "method",
             "name": "_getKeyArray",
@@ -528,7 +656,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 638,
+            "line": 749,
             "description": "发送按键序列到当前焦点对象上",
             "itemtype": "method",
             "name": "sendKeys",
@@ -549,7 +677,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 651,
+            "line": 762,
             "description": "在当前光标处触发单击事件",
             "itemtype": "method",
             "name": "click",
@@ -570,7 +698,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 670,
+            "line": 781,
             "description": "在当前光标处触发双击事件",
             "itemtype": "method",
             "name": "dblclick",
@@ -584,7 +712,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 682,
+            "line": 793,
             "description": "在当前光标处触发鼠标左键按下",
             "itemtype": "method",
             "name": "mousedown",
@@ -598,7 +726,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 694,
+            "line": 805,
             "description": "移动到指定对象中间或坐标点",
             "itemtype": "method",
             "name": "mousemove",
@@ -624,7 +752,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 719,
+            "line": 834,
             "description": "在当前光标处触发鼠标左键按起",
             "itemtype": "method",
             "name": "mouseup",
@@ -638,7 +766,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 731,
+            "line": 846,
             "description": "拖放",
             "itemtype": "method",
             "name": "dragDrop",
@@ -664,7 +792,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 745,
+            "line": 860,
             "description": "等待对象出现或消失",
             "itemtype": "method",
             "name": "waitFor",
@@ -703,10 +831,10 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 801,
+            "line": 916,
             "description": "返回Element对象实例",
             "itemtype": "method",
-            "name": "$",
+            "name": "element",
             "access": "public",
             "tagname": "",
             "params": [
@@ -718,12 +846,13 @@
                 },
                 {
                     "name": "value",
-                    "description": "对象选择值",
-                    "type": "String"
+                    "description": "对象选择值，留空返回当前焦点所在对象",
+                    "type": "String",
+                    "optional": true
                 }
             ],
             "return": {
-                "description": "Element的实例对象",
+                "description": "Element的实例对象，如果对象不存在，返回false",
                 "type": "Element"
             },
             "class": "Browser"
@@ -750,8 +879,9 @@
                 },
                 {
                     "name": "value",
-                    "description": "对象选择值",
-                    "type": "String"
+                    "description": "对象选择值，留空返回当前焦点所在对象",
+                    "type": "String",
+                    "optional": true
                 }
             ],
             "class": "Element"

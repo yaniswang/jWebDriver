@@ -37,10 +37,10 @@ function runBrowserTest(browserName){
 				var content = '<!DOCTYPE HTML><html><head><meta charset="UTF-8"><title>testtitle</title></head>';
 				switch(req.url){
 					case '/test1.html':
-						content += '<p style="padding:20px;"><input type="text" id="kw" onclick="this.value=1" ondblclick="this.value=2"><input type="text" id="testmouse" onmousedown="this.value=3" onmouseup="this.value=4"><input type="button" id="alert" onclick="alert(123)" value="alert"></p>';
+						content += '<p style="padding:20px;"><input type="text" id="kw" onclick="this.value=1" ondblclick="this.value=2"><script>document.getElementById("kw").focus();</script><input type="text" id="testmouse" onmousedown="this.value=3" onmouseup="this.value=4"><input type="button" id="alert" onclick="alert(123)" value="alert"></p><a href="test2.html" target="_blank" id="testwindow">test2</a><iframe src="test2.html" id="testiframe"></iframe>';
 						break;
 					case '/test2.html':
-						content += 'test2.html';
+						content += 'test2.html<input type="text" id="test2input">';
 						break;
 				}
 				content += '<body></body></html>';
@@ -79,6 +79,18 @@ function runBrowserTest(browserName){
 				browser.url().should.equal(testHost + '/test1.html');
 				browser.forward();
 				browser.url().should.equal(testHost + '/test2.html');
+				done();
+			});
+
+		});
+
+		it('should refresh page', function(done){
+
+			wd.run(function(browser, $){
+				browser.url(testHost + '/test1.html');
+				$('#kw').val('refresh');
+				browser.refresh();
+				$('#kw').val().should.equal('');
 				done();
 			});
 
@@ -138,18 +150,6 @@ function runBrowserTest(browserName){
 
 		});
 
-		it('should control alert', function(done){
-
-			wd.run(function(browser, $){
-				$('#alert').click();
-				browser.sleep(500);
-				browser.getAlert().should.equal('123');
-				browser.closeAlert();
-				done();
-			});
-
-		});
-
 		it('should get screenshot', function(done){
 
 			wd.run(function(browser, $){
@@ -163,6 +163,17 @@ function runBrowserTest(browserName){
 				if(fs.existsSync(tempPath)){
 					fs.unlinkSync(tempPath);
 				}
+				done();
+			});
+
+		});
+
+		it('should get element', function(done){
+
+			wd.run(function(browser, $){
+				$().attr('id').should.equal('kw');
+				($('#testmouse') !== false).should.true;
+				($('#abcaaa') === false).should.true;
 				done();
 			});
 
@@ -182,18 +193,44 @@ function runBrowserTest(browserName){
 		it('should control mouse', function(done){
 
 			wd.run(function(browser, $){
-				var kw = $('#kw');
+				browser.url(testHost + '/test1.html');
+				var kw = $('#kw'),
+					kwoffset = kw.offset(),
+					kwsize = kw.size();
+				kwoffset.x += kwsize.width/2;
+				kwoffset.y += kwsize.height/2;
+				// //mousemove:x,y
+				kw.val('test');
+				browser.mousemove(kwoffset.x, kwoffset.y);
+				browser.click().sleep(200);
+				kw.val().should.equal('1');
+				//mousemove:element
 				browser.mousemove(kw);
 				browser.click().sleep(200);
 				kw.val().should.equal('1');
+				//dbclick
 				browser.dblclick().sleep(200);
 				kw.val().should.equal('2');
 				var testmouse = $('#testmouse');
 				browser.mousemove(testmouse).sleep(100);
+				//mousedown
 				browser.mousedown().sleep(200);
 				testmouse.val().should.equal('3');
+				//mouseup
 				browser.mouseup().sleep(200);
 				testmouse.val().should.equal('4');
+				done();
+			});
+
+		});
+
+		it('should control alert', function(done){
+
+			wd.run(function(browser, $){
+				$('#alert').click();
+				browser.sleep(500);
+				browser.getAlert().should.equal('123');
+				browser.closeAlert();
 				done();
 			});
 
@@ -202,10 +239,95 @@ function runBrowserTest(browserName){
 		it('should waitFor element', function(done){
 
 			wd.run(function(browser, $){
-				($('#wait')._id === undefined).should.true;
-				browser.exec('setTimeout(function(){document.body.innerHTML=\'<input type="text" id="wait">\';},500);return 1;');
-				browser.waitFor('#wait');
-				$('#wait')._id.should.be.a('string');
+				($('#wait1') === false).should.true;
+				browser.exec('setTimeout(function(){document.body.innerHTML=\'<input type="text" id="wait1">\';},500);return 1;');
+				browser.waitFor('#wait1');
+				($('#wait1') !== false).should.true;
+				browser.exec('setTimeout(function(){document.body.innerHTML=\'<input type="text" id="wait2">\';},100);return 1;');
+				browser.waitFor('#wait2',50).should.false;
+				done();
+			});
+
+		});
+
+		it('should switchTo window', function(done){
+
+			wd.run(function(browser, $){
+				browser.url(testHost + '/test1.html');
+				$('#testwindow').click();
+				browser.sleep(200);
+				var mainWin = browser.window(),
+					allWin = browser.window(true);
+				allWin.length.should.equal(2);
+				browser.switchTo(allWin[1]);
+				//no element
+				($('#testwindow') === false).should.true;
+				browser.close();
+				allWin = browser.window(true);
+				allWin.length.should.equal(1);
+				browser.switchTo(mainWin);
+				($('#testwindow') !== false).should.true;
+				done();
+			});
+
+		});
+
+		it('should switchTo frame', function(done){
+
+			wd.run(function(browser, $){
+				($('#testwindow') !== false).should.true;
+				browser.switchTo($('#testiframe'));
+				($('#test2input') !== false).should.true;
+				browser.switchTo();
+				($('#testwindow') !== false).should.true;
+				done();
+			});
+
+		});
+
+		it('should change size of window', function(done){
+
+			wd.run(function(browser, $){
+				browser.size(501,502);
+				var newSize = browser.size();
+				newSize.width.should.equal(501);
+				newSize.height.should.equal(502);
+				browser.size({'width': 603,'height': 604});
+				newSize = browser.size();
+				newSize.width.should.equal(603);
+				newSize.height.should.equal(604);
+				done();
+			});
+
+		});
+
+		it('should change offset of window', function(done){
+
+			wd.run(function(browser, $){
+				browser.offset(101,102);
+				var newOffset = browser.offset();
+				newOffset.x.should.equal(101);
+				newOffset.y.should.equal(102);
+				browser.offset({'x': 203,'y': 204});
+				newOffset = browser.offset();
+				newOffset.x.should.equal(203);
+				newOffset.y.should.equal(204);
+				done();
+			});
+
+		});
+
+		it('should maximize window', function(done){
+
+			wd.run(function(browser, $){
+				browser.size(501,502);
+				var newSize = browser.size();
+				newSize.width.should.equal(501);
+				newSize.height.should.equal(502);
+				browser.maximize();
+				var newSize = browser.size();
+				newSize.width.should.above(501);
+				newSize.height.should.above(502);
 				done();
 			});
 
