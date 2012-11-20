@@ -49,9 +49,11 @@ Chrome & ie must download chromeDriver & IEDriverServer.
 	var wd = new JWebDriver({'browserName': 'firefox'});
 
 	wd.run(function(browser, $){
-	    browser.url('http://www.baidu.com/');
-	    browser.waitFor('#kw');
-	    $('#kw').val('mp3').submit();
+		browser.url('http://www.baidu.com/');
+		var kw = browser.waitFor('#kw',2000);
+		if(browser.isOk(kw)){
+			kw.val('mp3').submit();
+		}
 	    browser.sleep(1000);
 	    browser.close();
 	});

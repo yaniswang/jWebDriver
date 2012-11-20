@@ -172,8 +172,8 @@ function runBrowserTest(browserName){
 
 			wd.run(function(browser, $){
 				$().attr('id').should.equal('kw');
-				($('#testmouse') !== false).should.true;
-				($('#abcaaa') === false).should.true;
+				browser.isOk($('#testmouse')).should.true;
+				browser.isError($('#abcaaa')).should.true;
 				done();
 			});
 
@@ -239,12 +239,13 @@ function runBrowserTest(browserName){
 		it('should waitFor element', function(done){
 
 			wd.run(function(browser, $){
-				($('#wait1') === false).should.true;
+				browser.isError($('#wait1')).should.true;
 				browser.exec('setTimeout(function(){document.body.innerHTML=\'<input type="text" id="wait1">\';},500);return 1;');
-				browser.waitFor('#wait1');
-				($('#wait1') !== false).should.true;
+				var wait1 = browser.waitFor('#wait1');
+				browser.isOk(wait1).should.true;
 				browser.exec('setTimeout(function(){document.body.innerHTML=\'<input type="text" id="wait2">\';},100);return 1;');
-				browser.waitFor('#wait2',50).should.false;
+				var wait2 = browser.waitFor('#wait2',50);
+				browser.isError(wait2).should.true;
 				done();
 			});
 
@@ -261,12 +262,12 @@ function runBrowserTest(browserName){
 				allWin.length.should.equal(2);
 				browser.switchTo(allWin[1]);
 				//no element
-				($('#testwindow') === false).should.true;
+				browser.isError($('#testwindow')).should.true;
 				browser.close();
 				allWin = browser.window(true);
 				allWin.length.should.equal(1);
 				browser.switchTo(mainWin);
-				($('#testwindow') !== false).should.true;
+				browser.isOk($('#testwindow')).should.true;
 				done();
 			});
 
@@ -275,11 +276,11 @@ function runBrowserTest(browserName){
 		it('should switchTo frame', function(done){
 
 			wd.run(function(browser, $){
-				($('#testwindow') !== false).should.true;
+				browser.isOk($('#testwindow')).should.true;
 				browser.switchTo($('#testiframe'));
-				($('#test2input') !== false).should.true;
+				browser.isOk($('#test2input')).should.true;
 				browser.switchTo();
-				($('#testwindow') !== false).should.true;
+				browser.isOk($('#testwindow')).should.true;
 				done();
 			});
 

@@ -1,4 +1,4 @@
-var JWebDriver = require('../lib/jwebdriver');
+var JWebDriver = require('../');
 
 JWebDriver.config({
 	'logMode': 'all',
@@ -10,7 +10,10 @@ var wd = new JWebDriver({'browserName':'chrome'});
 
 wd.run(function(browser, $){
 	browser.url('http://www.baidu.com/');
-	browser.waitFor('#kw');
-	$('#kw').val('mp3').submit();
+	var kw = browser.waitFor('#kw',2000);
+	if(browser.isOk(kw)){
+		kw.val('mp3').submit();
+	}
+	browser.sleep(1000);
 	browser.close();
 });
