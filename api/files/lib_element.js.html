@@ -121,6 +121,8 @@ Element.prototype = {
 			value = using;
 			using = &#x27;css selector&#x27;;
 		}
+		self.using = using;
+		self.value = value;
 		if(value === undefined){
 			self._id = browser.doCommand(&#x27;getActiveElement&#x27;).ELEMENT;
 		}
@@ -133,7 +135,8 @@ Element.prototype = {
 			{
 				throw &#x27;Please provide any of the following using strings as the first parameter: class name, css selector, id, name, link text, partial link text, tag name or xpath&#x27;;
 			}
-			self._id = browser.doCommand(&#x27;getElement&#x27;, {&#x27;using&#x27;: using,&#x27;value&#x27;: value}).ELEMENT;
+			var result = browser.doCommand(&#x27;getElement&#x27;, {&#x27;using&#x27;: using,&#x27;value&#x27;: value});
+			self._id = browser.isOk(result) ? result.ELEMENT : result;
 		}
 	},
 
@@ -154,12 +157,12 @@ Element.prototype = {
 	},
 
 	&#x2F;**
-	 * 返回官方JSON格式的Element对象
-	 * @method toJson
+	 * 返回官方数组格式的Element对象
+	 * @method toArray
 	 * @public
 	 * @return {Object} 官方Element对象{ELEMENT}
 	 *&#x2F;
-	toJson: function(){
+	toArray: function(){
 		return {ELEMENT: this._id};
 	},
 
@@ -178,14 +181,11 @@ Element.prototype = {
 			value = using;
 			using = &#x27;css selector&#x27;;
 		}
-		var response = self._doElementCommand(&#x27;findElement&#x27;, {&#x27;using&#x27;: using,&#x27;value&#x27;: value}),
-			id = response.ELEMENT;
-		if(id){
-			return new Element(self.browser, &#x27;element&#x27;, id);
+		var result = self._doElementCommand(&#x27;findElement&#x27;, {&#x27;using&#x27;: using,&#x27;value&#x27;: value});
+		if(self.browser.isOk(result)){
+			return new Element(self.browser, &#x27;element&#x27;, result.ELEMENT);
 		}
-		else{
-			return false;
-		}
+		return result;
 	},
 
 	&#x2F;**

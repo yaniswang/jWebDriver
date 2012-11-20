@@ -273,24 +273,57 @@ Browser.prototype = {
 	 * 输出日志
 	 * @method log
 	 * @public
-	 * @param  {String} message 日志消息
-	 * @param  {String} content 日志具体内容
+	 * @param  {String} type 日志类型
+	 * @param  {String} message 日志内容
 	 * @return {Browser}	当前Browser对象实例
 	 *&#x2F;
-	log: function(message, content){
+	log: function(type, message){
 		var self = this;
-		if(self.logMode === &#x27;all&#x27; || (self.logMode === &#x27;error&#x27; &amp;&amp; &#x2F;error&#x2F;i.test(message))){
+		if(message === undefined){
+			message = type;
+			type = &#x27;INFO&#x27;;
+		}
+		if(self.logMode === &#x27;all&#x27; || (self.logMode === &#x27;error&#x27; &amp;&amp; type === &#x27;ERROR&#x27;)){
 			var dateString = (new Date()).toString().match(&#x2F;\d\d:\d\d:\d\d&#x2F;)[0];
-			if (content !== undefined)
-			{
-				console.log(colors.dkgray +&#x27;[&#x27; + dateString + &#x27;]: &#x27; + colors.reset, message, &#x27;\t&#x27;, content);
+			var mapColors = {
+				&#x27;COMMAND&#x27;: colors.violet,
+				&#x27;DATA&#x27;: colors.brown,
+				&#x27;RESULT&#x27;: colors.teal,
+				&#x27;ERROR&#x27;: colors.red,
+				&#x27;WARNING&#x27;: colors.yellow,
+				&#x27;INFO&#x27;: colors.white
 			}
-			else
-			{
-				console.log(colors.dkgray + &#x27;[&#x27; + dateString + &#x27;]: &#x27; + colors.reset, message);
+			if(message){
+				console.log(colors.dkgray +&#x27;[&#x27; + dateString + &#x27;]: &#x27; + colors.reset, mapColors[type] + type + colors.reset, &#x27;\t&#x27;, message);
+			}
+			else{
+				console.log(colors.dkgray +&#x27;[&#x27; + dateString + &#x27;]: &#x27; + colors.reset, mapColors[type] + type + colors.reset);
 			}
 		}
 		return self;
+	},
+
+	&#x2F;**
+	 * 检查返回值是否有错误，适用于所有WebDriver API的返回值
+	 * @method isError
+	 * @public
+	 * @param  {Object}  result 所有WebDriver API的返回值
+	 * @return {Boolean}        如果有错误返回true
+	 *&#x2F;
+	isError: function(result){
+		var status = result.status;
+		return status !== undefined &amp;&amp; status !== 0;
+	},
+
+	&#x2F;**
+	 * 检查返回值是否正确，适用于所有WebDriver API的返回值
+	 * @method isOk
+	 * @public
+	 * @param  {Object}  result 所有WebDriver API的返回值
+	 * @return {Boolean}        如果正确返回true
+	 *&#x2F;
+	isOk: function(result){
+		return !this.isError(result);
 	},
 
 	&#x2F;**
@@ -330,20 +363,14 @@ Browser.prototype = {
 					}
 					catch(err){
 		                if (result !== &#x27;&#x27;) {
-		                    self.log(colors.red + err + colors.reset + &#x27;\n&#x27;);
-		                    self.log(colors.dkgray + result + colors.reset + &#x27;\n&#x27;);
+		                	self.log(&#x27;ERROR&#x27;, err + &#x27;\n&#x27; + result + &#x27;\n&#x27;)
 		                }
 		                result = {status: -1, errorType: &#x27;jsonError&#x27;, errorMessage: &#x27;JSON.parse error.&#x27;};
-		                if(callback){
-		                	callback(result);
-		                }
-		                else{
-		                	return result;
-		                }
+		                return callback?callback(result):result;
 					}
 
 					if (result.status === 0) {&#x2F;&#x2F;操作成功
-						self.log(colors.teal + &#x27;RESULT\t&#x27;  + colors.reset, result.value);
+						self.log(&#x27;RESULT&#x27;, result.value);
 						result = result.value;
 					}
 		            else {
@@ -354,7 +381,7 @@ Browser.prototype = {
 						result.errorType = responseType;
 						result.errorMessage = responseMessage;
 
-						self.log(colors.red + &#x27;ERROR\t&#x27;  + colors.reset, responseType);
+						self.log(&#x27;ERROR&#x27;, responseType);
 		            }
 				}
 				if(callback){
@@ -386,7 +413,7 @@ Browser.prototype = {
 	_doRequest: function(requestOptions, data, callback){
 		var self = this, fiber = Fiber.current;
 
-		self.log(colors.violet + &#x27;COMMAND\t&#x27; + colors.reset + requestOptions.method, requestOptions.path);
+		self.log(&#x27;COMMAND&#x27;, requestOptions.method + &#x27;\t&#x27; + requestOptions.path);
 
 		var responseStr = &#x27;&#x27;;
 
@@ -397,7 +424,7 @@ Browser.prototype = {
 				return &#x27;\\&#x27;+escape(a).substr(1);
 			});
 			if(data !== &#x27;{}&#x27;){
-				self.log(colors.brown + &#x27;DATA\t&#x27; + colors.reset, data);
+				self.log(&#x27;DATA&#x27;, data);
 			}
 		}
 		else{
@@ -427,11 +454,11 @@ Browser.prototype = {
 		        		var match = res.headers.location.match(&#x2F;wd\&#x2F;hub\&#x2F;session\&#x2F;(\d+)$&#x2F;i);
 		        		if(match !== null){
 		        			self.sessionId = match[1];
-		        			self.log(&#x27;NEW SESSION ID&#x27;, self.sessionId);
+		        			self.log(&#x27;RESULT&#x27;, self.sessionId);
 		        		}
 		        	}
 		        	catch(e){
-		        		self.log(colors.red + &#x27;GET SESSION ID FAILED&#x27; + colors.reset);
+		        		self.log(&#x27;ERROR&#x27;, &#x27;GET SESSION ID FAILED&#x27;);
 		        		throw &#x27;GET SESSION ID FAILED&#x27;;
 		        	}
 		        }
@@ -446,7 +473,7 @@ Browser.prototype = {
 
 		req.on(&#x27;error&#x27;, function(err)
 		{
-	        self.log(colors.red + &#x27;ERROR ON REQUEST&#x27; + colors.reset);
+			self.log(&#x27;ERROR&#x27;, &#x27;ERROR ON REQUEST&#x27;);
 		});
 
 		if(data){
@@ -501,7 +528,7 @@ Browser.prototype = {
 			self.doCommand(&#x27;switchWindow&#x27;,{name: target});
 		}
 		else if(target instanceof Element){
-			self.doCommand(&#x27;switchFrame&#x27;,{id: target.toJson()});
+			self.doCommand(&#x27;switchFrame&#x27;,{id: target.toArray()});
 		}
 		else if(target === undefined){
 			self.doCommand(&#x27;switchFrame&#x27;,{id: null});
@@ -761,9 +788,9 @@ Browser.prototype = {
 		var arg;
 		for(var i in args){
 			arg = args[i];
-			if(arg.toJson){
+			if(arg instanceof Element){
 				&#x2F;&#x2F;转换为原生Element对象
-				args[i] = arg.toJson();
+				args[i] = arg.toArray();
 			}
 		}
 		var data = {&#x27;script&#x27;: script, args: args};
@@ -904,8 +931,8 @@ Browser.prototype = {
 	 *&#x2F;
 	mousemove: function(x, y){
 		var self = this, data = {};
-		if(x.toJson){
-			data.element = x.toJson().ELEMENT;
+		if(x instanceof Element){
+			data.element = x.toArray().ELEMENT;
 		}
 		else if(x.x &amp;&amp; x.y){
 			data.xoffset = x.x;
@@ -955,40 +982,40 @@ Browser.prototype = {
 	 * @public
 	 * @param  {String} [using]  对象选择类型，留空默认为：css selector(class name|css selector|id|name|link text|partial link text|tag name|xpath)
 	 * @param  {String} value  对象选择值
-	 * @param  {Boolean} [bExist] 测试目标是对象存在或不存在
+	 * @param  {Boolean} [targetExist] 测试目标是对象存在或不存在
 	 * @param  {Number} [timeout] 等待超时时间，单位毫秒，默认30000毫秒
-	 * @return {Browser} 当前Browser对象实例
+	 * @return {Element|Object} 等待的目标如果存在，则返回Element对象，如果不存在或者超时则返回错误对象
 	 *&#x2F;
-	waitFor: function(using, value, bExist, timeout){
+	waitFor: function(using, value, targetExist, timeout){
 		var self = this,
 			fiber = Fiber.current,
-			ret = self;
+			ret, bExist;
 		if(typeof value !== &#x27;string&#x27;){
 			&#x2F;&#x2F;默认css选择器
-			bExist = value;
+			targetExist = value;
 			value = using;
 			using = &#x27;css selector&#x27;;
 		}
-		if(typeof bExist === &#x27;number&#x27;){
-			timeout = bExist;
-			bExist = true;
+		if(typeof targetExist === &#x27;number&#x27;){
+			timeout = targetExist;
+			targetExist = true;
 		}
-		if(bExist === undefined){
-			bExist = true;
+		if(targetExist === undefined){
+			targetExist = true;
 		}
 		if(timeout === undefined){
 			timeout = 30000;
 		}
 		var _timer1, _timer2;
 		function waitElement(){
-			self.doCommand(&#x27;getElement&#x27;, {&#x27;using&#x27;: using,&#x27;value&#x27;: value}, function(res){
-				if((res.ELEMENT !== undefined) === bExist){
-					if(_timer2){
-						clearTimeout(_timer2);
-					}
+			self.doCommand(&#x27;getElement&#x27;, {&#x27;using&#x27;: using,&#x27;value&#x27;: value}, function(result){
+				bExist  = self.isOk(result);
+				if(bExist === targetExist){
+					clearTimeout(_timer2);
+					ret = result;
 					fiber.run();
 				}
-				else{
+				else if(_timer1 !== null){
 					_timer1 = setTimeout(waitElement, 500);
 				}
 			});
@@ -996,26 +1023,41 @@ Browser.prototype = {
 		_timer1 = setTimeout(waitElement, 1);
 		_timer2 = setTimeout(function(){
 			clearTimeout(_timer1);
-			&#x2F;&#x2F;超时则返回false
-			ret = false;
-			self.log(&#x27;waitFor timeout&#x27;, using + &#x27; , &#x27; + value);
+			_timer1 = null;
+			var errorMessage = &#x27;waitFor timeout: &#x27; + using + &#x27; , &#x27; + value;
+			&#x2F;&#x2F;超时
+			ret = {
+				&#x27;status&#x27;:-1,
+				&#x27;errorType&#x27;: &#x27;waitForTimeout&#x27;,
+				&#x27;errorMessage&#x27;: errorMessage
+			};
+			self.log(&#x27;ERROR&#x27;, errorMessage);
 			fiber.run();
 		}, timeout);
 		Fiber.yield();
-		return ret;
+		return bExist === true ? self.element(&#x27;element&#x27;, ret.ELEMENT) : ret;
 	},
 
 	&#x2F;**
 	 * 返回Element对象实例
+	 * &lt;p&gt;
+	 * 此方法不建议直接调用，建议使用run函数的第二个参数$符，例如:
+	 * &lt;pre&gt;
+	 * wd.run(function(browser, $){
+	 * 	$(&#x27;#id&#x27;).val(&#x27;test&#x27;);
+	 * })
+	 * &lt;&#x2F;pre&gt;
+	 * &lt;&#x2F;p&gt;
 	 * @method element
 	 * @public
 	 * @param  {String} [using] 对象选择类型，留空默认为：css selector(class name|css selector|id|name|link text|partial link text|tag name|xpath)
 	 * @param  {String} [value] 对象选择值，留空返回当前焦点所在对象
-	 * @return {Element}       Element的实例对象，如果对象不存在，返回false
+	 * @return {Element}       Element的实例对象，如果对象不存在，返回原始消息
 	 *&#x2F;
 	element: function(using, value){
-		var element = new Element(this, using, value);
-		return element._id === undefined ? false : element;
+		var self = this;
+		var element = new Element(self, using, value);
+		return self.isError(element._id) ? element._id : element;
 	}
 
 }
