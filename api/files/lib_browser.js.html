@@ -344,7 +344,7 @@ Browser.prototype = {
 			if(data &amp;&amp; (pathValues = data.pathValues)){
 				&#x2F;&#x2F;填充PATH中除sessionId以外的参数
 				for(var name in pathValues){
-					path = path.replace(&#x27;:&#x27;+name, pathValues[name]);
+					path = path.replace(&#x27;:&#x27;+name, encodeURIComponent(pathValues[name]));
 				}
 				delete data.pathValues;
 			}
@@ -458,8 +458,6 @@ Browser.prototype = {
 		        		}
 		        	}
 		        	catch(e){
-		        		self.log(&#x27;ERROR&#x27;, &#x27;GET SESSION ID FAILED&#x27;);
-		        		throw &#x27;GET SESSION ID FAILED&#x27;;
 		        	}
 		        }
 		        if(callback){&#x2F;&#x2F;异步模式

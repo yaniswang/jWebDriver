@@ -1,7 +1,7 @@
-jWebDriver logs
+jWebDriver change logs
 ====================
 
-## ver 0.9.2 (2012-11-20)
+## ver 0.9.2 (2012-11-21)
 
 add:
 
@@ -15,6 +15,11 @@ edit:
 2. adjust waitFor's return value:if success return Element
 3. change toJson(element) to toArray
 4. make all api return value with one accord
+5. replace init callback to error callback
+
+fix:
+
+1. fix window api when use webdriver node mode
 
 ## ver 0.9.1 (2012-11-4)
 

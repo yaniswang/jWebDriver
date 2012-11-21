@@ -22,12 +22,15 @@ function runBrowserTest(browserName){
 			var readyCount = 0;
 
 			//init webdriver
-			wd = new JWebDriver({'browserName': browserName}, function(){
+			wd = new JWebDriver({'browserName': browserName});
+
+			wd.run(function(){
 				readyCount++;
 				if(readyCount === 2){
 					done();
 				}
 			});
+
 
 			var http = require('http');
 

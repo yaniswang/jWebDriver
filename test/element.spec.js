@@ -22,7 +22,9 @@ function runBrowserTest(browserName){
 			var readyCount = 0;
 
 			//init webdriver
-			wd = new JWebDriver({'browserName': browserName}, function(browser){
+			wd = new JWebDriver({'browserName': browserName});
+
+			wd.run(function(browser){
 				browser.url(testHost + '/test1.html');
 				readyCount++;
 				if(readyCount === 2){
