@@ -1304,6 +1304,16 @@
             "itemtype": "method",
             "name": "_run",
             "class": "JWebDriver"
+        },
+        {
+            "file": "lib\\jwebdriver.js",
+            "line": 133,
+            "description": "结束WebDriver会话\n<p>\n本接口仅能取消后续未执行的任务队列，已经在执行中的无法中断，并且会在当前任务执行完毕后才中断。\n</p>",
+            "itemtype": "method",
+            "name": "end",
+            "access": "public",
+            "tagname": "",
+            "class": "JWebDriver"
         }
     ]
 }
