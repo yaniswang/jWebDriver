@@ -5,7 +5,7 @@ jWebDriver
 
 A webdriver client for Node.js
 
-jsCoverage: [91%](http://yaniswang.com/jWebDriver/coverage.html)
+jsCoverage: [90%](http://yaniswang.com/jWebDriver/coverage.html)
 
 Features
 ================

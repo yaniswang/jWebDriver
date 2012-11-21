@@ -164,9 +164,9 @@ JWebDriver.prototype = {
 	_init: function(options, onError){
 		var self = this;
 		self._Fiber = Fiber;
-		self._arrTask = [];&#x2F;&#x2F;任务队列数组
+		self._arrTasks = [];&#x2F;&#x2F;任务队列数组
 		self._bRun = true;&#x2F;&#x2F;运行状态
-		self.browser = new Browser(wdConfig, options, function(result){
+		self._browser = new Browser(wdConfig, options, function(result){
 			if(result &amp;&amp; result.status !== 0){
 				if(onError){
 					onError(result);
@@ -193,7 +193,7 @@ JWebDriver.prototype = {
 	run: function(func){
 		var self = this;
 		&#x2F;&#x2F;插入运行队列
-		self._arrTask.push(func);
+		self._arrTasks.push(func);
 		if(!self._bRun){
 			self._run();
 		}
@@ -206,12 +206,12 @@ JWebDriver.prototype = {
 	 * @method _run
 	 *&#x2F;
 	_run: function(){
-		var self = this , arrTask = self._arrTask;
-		if(arrTask.length&gt;0){
-			var func = arrTask.shift();
+		var self = this , _arrTasks = self._arrTasks;
+		if(_arrTasks.length&gt;0){
+			var func = _arrTasks.shift();
 			self._Fiber(function(){
 				self._bRun = true;
-				var browser = self.browser;
+				var browser = self._browser;
 				func(browser, function(){
 					return browser.element.apply(browser, arguments);
 				});
@@ -219,6 +219,25 @@ JWebDriver.prototype = {
 				&#x2F;&#x2F;继续运行下个任务
 				self._run();
 			}).run();
+		}
+	},
+
+	&#x2F;**
+	 * 结束WebDriver会话
+	 * &lt;p&gt;
+	 * 本接口仅能取消后续未执行的任务队列，已经在执行中的无法中断，并且会在当前任务执行完毕后才中断。
+	 * &lt;&#x2F;p&gt;
+	 * @method end
+	 * @public
+	 *&#x2F;
+	end: function(){
+		var self = this;
+		if(self._browser !== null){
+			self._arrTasks = [];
+			self.run(function(browser){
+				browser.end();
+				self._browser = null;
+			});
 		}
 	}
 }

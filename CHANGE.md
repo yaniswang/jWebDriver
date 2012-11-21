@@ -8,6 +8,7 @@ add:
 1. add window & frame api
 2. add test for window & frame
 3. browser class add 2 functions:isOk, isError
+4. add end api for JWebDriver
 
 edit:
 

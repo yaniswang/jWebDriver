@@ -15,5 +15,5 @@ wd.run(function(browser, $){
 		kw.val('mp3').submit();
 	}
 	browser.sleep(1000);
-	browser.close();
+	browser.end();
 });
