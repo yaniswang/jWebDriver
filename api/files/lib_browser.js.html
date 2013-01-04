@@ -987,9 +987,10 @@ Browser.prototype = {
 	waitFor: function(using, value, targetExist, timeout){
 		var self = this,
 			fiber = Fiber.current,
-			ret, bExist;
+			ret, bExist, bTimeout = false;
 		if(typeof value !== &#x27;string&#x27;){
 			&#x2F;&#x2F;默认css选择器
+			timeout = targetExist;
 			targetExist = value;
 			value = using;
 			using = &#x27;css selector&#x27;;
@@ -1008,12 +1009,16 @@ Browser.prototype = {
 		function waitElement(){
 			self.doCommand(&#x27;getElement&#x27;, {&#x27;using&#x27;: using,&#x27;value&#x27;: value}, function(result){
 				bExist  = self.isOk(result);
+				ret = result;
 				if(bExist === targetExist){
 					clearTimeout(_timer2);
-					ret = result;
+					fiber.run();
+				}
+				else if(bTimeout === true){
 					fiber.run();
 				}
 				else if(_timer1 !== null){
+					&#x2F;&#x2F;每隔500毫秒确认目标是否存在
 					_timer1 = setTimeout(waitElement, 500);
 				}
 			});
@@ -1022,15 +1027,9 @@ Browser.prototype = {
 		_timer2 = setTimeout(function(){
 			clearTimeout(_timer1);
 			_timer1 = null;
-			var errorMessage = &#x27;waitFor timeout: &#x27; + using + &#x27; , &#x27; + value;
-			&#x2F;&#x2F;超时
-			ret = {
-				&#x27;status&#x27;:-1,
-				&#x27;errorType&#x27;: &#x27;waitForTimeout&#x27;,
-				&#x27;errorMessage&#x27;: errorMessage
-			};
-			self.log(&#x27;ERROR&#x27;, errorMessage);
-			fiber.run();
+			self.log(&#x27;ERROR&#x27;, &#x27;waitFor timeout: &#x27; + using + &#x27; , &#x27; + value);
+			&#x2F;&#x2F;标记超时，getElement返回时结束当前等待请求
+			bTimeout = true;
 		}, timeout);
 		Fiber.yield();
 		return bExist === true ? self.element(&#x27;element&#x27;, ret.ELEMENT) : ret;

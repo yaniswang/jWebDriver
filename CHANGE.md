@@ -1,6 +1,12 @@
 jWebDriver change logs
 ====================
 
+## ver 0.9.3 (2013-1-3)
+
+fix:
+
+1. fix waitFor: browser.waitFor('#id', false, 60000)
+
 ## ver 0.9.2 (2012-11-21)
 
 add:

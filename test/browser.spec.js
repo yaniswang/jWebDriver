@@ -122,7 +122,7 @@ function runBrowserTest(browserName){
 
 			wd.run(function(browser, $){
 				browser.getCookies().should.length(0);
-				browser.addCookie({name:'test1',value:'123'})
+				browser.addCookie({name:'test1',value:'123'});
 				browser.getCookies().should.length(1);
 				browser.addCookie({name:'test2',value:'321'})
 				browser.getCookies().should.length(2);
@@ -248,6 +248,11 @@ function runBrowserTest(browserName){
 				browser.isOk(wait1).should.true;
 				browser.exec('setTimeout(function(){document.body.innerHTML=\'<input type="text" id="wait2">\';},100);return 1;');
 				var wait2 = browser.waitFor('#wait2',50);
+				browser.isError(wait2).should.true;
+				wait2 = $('#wait2');
+				browser.isOk(wait2).should.true;
+				browser.exec('setTimeout(function(){document.body.innerHTML=\'<input type="text" id="wait3">\';},100);return 1;');
+				wait2 = browser.waitFor('#wait2', false);
 				browser.isError(wait2).should.true;
 				done();
 			});
