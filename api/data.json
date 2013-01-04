@@ -873,7 +873,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 947,
+            "line": 946,
             "description": "返回Element对象实例\n<p>\n此方法不建议直接调用，建议使用run函数的第二个参数$符，例如:\n<pre>\nwd.run(function(browser, $){\n\t$('#id').val('test');\n})\n</pre>\n</p>",
             "itemtype": "method",
             "name": "element",
