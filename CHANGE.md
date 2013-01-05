@@ -1,11 +1,13 @@
 jWebDriver change logs
 ====================
 
-## ver 0.9.3 (2013-1-3)
+## ver 0.9.3 (2013-1-5)
 
 fix:
 
-1. fix waitFor: browser.waitFor('#id', false, 60000)
+1. fix: waitFor: browser.waitFor('#id', false, 60000)
+2. fix: remove proxy from default config
+
 
 ## ver 0.9.2 (2012-11-21)
 
@@ -27,6 +29,7 @@ edit:
 fix:
 
 1. fix window api when use webdriver node mode
+
 
 ## ver 0.9.1 (2012-11-4)
 
