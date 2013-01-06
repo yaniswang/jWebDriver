@@ -307,7 +307,7 @@ Browser.prototype = {
 	 * @return {Boolean}        如果有错误返回true
 	 *&#x2F;
 	isError: function(result){
-		var status = result.status;
+		var status = result &amp;&amp; result.status;
 		return status !== undefined &amp;&amp; status !== 0;
 	},
 
@@ -427,12 +427,24 @@ Browser.prototype = {
 			data = &#x27;&#x27;;
 		}
 		requestOptions.headers = {
-			&#x27;content-type&#x27;: &#x27;application&#x2F;json&#x27;,
-			&#x27;charset&#x27;: &#x27;charset=UTF-8&#x27;,
-			&#x27;content-length&#x27;: data.length
+			&#x27;Accept&#x27;: &#x27;application&#x2F;json; charset=utf-8&#x27;,
+			&#x27;Content-Type&#x27;: &#x27;application&#x2F;json;charset=UTF-8&#x27;,
+			&#x27;Content-Length&#x27;: data.length
 		}
 
 		var req = http.request(requestOptions, function(res){
+			if ( &#x2F;^302|303$&#x2F;.test(res.statusCode) &amp;&amp; self.sessionId === null) {
+	        	try{
+	        		var match = res.headers.location.match(&#x2F;wd\&#x2F;hub\&#x2F;session\&#x2F;(.+)$&#x2F;i);
+	        		if(match !== null){
+	        			self.sessionId = match[1];
+	        			self.log(&#x27;RESULT&#x27;, self.sessionId);
+	        		}
+	        	}
+	        	catch(e){
+	        	}
+	        	doCallback(&#x27;&#x27;);
+			}
 			var arrResBuffers = [], resBufferSize = 0;
 		    res.on(&#x27;data&#x27;, function (data) {
 		        arrResBuffers.push(data);
@@ -445,23 +457,7 @@ Browser.prototype = {
 		            pos += arrResBuffers[i].length;
 		        }
 		        responseStr = resBuffer.toString(&#x27;utf-8&#x27;);
-		        if(self.sessionId === null){
-		        	try{
-		        		var match = res.headers.location.match(&#x2F;wd\&#x2F;hub\&#x2F;session\&#x2F;(\d+)$&#x2F;i);
-		        		if(match !== null){
-		        			self.sessionId = match[1];
-		        			self.log(&#x27;RESULT&#x27;, self.sessionId);
-		        		}
-		        	}
-		        	catch(e){
-		        	}
-		        }
-		        if(callback){&#x2F;&#x2F;异步模式
-		        	callback(responseStr);
-		        }
-		        else if(fiber){&#x2F;&#x2F;同步模式
-		        	fiber.run();
-		        }
+		        doCallback(responseStr);
 		     });
 		});
 
@@ -474,6 +470,15 @@ Browser.prototype = {
 			req.write(data);
 		}
 		req.end();
+
+		function doCallback(data){
+	        if(callback){&#x2F;&#x2F;异步模式
+	        	callback(data);
+	        }
+	        else if(fiber){&#x2F;&#x2F;同步模式
+	        	fiber.run();
+	        }
+		}
 
 		if(callback === undefined &amp;&amp; fiber){
 			Fiber.yield();
