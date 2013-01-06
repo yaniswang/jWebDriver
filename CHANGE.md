@@ -1,12 +1,13 @@
 jWebDriver change logs
 ====================
 
-## ver 0.9.3 (2013-1-5)
+## ver 0.9.3 (2013-1-6)
 
 fix:
 
 1. fix: waitFor: browser.waitFor('#id', false, 60000)
 2. fix: remove proxy from default config
+3. fix: can't work with selenium server 2.28
 
 
 ## ver 0.9.2 (2012-11-21)
