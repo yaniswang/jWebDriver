@@ -443,7 +443,7 @@ Browser.prototype = {
 	        	}
 	        	catch(e){
 	        	}
-	        	doCallback(&#x27;&#x27;);
+	        	return doCallback(&#x27;&#x27;);
 			}
 			var arrResBuffers = [], resBufferSize = 0;
 		    res.on(&#x27;data&#x27;, function (data) {
@@ -1026,8 +1026,6 @@ Browser.prototype = {
 		}
 		_timer1 = setTimeout(waitElement, 1);
 		_timer2 = setTimeout(function(){
-			clearTimeout(_timer1);
-			_timer1 = null;
 			self.log(&#x27;ERROR&#x27;, &#x27;waitFor timeout: &#x27; + using + &#x27; , &#x27; + value);
 			&#x2F;&#x2F;标记超时，getElement返回时结束当前等待请求
 			bTimeout = true;
