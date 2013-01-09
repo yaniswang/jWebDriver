@@ -9,7 +9,7 @@ JWebDriver.config({
 
 runBrowserTest('chrome');
 runBrowserTest('firefox');
-runBrowserTest('ie');
+// runBrowserTest('ie');
 
 function runBrowserTest(browserName){
 

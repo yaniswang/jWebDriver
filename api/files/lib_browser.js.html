@@ -431,6 +431,7 @@ Browser.prototype = {
 			&#x27;Content-Type&#x27;: &#x27;application&#x2F;json;charset=UTF-8&#x27;,
 			&#x27;Content-Length&#x27;: data.length
 		}
+		requestOptions.agent = false;
 
 		var req = http.request(requestOptions, function(res){
 			if ( &#x2F;^302|303$&#x2F;.test(res.statusCode) &amp;&amp; self.sessionId === null) {

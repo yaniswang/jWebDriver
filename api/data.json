@@ -236,7 +236,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 397,
+            "line": 398,
             "description": "延迟一定时间",
             "itemtype": "method",
             "name": "sleep",
@@ -257,7 +257,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 413,
+            "line": 414,
             "description": "返回窗口句柄",
             "itemtype": "method",
             "name": "window",
@@ -279,7 +279,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 424,
+            "line": 425,
             "description": "切换到另一个Window或Frame",
             "itemtype": "method",
             "name": "switchTo",
@@ -301,7 +301,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 446,
+            "line": 447,
             "description": "返回或者设置当前窗口的大小",
             "itemtype": "method",
             "name": "size",
@@ -329,7 +329,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 473,
+            "line": 474,
             "description": "最大化当前窗口",
             "itemtype": "method",
             "name": "maximize",
@@ -343,7 +343,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 485,
+            "line": 486,
             "description": "返回或者设置当前窗口的坐标",
             "itemtype": "method",
             "name": "offset",
@@ -371,7 +371,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 512,
+            "line": 513,
             "description": "关闭当前窗口",
             "itemtype": "method",
             "name": "close",
@@ -385,7 +385,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 524,
+            "line": 525,
             "description": "结束浏览器会话",
             "itemtype": "method",
             "name": "end",
@@ -399,7 +399,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 536,
+            "line": 537,
             "description": "设置操作超时时间\n<p>\n注：script包括同步和异步两种代码\n</p>",
             "itemtype": "method",
             "name": "setTimeout",
@@ -425,7 +425,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 558,
+            "line": 559,
             "description": "打开或者返回当前URL",
             "itemtype": "method",
             "name": "url",
@@ -447,7 +447,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 576,
+            "line": 577,
             "description": "控制浏览器回到后一个URL",
             "itemtype": "method",
             "name": "forward",
@@ -461,7 +461,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 588,
+            "line": 589,
             "description": "控制浏览器回到前一个URL",
             "itemtype": "method",
             "name": "back",
@@ -475,7 +475,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 600,
+            "line": 601,
             "description": "刷新当前页面",
             "itemtype": "method",
             "name": "refresh",
@@ -489,7 +489,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 612,
+            "line": 613,
             "description": "返回当前页面title",
             "itemtype": "method",
             "name": "title",
@@ -503,7 +503,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 622,
+            "line": 623,
             "description": "返回当前页面源代码",
             "itemtype": "method",
             "name": "source",
@@ -517,7 +517,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 632,
+            "line": 633,
             "description": "返回当前页面下所有cookie",
             "itemtype": "method",
             "name": "getCookies",
@@ -531,7 +531,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 642,
+            "line": 643,
             "description": "添加cookie到当前页面\n<p>\n这里可以查看WebDriver官方定义的<a href=\"http://code.google.com/p/selenium/wiki/JsonWireProtocol#Cookie_JSON_Object\" target=\"_blank\">cookie对象</a>\n</p>",
             "itemtype": "method",
             "name": "addCookie",
@@ -552,7 +552,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 658,
+            "line": 659,
             "description": "删除cookie",
             "itemtype": "method",
             "name": "delCookies",
@@ -573,7 +573,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 676,
+            "line": 677,
             "description": "执行Javascript脚本",
             "itemtype": "method",
             "name": "exec",
@@ -605,7 +605,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 707,
+            "line": 708,
             "description": "获取弹出窗口的文本(alert, confirm, prompt)",
             "itemtype": "method",
             "name": "getAlert",
@@ -619,7 +619,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 717,
+            "line": 718,
             "description": "输入prompt中的值",
             "itemtype": "method",
             "name": "setAlert",
@@ -633,7 +633,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 729,
+            "line": 730,
             "description": "关闭弹出窗口",
             "itemtype": "method",
             "name": "closeAlert",
@@ -655,7 +655,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 742,
+            "line": 743,
             "description": "获取或保存当前网页截图\n<p>\nfilePath为可选项，若有则保存到文件\n</p>",
             "itemtype": "method",
             "name": "getScreenshot",
@@ -677,7 +677,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 760,
+            "line": 761,
             "description": "获取按键映射后的字符数组",
             "itemtype": "method",
             "name": "_getKeyArray",
@@ -698,7 +698,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 775,
+            "line": 776,
             "description": "发送按键序列到当前焦点对象上",
             "itemtype": "method",
             "name": "sendKeys",
@@ -719,7 +719,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 788,
+            "line": 789,
             "description": "在当前光标处触发单击事件",
             "itemtype": "method",
             "name": "click",
@@ -740,7 +740,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 807,
+            "line": 808,
             "description": "在当前光标处触发双击事件",
             "itemtype": "method",
             "name": "dblclick",
@@ -754,7 +754,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 819,
+            "line": 820,
             "description": "在当前光标处触发鼠标左键按下",
             "itemtype": "method",
             "name": "mousedown",
@@ -768,7 +768,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 831,
+            "line": 832,
             "description": "移动到指定对象中间或坐标点",
             "itemtype": "method",
             "name": "mousemove",
@@ -794,7 +794,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 860,
+            "line": 861,
             "description": "在当前光标处触发鼠标左键按起",
             "itemtype": "method",
             "name": "mouseup",
@@ -808,7 +808,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 872,
+            "line": 873,
             "description": "拖放",
             "itemtype": "method",
             "name": "dragDrop",
@@ -834,7 +834,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 886,
+            "line": 887,
             "description": "等待对象出现或消失",
             "itemtype": "method",
             "name": "waitFor",
@@ -873,7 +873,7 @@
         },
         {
             "file": "lib\\browser.js",
-            "line": 945,
+            "line": 946,
             "description": "返回Element对象实例\n<p>\n此方法不建议直接调用，建议使用run函数的第二个参数$符，例如:\n<pre>\nwd.run(function(browser, $){\n\t$('#id').val('test');\n})\n</pre>\n</p>",
             "itemtype": "method",
             "name": "element",
