@@ -1,6 +1,18 @@
 jWebDriver change logs
 ====================
 
+## ver 0.9.5 (2013-8-23)
+
+add:
+
+1. support run in fiber context
+
+## ver 0.9.4 (2013-4-12)
+
+edit:
+
+1. depend to new version of: fibers, xtend
+
 ## ver 0.9.3 (2013-1-6)
 
 fix:

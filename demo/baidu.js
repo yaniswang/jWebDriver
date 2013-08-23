@@ -6,7 +6,7 @@ JWebDriver.config({
 	'port': 4444
 });
 
-var wd = new JWebDriver({'browserName':'firefox'});
+var wd = new JWebDriver({'browserName':'chrome'});
 
 wd.run(function(browser, $){
 	browser.url('http://www.baidu.com/');

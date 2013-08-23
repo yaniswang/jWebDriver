@@ -2,14 +2,14 @@
 var JWebDriver = require('../');
 
 JWebDriver.config({
-	'logMode': 'silent',
+	'logMode': 'all',
 	'host': '127.0.0.1',
 	'port': 4444
 });
 
 runBrowserTest('chrome');
 runBrowserTest('firefox');
-// runBrowserTest('ie');
+runBrowserTest('ie');
 
 function runBrowserTest(browserName){
 
