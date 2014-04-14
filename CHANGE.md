@@ -1,6 +1,17 @@
 jWebDriver change logs
 ====================
 
+## ver 0.9.6 (2014-4-14)
+
+edit:
+
+1. fixed the version of depend module
+
+fix:
+
+1. support for new version of webdriver: 2.41.0
+2. fix baidu demo
+
 ## ver 0.9.5 (2013-9-6)
 
 add:

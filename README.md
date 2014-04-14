@@ -5,7 +5,7 @@ jWebDriver
 
 A webdriver client for Node.js
 
-jsCoverage: [90%](http://yaniswang.com/jWebDriver/coverage.html)
+jsCoverage: [87%](http://yaniswang.com/jWebDriver/coverage.html)
 
 Features
 ================
@@ -95,7 +95,7 @@ jWebDriver is released under the MIT license:
 
 > The MIT License
 >
-> Copyright (c) 2012 Yanis Wang \<yanis.wang@gmail.com\>
+> Copyright (c) 2014 Yanis Wang \<yanis.wang@gmail.com\>
 >
 > Permission is hereby granted, free of charge, to any person obtaining a copy
 > of this software and associated documentation files (the "Software"), to deal

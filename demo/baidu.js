@@ -10,7 +10,7 @@ var wd = new JWebDriver({'browserName':'chrome'});
 
 wd.run(function(browser, $){
 	browser.url('http://www.baidu.com/');
-	var kw = browser.waitFor('#kw',2000);
+	var kw = browser.waitFor('#kw1',2000);
 	if(browser.isOk(kw)){
 		kw.val('mp3').submit();
 	}
