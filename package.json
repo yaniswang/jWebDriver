@@ -1,6 +1,6 @@
 {
   "name": "jwebdriver",
-  "version": "0.9.6",
+  "version": "0.9.7",
   "description": "A webdriver client for node.js",
   "main": "./index",
   "dependencies": {

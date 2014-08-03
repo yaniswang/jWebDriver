@@ -1,6 +1,10 @@
 jWebDriver change logs
 ====================
 
+## ver 0.9.7 (2014-8-3)
+
+1. Report error when webdriver is not ready
+
 ## ver 0.9.6 (2014-4-14)
 
 edit:
