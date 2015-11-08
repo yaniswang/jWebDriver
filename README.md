@@ -67,12 +67,12 @@ Quick start
 More examples
 ================
 
-1. [Baidu test](https://github.com/yaniswang/jWebDriver/example/baidu.js)
-2. [Gooogle test](https://github.com/yaniswang/jWebDriver/example/google.js)
-3. [Mocha test](https://github.com/yaniswang/jWebDriver/example/mocha.js)
-4. [ES7 async](https://github.com/yaniswang/jWebDriver/example/es7async.js)
-5. [Upload test](https://github.com/yaniswang/jWebDriver/example/upload.js)
-6. [Drag Drop test](https://github.com/yaniswang/jWebDriver/example/dragdrop.js)
+1. [Baidu test](https://github.com/yaniswang/jWebDriver/blob/master/example/baidu.js)
+2. [Gooogle test](https://github.com/yaniswang/jWebDriver/blob/master/example/google.js)
+3. [Mocha test](https://github.com/yaniswang/jWebDriver/blob/master/example/mocha.js)
+4. [ES7 async](https://github.com/yaniswang/jWebDriver/blob/master/example/es7async.js)
+5. [Upload test](https://github.com/yaniswang/jWebDriver/blob/master/example/upload.js)
+6. [Drag Drop test](https://github.com/yaniswang/jWebDriver/blob/master/example/dragdrop.js)
 
 API Book
 ================
@@ -115,7 +115,7 @@ You can search all api here, include all mode of api:
 
         var arrSessions = yield driver.sessions(); // get all sessions
         for(var i=0;i<arrSessions.length;i++){
-            arrSessions[i].close();
+            yield arrSessions[i].close();
         }
         // new session
         var chrome = yield driver.session('chrome', '40.0', 'windows');
@@ -196,9 +196,9 @@ You can search all api here, include all mode of api:
 
         // ========================== navigator ==========================
 
-        chrome.refresh(); // refresh page
-        chrome.back(); // back to previous page
-        chrome.forward(); // forward to next page
+        yield chrome.refresh(); // refresh page
+        yield chrome.back(); // back to previous page
+        yield chrome.forward(); // forward to next page
 
         yield chrome.scrollTo('#id'); // scroll to element (first element)
         yield chrome.scrollTo('#id', 10, 10); // scroll to element (first element)
@@ -338,7 +338,7 @@ You can search all api here, include all mode of api:
 
         var len = elements.length;
         for(var i=0;i<len;i++){
-            var element = elements.get(i);
+            element = elements.get(i);
         }
 
         var tagName = yield element.tagName(); // get tagname (first element)
@@ -430,6 +430,7 @@ You can search all api here, include all mode of api:
     }).catch(function(error){
         console.log(error);
     });
+
 
 API Doc: [http://jwebdriver.com/api/](http://jwebdriver.com/api/)
 

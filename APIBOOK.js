@@ -21,7 +21,7 @@ co(function*(){
 
     var arrSessions = yield driver.sessions(); // get all sessions
     for(var i=0;i<arrSessions.length;i++){
-        arrSessions[i].close();
+        yield arrSessions[i].close();
     }
     // new session
     var chrome = yield driver.session('chrome', '40.0', 'windows');
@@ -102,9 +102,9 @@ co(function*(){
 
     // ========================== navigator ==========================
 
-    chrome.refresh(); // refresh page
-    chrome.back(); // back to previous page
-    chrome.forward(); // forward to next page
+    yield chrome.refresh(); // refresh page
+    yield chrome.back(); // back to previous page
+    yield chrome.forward(); // forward to next page
 
     yield chrome.scrollTo('#id'); // scroll to element (first element)
     yield chrome.scrollTo('#id', 10, 10); // scroll to element (first element)
@@ -244,7 +244,7 @@ co(function*(){
 
     var len = elements.length;
     for(var i=0;i<len;i++){
-        var element = elements.get(i);
+        element = elements.get(i);
     }
 
     var tagName = yield element.tagName(); // get tagname (first element)
