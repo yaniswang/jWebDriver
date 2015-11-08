@@ -2,10 +2,11 @@ var express = require('express');
 var co = require('co');
 var JWebDriver = require('../');
 var expect  = require("expect.js");
+var isWin32 = process.platform === 'win32';
 var coverUnix = process.env['coverunix'];
 
 var driverPort = 4444;
-if(coverUnix){
+if(coverUnix || !isWin32){
     driverPort = 4445;
     runBrowserTest('phantomjs');
 }

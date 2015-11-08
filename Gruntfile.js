@@ -47,7 +47,7 @@ module.exports = function(grunt) {
                 stderr: true
             },
             coverUnix: {
-                command: 'export coverunix=1 & "./node_modules/.bin/mocha"',
+                command: (isWin32?'set':'export')+' coverunix=1 & "./node_modules/.bin/istanbul" cover "./node_modules/mocha/bin/_mocha"',
                 stdout: true,
                 stderr: true
             }
@@ -72,7 +72,7 @@ module.exports = function(grunt) {
           '--webdriver=4445', '--ignore-ssl-errors=true'
         ];
         phantomjsProcess = childProcess.spawn(binPath, childArgs, {
-            stdio: ['inherit', 'inherit', 'inherit']
+            detached: true
         });
         grunt.log.ok('Phantomjs start successed.');
     });
