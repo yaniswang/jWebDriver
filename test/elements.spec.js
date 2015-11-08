@@ -50,8 +50,8 @@ function runBrowserTest(browserName){
                 }, function(error, ret){
                     browser = ret;
                     done();
-                });
-            });
+                }).catch(done);
+            }).catch(done);
 
         });
 
