@@ -77,6 +77,19 @@ More examples
 API Book
 ================
 
+jWebDriver have 3 Class: Driver, Broswer, Elemenets
+
+All api can used with chain promise and all support generator & es7 async:
+
+    browser.find('#kw').then(function(kw){
+        return kw.setValue('test').submit();
+    }).then(function(){
+        console.log('done!');
+    }).catch(function(error){
+        console.log(error);
+    });
+
+
 You can search all api here, include all mode of api:
 
     var co = require('co');
