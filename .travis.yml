@@ -11,5 +11,5 @@ cache:
 matrix:
   fast_finish: true
 
-script: "mocha"
+script: "grunt"
 

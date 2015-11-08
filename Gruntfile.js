@@ -47,7 +47,7 @@ module.exports = function(grunt) {
                 stderr: true
             },
             coverUnix: {
-                command: (isWin32?'set':'export')+' coverunix=1 & "./node_modules/.bin/istanbul" cover "./node_modules/mocha/bin/_mocha"',
+                command: (isWin32?'set':'export')+' coverunix=1 & "./node_modules/mocha/bin/_mocha"',
                 stdout: true,
                 stderr: true
             }
