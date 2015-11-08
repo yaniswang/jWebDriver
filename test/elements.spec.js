@@ -4,10 +4,10 @@ var co = require('co');
 var JWebDriver = require('../');
 var expect  = require("expect.js");
 var isWin32 = process.platform === 'win32';
-var coverUnix = process.env['coverunix'];
+var coverUnix = process.env['coverunix'] || !isWin32;
 
 var driverPort = 4444;
-if(coverUnix || !isWin32){
+if(coverUnix){
     driverPort = 4445;
     runBrowserTest('phantomjs');
 }
