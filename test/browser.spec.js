@@ -1,3 +1,5 @@
+var path = require('path');
+var os = require('os');
 var express = require('express');
 var co = require('co');
 var JWebDriver = require('../');
@@ -287,7 +289,7 @@ function runBrowserTest(browserName){
 
             co(function*(){
                 var fs =require('fs');
-                var tempPath = 'c:/jwebdriver.png';
+                var tempPath = path.resolve(os.tmpdir(),'jwebdriver.png');
                 if(fs.existsSync(tempPath)){
                     fs.unlinkSync(tempPath);
                 }
