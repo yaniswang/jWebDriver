@@ -1,16 +1,30 @@
 {
   "name": "jwebdriver",
-  "version": "0.9.7",
+  "version": "1.0.0",
   "description": "A webdriver client for node.js",
+  "homepage": "http://jwebdriver.com/",
   "main": "./index",
   "dependencies": {
-    "fibers": "1.0.0",
+    "co": "4.6.0",
+    "node-zip": "1.1.1",
+    "promiseclass": "0.9.4",
+    "request": "2.65.0",
     "xtend": "2.0.3"
   },
   "devDependencies": {
-    "mocha": "1.8.2",
-    "should": "1.2.1",
-    "jscover": "0.2.4"
+    "expect.js": "0.3.1",
+    "express": "4.13.3",
+    "grunt": "0.4.1",
+    "grunt-cli": "0.1.6",
+    "grunt-contrib-clean": "0.4.0",
+    "grunt-contrib-jshint": "0.11.3",
+    "grunt-contrib-watch": "0.3.1",
+    "grunt-contrib-yuidoc": "0.10.0",
+    "grunt-exec": "0.4.0",
+    "istanbul": "0.3.22",
+    "istanbul-coveralls": "1.0.3",
+    "mocha": "2.3.3",
+    "phantomjs": "1.9.18"
   },
   "scripts": {
     "test": "mocha"
@@ -27,8 +41,18 @@
     "webdriver",
     "test",
     "selenium",
-    "Javascript"
+    "javascript",
+    "sync",
+    "jquery",
+    "promise",
+    "chain",
+    "generator",
+    "await",
+    "hosts"
   ],
   "author": "Yanis Wang",
-  "license": "MIT"
+  "license": "MIT",
+  "engines": {
+    "node": ">= 4"
+  }
 }

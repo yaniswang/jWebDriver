@@ -1,2 +1,4 @@
 node_modules
-lib-cov
+coverage
+doc
+npm-debug.log

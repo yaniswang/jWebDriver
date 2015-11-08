@@ -1,69 +1,11 @@
-jWebDriver change logs
+jWebDriver change log
 ====================
 
-## ver 0.9.7 (2014-8-3)
+## ver 1.0.0 (2015-11-9)
 
-1. Report error when webdriver is not ready
-
-## ver 0.9.6 (2014-4-14)
-
-edit:
-
-1. fixed the version of depend module
-
-fix:
-
-1. support for new version of webdriver: 2.41.0
-2. fix baidu demo
-
-## ver 0.9.5 (2013-9-6)
-
-add:
-
-1. support run in fiber context
-
-## ver 0.9.4 (2013-4-12)
-
-edit:
-
-1. depend to new version of: fibers, xtend
-
-## ver 0.9.3 (2013-1-6)
-
-fix:
-
-1. fix: waitFor: browser.waitFor('#id', false, 60000)
-2. fix: remove proxy from default config
-3. fix: can't work with selenium server 2.28
-4. fix: close nodejs agent for http
-
-
-## ver 0.9.2 (2012-11-21)
-
-add:
-
-1. add window & frame api
-2. add test for window & frame
-3. browser class add 2 functions:isOk, isError
-4. add end api for JWebDriver
-
-edit:
-
-1. adjust log function
-2. adjust waitFor's return value:if success return Element
-3. change toJson(element) to toArray
-4. make all api return value with one accord
-5. replace init callback to error callback
-
-fix:
-
-1. fix window api when use webdriver node mode
-
-
-## ver 0.9.1 (2012-11-4)
-
-add:
-
-1. finish all commands
-2. add test for all api
-3. add js coverage
+1. All api reconstructed
+2. Support promise & generator & es7 async
+3. Support hosts mode, different hosts for different job
+4. Support for remote file upload
+5. Options for change the test speed
+6. Drop fiber

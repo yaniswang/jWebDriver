@@ -1,4 +1,4 @@
---require should
+--require expect.js
 --reporter Spec
 --ui bdd
 --timeout 30000
