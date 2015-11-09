@@ -2,24 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>lib\browser.js - jWebDriver API</title>
-    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.7.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
-    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
-    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
-    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
-    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.7.0&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+    <title>lib\browser.js - jwebdriver</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
 
 <div id="doc">
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
-            
-                <h1><img src="https:&#x2F;&#x2F;raw.github.com&#x2F;yaniswang&#x2F;jWebDriver&#x2F;master&#x2F;logo_s.png" title="jWebDriver API"></h1>
-            
+                <h1><img src="https://raw.github.com/yaniswang/jWebDriver/master/logo_s.png" title="jwebdriver"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 0.9.3</em>
+            <em>API Docs for: 1.0.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -27,1054 +25,1614 @@
         <div class="yui3-u-1-4">
             <div id="docs-sidebar" class="sidebar apidocs">
                 <div id="api-list">
-    <h2 class="off-left">APIs</h2>
-    <div id="api-tabview" class="tabview">
-        <ul class="tabs">
-            <li><a href="#api-classes">Classes</a></li>
-            <li><a href="#api-modules">Modules</a></li>
-        </ul>
-
-        <div id="api-tabview-filter">
-            <input type="search" id="api-filter" placeholder="Type to filter APIs">
-        </div>
-
-        <div id="api-tabview-panel">
-            <ul id="api-classes" class="apis classes">
-            
-                <li><a href="..&#x2F;classes/Browser.html">Browser</a></li>
-            
-                <li><a href="..&#x2F;classes/Element.html">Element</a></li>
-            
-                <li><a href="..&#x2F;classes/JWebDriver.html">JWebDriver</a></li>
-            
-            </ul>
-
-            <ul id="api-modules" class="apis modules">
-            
-            </ul>
-        </div>
-    </div>
-</div>
-
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/Browser.html">Browser</a></li>
+                                <li><a href="../classes/Elements.html">Elements</a></li>
+                                <li><a href="../classes/JWebDriver.html">JWebDriver</a></li>
+                            </ul>
+                
+                
+                            <ul id="api-modules" class="apis modules">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="yui3-u-3-4">
                 <div id="api-options">
-        Show:
-        <label for="api-show-inherited">
-            <input type="checkbox" id="api-show-inherited" checked>
-            Inherited
-        </label>
-
-        <label for="api-show-protected">
-            <input type="checkbox" id="api-show-protected">
-            Protected
-        </label>
-
-        <label for="api-show-private">
-            <input type="checkbox" id="api-show-private">
-            Private
-        </label>
-        <label for="api-show-deprecated">
-            <input type="checkbox" id="api-show-deprecated">
-            Deprecated
-        </label>
-
-    </div>
-
-
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: lib\browser.js</h1>
+<h1 class="file-heading">File: lib\browser.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
-&#x2F;**
-* This class is used for control browser.
-* &lt;p&gt;
-* Browser类用来实例化一个对象，以绑定目标浏览器并调用接口进行控制。
-* &lt;&#x2F;p&gt;
-* @class Browser
-*&#x2F;
+&#x27;use strict&#x27;;
+/**
+ * This class is used for control browser.
+ * @class Browser
+ */
 
-var http = require(&#x27;http&#x27;),
-	fs = require(&#x27;fs&#x27;),
-	Fiber = require(&#x27;fibers&#x27;),
-	extend = require(&#x27;xtend&#x27;);
+const fs = require(&#x27;fs&#x27;);
+const os = require(&#x27;os&#x27;);
+const path = require(&#x27;path&#x27;);
 
-var Element = require(&#x27;.&#x2F;element&#x27;);
+const PromiseClass = require(&#x27;promiseclass&#x27;);
+const extend = require(&#x27;xtend&#x27;);
+const Zip = require(&#x27;node-zip&#x27;);
+const HostsProxy = require(&#x27;./hostsproxy&#x27;);
 
-var arrCommands = require(&#x27;.&#x2F;commands.js&#x27;);
+const Elements = require(&#x27;./elements&#x27;);
 
-&#x2F;&#x2F;颜色列表
-var colors = {
-	black: &#x27;\x1b[0;30m&#x27;,
-	dkgray: &#x27;\x1b[1;30m&#x27;,
-	brick: &#x27;\x1b[0;31m&#x27;,
-	red: &#x27;\x1b[1;31m&#x27;,
-	green: &#x27;\x1b[0;32m&#x27;,
-	lime: &#x27;\x1b[1;32m&#x27;,
-	brown: &#x27;\x1b[0;33m&#x27;,
-	yellow: &#x27;\x1b[1;33m&#x27;,
-	navy: &#x27;\x1b[0;34m&#x27;,
-	blue: &#x27;\x1b[1;34m&#x27;,
-	violet: &#x27;\x1b[0;35m&#x27;,
-	magenta: &#x27;\x1b[1;35m&#x27;,
-	teal: &#x27;\x1b[0;36m&#x27;,
-	cyan: &#x27;\x1b[1;36m&#x27;,
-	ltgray: &#x27;\x1b[0;37m&#x27;,
-	white: &#x27;\x1b[1;37m&#x27;,
-	reset: &#x27;\x1b[0m&#x27;
+// default options for browser
+const defaultOptions = {
+    &#x27;browserName&#x27;: &#x27;chrome&#x27;,
+    &#x27;version&#x27;: &#x27;ANY&#x27;,
+    &#x27;platform&#x27;: &#x27;ANY&#x27;
 };
 
-&#x2F;&#x2F;响应代码
-var responseCodes = {
-	&#x27;0&#x27;: {type: &#x27;Success&#x27;, message:	&#x27;The command executed successfully.&#x27;},
-	&#x27;7&#x27;: {type: &#x27;NoSuchElement&#x27;, message: &#x27;An element could not be located on the page using the given search parameters.&#x27;},
-	&#x27;8&#x27;: {type: &#x27;NoSuchFrame&#x27;, message: &#x27;A request to switch to a frame could not be satisfied because the frame could not be found.&#x27;},
-	&#x27;9&#x27;: {type: &#x27;UnknownCommand&#x27;, message: &#x27;The requested resource could not be found, or a request was received using an HTTP method that is not supported by the mapped resource.&#x27;},
-	&#x27;10&#x27;: {type: &#x27;StaleElementReference&#x27;, message: &#x27;An element command failed because the referenced element is no longer attached to the DOM.&#x27;},
-	&#x27;11&#x27;: {type: &#x27;ElementNotVisible&#x27;, message: &#x27;An element command could not be completed because the element is not visible on the page.&#x27;},
-	&#x27;12&#x27;: {type: &#x27;InvalidElementState&#x27;, message: &#x27;An element command could not be completed because the element is in an invalid state (e.g. attempting to click a disabled element).&#x27;},
-	&#x27;13&#x27;: {type: &#x27;UnknownError&#x27;, message: &#x27;An unknown server-side error occurred while processing the command.&#x27;},
-	&#x27;15&#x27;: {type: &#x27;ElementIsNotSelectable&#x27;, message: &#x27;An attempt was made to select an element that cannot be selected.&#x27;},
-	&#x27;17&#x27;: {type: &#x27;JavaScriptError&#x27;, message: &#x27;An error occurred while executing user supplied JavaScript.&#x27;},
-	&#x27;19&#x27;: {type: &#x27;XPathLookupError&#x27;, message: &#x27;An error occurred while searching for an element by XPath.&#x27;},
-	&#x27;23&#x27;: {type: &#x27;NoSuchWindow&#x27;, message: &#x27;A request to switch to a different window could not be satisfied because the window could not be found.&#x27;},
-	&#x27;24&#x27;: {type: &#x27;InvalidCookieDomain&#x27;, message: &#x27;An illegal attempt was made to set a cookie under a different domain than the current page.&#x27;},
-	&#x27;25&#x27;: {type: &#x27;UnableToSetCookie&#x27;, message: &#x27;A request to set a cookie\&#x27;s value could not be satisfied.&#x27;},
-    &#x27;26&#x27;: {type: &#x27;UnexpectedAlertOpen&#x27;, message: &#x27;A modal dia&#x60; was open, blocking this operation&#x27;},
-    &#x27;27&#x27;: {type: &#x27;NoAlertOpenError&#x27;, message: &#x27;An attempt was made to operate on a modal dialog when one was not open.&#x27;},
-	&#x27;28&#x27;: {type: &#x27;ScriptTimeout&#x27;, message: &#x27;A script did not complete before its timeout expired.&#x27;},
-    &#x27;29&#x27;: {type: &#x27;InvalidElementCoordinates&#x27;, message: &#x27;The coordinates provided to an interactions operation are invalid.&#x27;},
-    &#x27;30&#x27;: {type: &#x27;IMENotAvailable&#x27;, message: &#x27;IME was not available.&#x27;},
-    &#x27;31&#x27;: {type : &#x27;IMEEngineActivationFailed&#x27;, message: &#x27;An IME engine could not be started.&#x27;},
-    &#x27;32&#x27;: {type: &#x27;InvalidSelector&#x27;, message: &#x27;Argument was an invalid selector (e.g. XPath&#x2F;CSS).&#x27;}
+// nick name for browser
+const mapBrowserNickName = {
+    &#x27;ie&#x27;: &#x27;internet explorer&#x27;,
+    &#x27;ff&#x27;: &#x27;firefox&#x27;
 };
 
-&#x2F;&#x2F;默认浏览器参数
-var defaultOptions = {
-	&#x27;browserName&#x27;: &#x27;firefox&#x27;,
-	&#x27;version&#x27;: &#x27;&#x27;,
-	&#x27;platform&#x27;: &#x27;ANY&#x27;
+// https://code.google.com/p/selenium/wiki/JsonWireProtocol#/session/:sessionId/click
+const MouseButtons = {
+    LEFT: 0,
+    MIDDLE: 1,
+    RIGHT: 2
+};
+
+// https://code.google.com/p/selenium/wiki/JsonWireProtocol#/session/:sessionId/element/:id/value
+const Keys = {
+    NULL: &#x27;\uE000&#x27;,
+    CANCEL: &#x27;\uE001&#x27;,
+    HELP: &#x27;\uE002&#x27;,
+    BACK_SPACE: &#x27;\uE003&#x27;,
+    TAB: &#x27;\uE004&#x27;,
+    CLEAR: &#x27;\uE005&#x27;,
+    RETURN: &#x27;\uE006&#x27;,
+    ENTER: &#x27;\uE007&#x27;,
+    SHIFT: &#x27;\uE008&#x27;,
+    CONTROL: &#x27;\uE009&#x27;,
+    CTRL: &#x27;\uE009&#x27;,
+    ALT: &#x27;\uE00A&#x27;,
+    PAUSE: &#x27;\uE00B&#x27;,
+    ESCAPE: &#x27;\uE00C&#x27;,
+    SPACE: &#x27;\uE00D&#x27;,
+    PAGE_UP: &#x27;\uE00E&#x27;,
+    PAGE_DOWN: &#x27;\uE00F&#x27;,
+    END: &#x27;\uE010&#x27;,
+    HOME: &#x27;\uE011&#x27;,
+    ARROW_LEFT: &#x27;\uE012&#x27;,
+    LEFT: &#x27;\uE012&#x27;,
+    ARROW_UP: &#x27;\uE013&#x27;,
+    UP: &#x27;\uE013&#x27;,
+    ARROW_RIGHT: &#x27;\uE014&#x27;,
+    RIGHT: &#x27;\uE014&#x27;,
+    ARROW_DOWN: &#x27;\uE015&#x27;,
+    DOWN: &#x27;\uE015&#x27;,
+    INSERT: &#x27;\uE016&#x27;,
+    DELETE: &#x27;\uE017&#x27;,
+    SEMICOLON: &#x27;\uE018&#x27;,
+    EQUALS: &#x27;\uE019&#x27;,
+
+    NUMPAD0: &#x27;\uE01A&#x27;,
+    NUMPAD1: &#x27;\uE01B&#x27;,
+    NUMPAD2: &#x27;\uE01C&#x27;,
+    NUMPAD3: &#x27;\uE01D&#x27;,
+    NUMPAD4: &#x27;\uE01E&#x27;,
+    NUMPAD5: &#x27;\uE01F&#x27;,
+    NUMPAD6: &#x27;\uE020&#x27;,
+    NUMPAD7: &#x27;\uE021&#x27;,
+    NUMPAD8: &#x27;\uE022&#x27;,
+    NUMPAD9: &#x27;\uE023&#x27;,
+    MULTIPLY: &#x27;\uE024&#x27;,
+    ADD: &#x27;\uE025&#x27;,
+    SEPARATOR: &#x27;\uE026&#x27;,
+    SUBTRACT: &#x27;\uE027&#x27;,
+    DECIMAL: &#x27;\uE028&#x27;,
+    DIVIDE: &#x27;\uE029&#x27;,
+
+    F1: &#x27;\uE031&#x27;,
+    F2: &#x27;\uE032&#x27;,
+    F3: &#x27;\uE033&#x27;,
+    F4: &#x27;\uE034&#x27;,
+    F5: &#x27;\uE035&#x27;,
+    F6: &#x27;\uE036&#x27;,
+    F7: &#x27;\uE037&#x27;,
+    F8: &#x27;\uE038&#x27;,
+    F9: &#x27;\uE039&#x27;,
+    F10: &#x27;\uE03A&#x27;,
+    F11: &#x27;\uE03B&#x27;,
+    F12: &#x27;\uE03C&#x27;,
+
+    COMMAND: &#x27;\uE03D&#x27;,
+    META: &#x27;\uE03D&#x27;
+};
+
+const mapCapabilities = {
+    javascript: &#x27;javascriptEnabled&#x27;,
+    cssselector: &#x27;cssSelectorsEnabled&#x27;,
+    screenshot: &#x27;takesScreenshot&#x27;,
+    storage: &#x27;webStorageEnabled&#x27;,
+    alert: &#x27;handlesAlerts&#x27;,
+    database: &#x27;databaseEnabled&#x27;,
+    rotatable : &#x27;rotatable&#x27;
+};
+
+const Browser = PromiseClass.create({
+
+    /**
+     * mouse buttons
+     * @property MouseButtons
+     * @public
+     */
+    MouseButtons: MouseButtons,
+
+    /**
+     * keyboard buttons
+     * @property Keys
+     * @public
+     */
+    Keys: Keys,
+
+    /**
+     * init browser instance
+     * @method constructor
+     * @private
+     * @param  {JWebDriver} driver JWebDriver instance
+     * @param  {String|Object} browserName or capabilitie object
+     * @param  {String} version
+     * @param  {String} platform
+     * @param  {Function} done callback function
+     */
+    constructor(driver, browserName, version, platform){
+        let self = this;
+        self._driver = driver;
+        self.browserName = browserName;
+        self.version = version;
+        self.platform = platform;
+    },
+
+    /**
+     * init browser
+     * @method init
+     * @private
+     * @param  {Function} done callback function
+     */
+    init(done){
+        let self = this;
+        let driver = self._driver;
+        let browserName = self.browserName;
+        let version = self.version;
+        let platform = self.platform;
+        let sessionInfo = {};
+        if(typeof browserName === &#x27;object&#x27;){
+            if(browserName.sessionId){
+                self.sessionId = browserName.sessionId;
+                return done();
+            }
+            sessionInfo = browserName;
+        }
+        else{
+            sessionInfo.browserName = browserName;
+            if(version){
+                sessionInfo.version = version;
+            }
+            if(platform){
+                sessionInfo.platform = platform;
+            }
+        }
+        browserName = sessionInfo.browserName;
+        if(browserName &amp;&amp; (browserName = mapBrowserNickName[browserName])){
+            sessionInfo.browserName = browserName;
+        }
+        sessionInfo = extend({}, defaultOptions, sessionInfo);
+        new Promise(function(resolve){
+            let hosts = sessionInfo.hosts;
+            if(hosts){
+                // support hosts
+                delete sessionInfo[&#x27;hosts&#x27;];
+                let config = {
+                    mode: &#x27;hosts&#x27;,
+                    hosts: hosts
+                };
+                let hostsProxy = HostsProxy.createServer(config);
+                hostsProxy.on(&#x27;error&#x27;, function(){});
+                hostsProxy.listen(0, function(msg){
+                    let localIp = getLocalIP();
+                    let proxyHost = localIp+&#x27;:&#x27;+msg.port;
+                    sessionInfo.proxy = {
+                        &#x27;proxyType&#x27;: &#x27;manual&#x27;,
+                        &#x27;httpProxy&#x27;: proxyHost,
+                        &#x27;sslProxy&#x27;: proxyHost
+                    };
+                    self._hostsProxy = hostsProxy;
+                    resolve(sessionInfo);
+                });
+            }
+            else{
+                resolve(sessionInfo);
+            }
+        }).then(function(sessionInfo){
+            let sessionOptions = {
+                &#x27;desiredCapabilities&#x27;: sessionInfo
+            };
+            driver.execStrict(&#x27;newSession&#x27;, {}, sessionOptions, function(error, ret){
+                if(error){
+                    done(error);
+                }
+                else{
+                    self.sessionId = ret.sessionId;
+                    let capabilities = ret.value;
+                    self.capabilities = capabilities;
+                    self.browserName = capabilities[&#x27;browserName&#x27;] || self.browserName;
+                    self.version = capabilities[&#x27;version&#x27;] || self.version;
+                    self.platform = capabilities[&#x27;platform&#x27;] || self.platform;
+                    done();
+                }
+            }).catch(done);
+        }).catch(done);
+    },
+
+    /**
+     * save log
+     * @method log
+     * @public
+     * @param  {COMMAND|DATA|RESULT|ERROR|WARNING|INFO} type log type
+     * @param  {Object} message log message
+     */
+    log(type, message){
+        this._driver.log(type, message);
+    },
+
+    /**
+     * execute protocal command with this session
+     * @method exec
+     * @public
+     * @param  {String} cmd protocal command, defined in command.js
+     * @param  {Object} [pathData] replace the path parameters, no need to add sessionId
+     * @param  {Object} [data] send data to protocal api
+     * @param  {Function} done callback function
+     * @return {Object} the return object from webdriver server
+     */
+    exec(cmd, pathData, data, done){
+        let self = this;
+        if(typeof pathData === &#x27;function&#x27;){
+            pathData = undefined;
+            data = undefined;
+        }
+        else if(typeof data === &#x27;function&#x27;){
+            data = undefined;
+        }
+        done = getDone(arguments);
+        pathData = pathData || {};
+        pathData.sessionId = self.sessionId;
+        self._driver.exec(cmd, pathData, data, done);
+    },
+
+    /**
+     * execute protocal command strictly with this session
+     * @method execStrict
+     * @public
+     * @param  {String} cmd protocal command, defined in command.js
+     * @param  {Object} [pathData] replace the path parameters, no need to add sessionId
+     * @param  {Object} [data] send data to protocal api
+     * @param  {Function} done callback function
+     * @return {Object} the return object from webdriver server
+     */
+    execStrict(cmd, pathData, data, done){
+        let self = this;
+        if(typeof pathData === &#x27;function&#x27;){
+            pathData = undefined;
+            data = undefined;
+        }
+        else if(typeof data === &#x27;function&#x27;){
+            data = undefined;
+        }
+        done = getDone(arguments);
+        pathData = pathData || {};
+        pathData.sessionId = self.sessionId;
+        self._driver.execStrict(cmd, pathData, data, done);
+    },
+
+    /**
+     * get browser info
+     * @method info
+     * @public
+     * @return {Object} info object
+     */
+    info(){
+        return this.capabilities;
+    },
+
+    /**
+     * get capability support
+     * @method support
+     * @public
+     * @param  {String} capability
+     * @return {Object} info object
+     */
+    support(capability){
+        let capabilities = this.capabilities;
+        let rawCapability = mapCapabilities[capability.toLowerCase()];
+        return rawCapability &amp;&amp; capabilities[rawCapability] || false;
+    },
+
+    /**
+     * sleep sync
+     * @method sleep
+     * @public
+     * @param  {Number} ms millisecond
+     * @param  {Function} done callback function
+     */
+    sleep(ms, done){
+        this._driver.sleep(ms, done);
+    },
+
+    /**
+     * config webdriver options
+     * @method config
+     * @public
+     * @param  {String} options options for webdriver config
+     * @param  {Function} done callback function
+     */
+    config(options, done){
+        let self = this;
+        // timeout
+        let pageloadTimeout = options.pageloadTimeout;
+        let scriptTimeout = options.scriptTimeout;
+        let asyncScriptTimeout = options.asyncScriptTimeout;
+        let implicitTimeout = options.implicitTimeout;
+        Promise.resolve().then(function(){
+            if(pageloadTimeout){
+                return self.exec(&#x27;configTimeouts&#x27;, {}, {
+                    &#x27;type&#x27;: &#x27;page load&#x27;,
+                    &#x27;ms&#x27;: pageloadTimeout
+                });
+            }
+        }).then(function(){
+            if(scriptTimeout){
+                return self.exec(&#x27;configTimeouts&#x27;, {}, {
+                    &#x27;type&#x27;: &#x27;script&#x27;,
+                    &#x27;ms&#x27;: scriptTimeout
+                });
+            }
+        }).then(function(){
+            if(asyncScriptTimeout){
+                return self.exec(&#x27;configAsyncScriptTimeout&#x27;, {}, {
+                    &#x27;ms&#x27;: asyncScriptTimeout
+                });
+            }
+        }).then(function(){
+            if(implicitTimeout){
+                return self.exec(&#x27;configImplicitTimeout&#x27;, {}, {
+                    &#x27;ms&#x27;: implicitTimeout
+                });
+            }
+        }).then(function(){
+            done();
+        }).catch(done);
+    },
+
+    /**
+     * goto url or get url
+     * @method url
+     * @public
+     * @param  {String} [url] url for goto
+     * @param  {Function} done callback function
+     * @return {url|this} return this or url
+     */
+    url(url, done){
+        let self = this;
+        if(typeof url === &#x27;function&#x27;){
+            url = undefined;
+        }
+        done = getDone(arguments);
+        // goto url
+        if(url){
+            self.execStrict(&#x27;setUrl&#x27;, {}, {
+                &#x27;url&#x27;: url
+            }, done);
+        }
+        // get url
+        else{
+            self.execStrict(&#x27;getUrl&#x27;, function(error, ret){
+                done(error, ret &amp;&amp; ret.value);
+            });
+        }
+    },
+
+    /**
+     * execute script in browser
+     * @method eval
+     * @public
+     * @param  {String|Function} script function to eval
+     * @param  {Array} [args] arguments send to script
+     * @param  {Function} done callback function
+     * @return {any} js function returned value
+     */
+    eval(script, args, done){
+        let self = this;
+        if(typeof args === &#x27;function&#x27;){
+            args = undefined;
+        }
+        done = getDone(arguments);
+        args = args !== undefined ? args : [];
+        if(args instanceof Array === false){
+            args = Array.prototype.slice.call(arguments);
+            script = args.shift();
+            args.pop();
+        }
+        if(typeof script === &#x27;string&#x27; || typeof script === &#x27;function&#x27;){
+            let isAsync = /(\(|,)\s*(done|callback|cb)\)/i.test(script);
+            script = String(script);
+            // support for: return document.title;
+            if(/^\s*function\s*\(/.test(script) === false){
+                script = &#x27;function(){&#x27;+script+&#x27;}&#x27;;
+            }
+            script = &#x27;return (&#x27; + script + &#x27;).apply(null, arguments);&#x27;;
+            args = args.map(function(arg){
+                if(arg instanceof Elements){
+                    arg.toJSON(function(error, obj){
+                        arg = obj;
+                    });
+                }
+                return arg;
+            });
+            self.execStrict(isAsync?&#x27;evalASync&#x27;:&#x27;eval&#x27;, {}, {
+                script: script,
+                args: args
+            }, function(error, ret){
+                done(error?&#x27;eval timeout&#x27;:null, ret &amp;&amp; ret.value);
+            });
+        }
+        else{
+            done(&#x27;First param must be string or function&#x27;);
+        }
+    },
+
+    /**
+     * get current window handle
+     * @method windowHandle
+     * @public
+     * @param  {Boolean} useCache
+     * @param  {Function} done callback function
+     * @return {String} window handle
+     */
+    windowHandle(useCache, done){
+        let self = this;
+        if(typeof useCache === &#x27;function&#x27;){
+            useCache = undefined;
+        }
+        done = getDone(arguments);
+        var windowHandle = self._windowHandle;
+        if(useCache &amp;&amp; windowHandle){
+            done(null, windowHandle);
+        }
+        else{
+            self.execStrict(&#x27;getCurrentWindowHandle&#x27;, function(error, ret){
+                if(ret){
+                    self._windowHandle = ret.value;
+                }
+                done(error, ret &amp;&amp; ret.value);
+            });
+        }
+    },
+
+    /**
+     * get all window handles
+     * @method windowHandles
+     * @public
+     * @param  {Function} done callback function
+     * @return {Array} window handle
+     */
+    windowHandles(done){
+        this.execStrict(&#x27;getAllWindowHandles&#x27;, function(error, ret){
+            done(error, ret &amp;&amp; ret.value);
+        });
+    },
+
+    /**
+     * switch to window
+     * @method switchWindow
+     * @public
+     * @param  {String} windowHandle window handle
+     * @param  {Function} done callback function
+     */
+    switchWindow(windowHandle, done){
+        let self = this;
+        new Promise(function(resolve){
+            if(typeof windowHandle === &#x27;number&#x27;){
+                self.windowHandles(function(error, ret){
+                    windowHandle = ret[windowHandle];
+                    if(windowHandle === undefined){
+                        done(&#x27;Window index overflow&#x27;);
+                    }
+                    else{
+                        resolve(windowHandle);
+                    }
+                });
+            }
+            else{
+                resolve(windowHandle);
+            }
+        }).then(function(windowHandle){
+            self.execStrict(&#x27;switchWindow&#x27;, {}, {
+                name: windowHandle
+            }, function(error, ret){
+                self._windowHandle = windowHandle;
+                done(error, ret);
+            });
+        });
+    },
+
+    /**
+     * open new window
+     * @method newWindow
+     * @public
+     * @param  {String} windowHandle window handle
+     * @param  {Function} done callback function
+     * @return {String} return window handle
+     */
+    newWindow(url, name, features, done){
+        let self = this;
+        if(typeof name === &#x27;function&#x27;){
+            name = undefined;
+            features = undefined;
+        }
+        else if(typeof features === &#x27;function&#x27;){
+            features = undefined;
+        }
+        done = getDone(arguments);
+        let script = &#x27;function(url, name, features){window.open(url, name, features);}&#x27;;
+        self.eval(script, url, name, features).then(function(){
+            return self.windowHandles();
+        }).then(function(arrWindowHandles){
+            done(null, arrWindowHandles[arrWindowHandles.length-1]);
+        }).catch(done);
+    },
+
+    /**
+     * get all frame elements
+     * @method frames
+     * @public
+     * @param  {Function} done callback function
+     * @return {Element}
+     */
+    frames(done){
+        this.find(&#x27;//iframe&#x27;, done);
+    },
+
+    /**
+     * switch to frame or main page
+     * @method switchFrame
+     * @public
+     * @param  {Elements|String} frame
+     * @param  {Function} done callback function
+     */
+    switchFrame(frame, done){
+        let self = this;
+        new Promise(function(resolve){
+            if(typeof frame === &#x27;string&#x27;){
+                resolve(self.find(frame));
+            }
+            else{
+                resolve(frame);
+            }
+        }).then(function(frame){
+            if(frame instanceof Elements){
+                return frame.toJSON();
+            }
+            else{
+                return frame;
+            }
+        }).then(function(frame){
+            self.execStrict(&#x27;switchFrame&#x27;, {}, {
+                id : frame
+            }, done);
+        });
+    },
+
+    /**
+     * switch to parent frame
+     * @method switchFrameParent
+     * @public
+     * @param  {Function} done callback function
+     */
+    switchFrameParent(done){
+        this.execStrict(&#x27;switchFrameParent&#x27;, done);
+    },
+
+    /**
+     * close current window
+     * @method closeWindow
+     * @public
+     * @param  {Function} done callback function
+     */
+    closeWindow(done){
+        this.execStrict(&#x27;closeWindow&#x27;, done);
+    },
+
+    /**
+     * get or set offset of window
+     * @method offset
+     * @public
+     * @param  {Number|Object} [x] x position
+     * @param  {Number|Object} [x] x position
+     * @param  {Function} done callback function
+     * @return {Object|this} return {x:1,y:1} or this
+     */
+    offset(x, y, done){
+        let self = this;
+        if(typeof x === &#x27;function&#x27;){
+            x = undefined;
+            y = undefined;
+        }
+        else if(typeof y === &#x27;function&#x27;){
+            y = undefined;
+        }
+        done = getDone(arguments);
+        Promise.resolve(self.windowHandle(true)).then(function(windowHandle){
+            if(x === undefined){
+                return self.execStrict(&#x27;getWindowOffset&#x27;, {
+                    windowHandle: windowHandle
+                }, function(error, ret){
+                    done(error, ret &amp;&amp; ret.value);
+                });
+            }
+            else if(x.x !== undefined){
+                y = x.y;
+                x = x.x;
+            }
+            self.execStrict(&#x27;setWindowOffset&#x27;, {
+                windowHandle: windowHandle
+            }, {
+                x: x,
+                y: y
+            }, done);
+        }).catch(done);
+    },
+
+    /**
+     * get or set size of window
+     * @method size
+     * @public
+     * @param  {Number|Object} [width]
+     * @param  {Number|Object} [height]
+     * @param  {Function} done callback function
+     * @return {Object|this} return {width:1,height:1} or this
+     */
+    size(width, height, done){
+        let self = this;
+        if(typeof width === &#x27;function&#x27;){
+            width = undefined;
+            height = undefined;
+        }
+        else if(typeof height === &#x27;function&#x27;){
+            height = undefined;
+        }
+        done = getDone(arguments);
+        Promise.resolve(self.windowHandle(true)).then(function(windowHandle){
+            if(width === undefined){
+                return self.execStrict(&#x27;getWindowSize&#x27;, {
+                    windowHandle: windowHandle
+                }, function(error, ret){
+                    done(error, ret &amp;&amp; ret.value);
+                });
+            }
+            else if(width.width !== undefined){
+                height = width.height;
+                width = width.width;
+            }
+            self.execStrict(&#x27;setWindowSize&#x27;, {
+                windowHandle: windowHandle
+            }, {
+                width: width,
+                height: height
+            }, done);
+        }).catch(done);
+    },
+
+    /**
+     * maximize the window
+     * @method maximize
+     * @public
+     * @param  {Function} done callback function
+     */
+    maximize(done){
+        var self = this;
+        Promise.resolve(self.windowHandle(true)).then(function(windowHandle){
+            self.execStrict(&#x27;maximizeWindow&#x27;, {
+                windowHandle : windowHandle
+            }, done);
+        }).catch(done);
+
+    },
+
+    /**
+     * get screenshot
+     * @method getScreenshot
+     * @public
+     * @param  {Function} done callback function
+     * @return {String} return screenshot by base64 format
+     */
+    getScreenshot(done){
+        this.execStrict(&#x27;getScreenshot&#x27;, function(error, ret){
+            done(error, ret &amp;&amp; ret.value);
+        });
+    },
+
+    /**
+     * get title
+     * @method title
+     * @public
+     * @param  {Function} done callback function
+     * @return {String} return document title
+     */
+    title(done){
+        this.execStrict(&#x27;getTitle&#x27;, function(error, ret){
+            done(error, ret &amp;&amp; ret.value);
+        });
+    },
+
+    /**
+     * get html
+     * @method html
+     * @public
+     * @param  {Function} done callback function
+     * @return {String} return document html
+     */
+    html(done){
+        this.execStrict(&#x27;getHtml&#x27;, function(error, ret){
+            done(error, ret &amp;&amp; ret.value);
+        });
+    },
+
+    /**
+     * refresh the window
+     * @method refresh
+     * @public
+     * @param  {Function} done callback function
+     */
+    refresh(done){
+        this.execStrict(&#x27;setRefresh&#x27;, done);
+    },
+
+    /**
+     * back the window
+     * @method back
+     * @public
+     * @param  {Function} done callback function
+     */
+    back(done){
+        this.execStrict(&#x27;setBack&#x27;, done);
+    },
+
+    /**
+     * forward the window
+     * @method forward
+     * @public
+     * @param  {Function} done callback function
+     */
+    forward(done){
+        this.execStrict(&#x27;setForward&#x27;, done);
+    },
+
+    /**
+     * get all cookies
+     * @method cookies
+     * @public
+     * @param  {Boolean} isArray
+     * @param  {Function} done callback function
+     * @return {Array} return all cookies
+     */
+    cookies(isArray, done){
+        if(typeof isArray === &#x27;function&#x27;){
+            isArray = undefined;
+        }
+        done = getDone(arguments);
+        this.execStrict(&#x27;getAllCookies&#x27;, function(error, ret){
+            if(error){
+                done(error);
+            }
+            else{
+                let arrCookies = ret.value;
+                if(isArray){
+                    done(null, arrCookies);
+                }
+                else{
+                    let mapCookies = {};
+                    arrCookies.forEach(function(cookie){
+                        mapCookies[cookie.name] = cookie;
+                    });
+                    done(null, mapCookies);
+                }
+            }
+        });
+
+    },
+
+    /**
+     * get or set cookie
+     * @method cookie
+     * @public
+     * @param  {String} name cookie name
+     * @param  {String} [value] cookie value
+     * @param  {Object} [options] options for cookie
+     * @param  {Function} done callback function
+     * @return {String} return cookie value or this
+     */
+    cookie(name, value, options, done){
+        let self = this;
+        if(typeof value === &#x27;function&#x27;){
+            value = undefined;
+            options = undefined;
+        }
+        else if(typeof options === &#x27;function&#x27;){
+            options = undefined;
+        }
+        done = getDone(arguments);
+        let cookieInfo;
+        if(value === undefined){
+            self.cookies(function(error, ret){
+                if(error){
+                    done(error);
+                }
+                else{
+                    cookieInfo = ret[name];
+                    done(null, cookieInfo &amp;&amp; cookieInfo.value);
+                }
+            });
+        }
+        else{
+            cookieInfo = options || {};
+            cookieInfo.name = String(name);
+            cookieInfo.value = String(value);
+            let expiry = cookieInfo.expiry;
+            if(expiry &amp;&amp; typeof expiry === &#x27;string&#x27;){
+                let match = expiry.match(/^(\d+)\s*(second|minute|hour|day|month|year)s?$/);
+                if(match !== null){
+                    let number = parseInt(match[1], 10);
+                    let unit = match[2];
+                    let date = new Date();
+                    switch(unit){
+                        case &#x27;second&#x27;:
+                            date.setSeconds(date.getSeconds() + number);
+                            break;
+                        case &#x27;minute&#x27;:
+                            date.setMinutes(date.getMinutes() + number);
+                            break;
+                        case &#x27;hour&#x27;:
+                            date.setHours(date.getHours() + number);
+                            break;
+                        case &#x27;day&#x27;:
+                            date.setDate(date.getDate() + number);
+                            break;
+                        case &#x27;month&#x27;:
+                            date.setMonth(date.getMonth() + number);
+                            break;
+                        case &#x27;year&#x27;:
+                            date.setFullYear(date.getFullYear() + number);
+                            break;
+                    }
+                    cookieInfo.expiry = date.getTime() / 1000;
+                }
+                else{
+                    done(&#x27;Bad format for expiry: &#x27; + expiry);
+                }
+            }
+            self.execStrict(&#x27;setCookie&#x27;, {}, {
+                cookie: cookieInfo
+            }, done);
+        }
+    },
+
+    /**
+     * remove cookie
+     * @method removeCookie
+     * @public
+     * @param  {String} name cookie name
+     * @param  {Function} done callback function
+     */
+    removeCookie(name, done){
+        this.execStrict(&#x27;delCookie&#x27;, {
+            name: name
+        }, done);
+    },
+
+    /**
+     * clear all cookies
+     * @method clearCookies
+     * @public
+     * @param  {Function} done callback function
+     */
+    clearCookies(done){
+        this.execStrict(&#x27;clearAllCookies&#x27;, done);
+    },
+
+    /**
+     * get all local storage keys
+     * @method localStorageKeys
+     * @public
+     * @param  {Function} done callback function
+     * @return {Array} return all local storage keys
+     */
+    localStorageKeys(done){
+        this.execStrict(&#x27;getAllLocalStorageKeys&#x27;, function(error, ret){
+            done(error, ret &amp;&amp; ret.value);
+        });
+    },
+
+    /**
+     * get or set local storage
+     * @method localStorage
+     * @public
+     * @param  {String} name local storage name
+     * @param  {String} [value] local storage value
+     * @param  {Function} done callback function
+     * @return {String} return local storage value or this
+     */
+    localStorage(name, value, done){
+        let self = this;
+        if(typeof value === &#x27;function&#x27;){
+            value = undefined;
+        }
+        done = getDone(arguments);
+        if(value !== undefined){
+            self.execStrict(&#x27;setLocalStorage&#x27;, {}, {
+                key: String(name),
+                value: String(value)
+            }, done);
+        }
+        else{
+            self.execStrict(&#x27;getLocalStorage&#x27;, {
+                key: String(name)
+            }, function(error, ret){
+                done(error, ret &amp;&amp; ret.value);
+            });
+        }
+    },
+
+    /**
+     * remove local storage
+     * @method removeLocalStorage
+     * @public
+     * @param  {String} name local storage name
+     * @param  {Function} done callback function
+     */
+    removeLocalStorage(name, done){
+        this.execStrict(&#x27;deleteLocalStorage&#x27;, {
+            key: name
+        }, done);
+    },
+
+    /**
+     * clear all local storage
+     * @method clearLocalStorages
+     * @public
+     * @param  {Function} done callback function
+     */
+    clearLocalStorages(done){
+        this.execStrict(&#x27;clearAllLocalStorages&#x27;, done);
+    },
+
+    /**
+     * get all session storage keys
+     * @method sessionStorageKeys
+     * @public
+     * @param  {Function} done callback function
+     * @return {Array} return all session storage keys
+     */
+    sessionStorageKeys(done){
+        this.execStrict(&#x27;getAllSessionStorageKeys&#x27;, function(error, ret){
+            done(error, ret &amp;&amp; ret.value);
+        });
+    },
+
+    /**
+     * get or set session storage
+     * @method sessionStorage
+     * @public
+     * @param  {String} name session storage name
+     * @param  {String} [value] session storage value
+     * @param  {Function} done callback function
+     * @return {String} return session storage value or this
+     */
+    sessionStorage(name, value, done){
+        let self = this;
+        if(typeof value === &#x27;function&#x27;){
+            value = undefined;
+        }
+        done = getDone(arguments);
+        if(value !== undefined){
+            self.execStrict(&#x27;setSessionStorage&#x27;, {}, {
+                key: String(name),
+                value: String(value)
+            }, done);
+        }
+        else{
+            self.execStrict(&#x27;getSessionStorage&#x27;, {
+                key: String(name)
+            }, function(error, ret){
+                done(error, ret &amp;&amp; ret.value);
+            });
+        }
+    },
+
+    /**
+     * remove session storage
+     * @method removeSessionStorage
+     * @public
+     * @param  {String} name session storage name
+     * @param  {Function} done callback function
+     */
+    removeSessionStorage(name, done){
+        this.execStrict(&#x27;deleteSessionStorage&#x27;, {
+            key: name
+        }, done);
+    },
+
+    /**
+     * clear all session storage
+     * @method clearSessionStorages
+     * @public
+     * @param  {Function} done callback function
+     */
+    clearSessionStorages(done){
+        this.execStrict(&#x27;clearAllSessionStorages&#x27;, done);
+    },
+
+    /**
+     * get alert text
+     * @method getAlert
+     * @public
+     * @param  {Function} done callback function
+     * @return {String}
+     */
+    getAlert(done){
+        this.execStrict(&#x27;getAlert&#x27;, function(error, ret){
+            done(error, ret &amp;&amp; ret.value);
+        });
+    },
+
+    /**
+     * accept alert or confirm
+     * @method acceptAlert
+     * @public
+     * @param  {Function} done callback function
+     */
+    acceptAlert(done){
+        this.execStrict(&#x27;acceptAlert&#x27;, done);
+    },
+
+    /**
+     * dismiss confirm
+     * @method dismissAlert
+     * @public
+     * @param  {Function} done callback function
+     */
+    dismissAlert(done){
+        this.execStrict(&#x27;dismissAlert&#x27;, done);
+    },
+
+    /**
+     * set text to prompt
+     * @method setAlert
+     * @public
+     * @param  {String} text
+     * @param  {Function} done callback function
+     */
+    setAlert(text, done){
+        this.execStrict(&#x27;setAlert&#x27;, {}, {
+            text: text
+        }, done);
+    },
+
+    /**
+     * send keys to browser
+     * @method sendKeys
+     * @public
+     * @param  {String} text
+     * @param  {Function} done callback function
+     */
+    sendKeys(text, done){
+        let self = this;
+        let Keys = self.Keys;
+        text = text.replace(/{(\w+)}/g, function(all, name){
+            let key = Keys[name.toUpperCase()];
+            return key?key:all;
+        });
+        self.execStrict(&#x27;sendKeys&#x27;, {}, {
+            value: text.split(&#x27;&#x27;)
+        }, done);
+    },
+
+    /**
+     * check sticky key
+     * @method isStickyKey
+     * @public
+     * @param  {String} key
+     * @return {Boolean}
+     */
+    isStickyKey(key){
+        let Keys = this.Keys;
+        return key === Keys.CTRL || key === Keys.SHIFT || key === Keys.ALT || key === Keys.META;
+    },
+
+    /**
+     * send keydown
+     * @method keyDown
+     * @public
+     * @param  {String} key
+     * @param  {Function} done callback function
+     */
+    keyDown(key, done){
+        let self = this;
+        let Keys = self.Keys;
+        key = Keys[key.toUpperCase()] || key;
+        if(self.isStickyKey(key)){
+            self.sendKeys(key, done);
+        }
+        else{
+            done(&#x27;keyDown or keyUp only support: CTRL|SHIFT|ALT|COMMAND|META&#x27;);
+        }
+    },
+
+    /**
+     * send keyup
+     * @method keyUp
+     * @public
+     * @param  {String} key
+     * @param  {Function} done callback function
+     */
+    keyUp(key, done){
+        let self = this;
+        let Keys = self.Keys;
+        key = Keys[key.toUpperCase()] || key;
+        if(self.isStickyKey(key)){
+            self.sendKeys(key, done);
+        }
+        else{
+            done(&#x27;keyDown or keyUp only support: CTRL|SHIFT|ALT|COMMAND|META&#x27;);
+        }
+    },
+
+    /**
+     * send mousemove (first element)
+     * @method mouseMove
+     * @public
+     * @param  {Elements|String} elements
+     * @param  {Number|Object} [x]
+     * @param  {Number} [y]
+     * @param  {Function} done callback function
+     */
+    mouseMove(elements, x, y, done){
+        let self = this;
+        if(typeof x === &#x27;function&#x27;){
+            x = undefined;
+            y = undefined;
+        }
+        else if(typeof y === &#x27;function&#x27;){
+            y = undefined;
+        }
+        done = getDone(arguments);
+        new Promise(function(resolve){
+            if(typeof elements === &#x27;string&#x27;){
+                resolve(self.find(elements));
+            }
+            else{
+                resolve(elements);
+            }
+        }).then(function(elements){
+            let data = {};
+            if(elements.length &gt; 0){
+                data.element = elements.elementIds[0];
+            }
+            else{
+                done(&#x27;Elements empty!&#x27;);
+            }
+            if(x !== undefined &amp;&amp; x.x !== undefined){
+                y = x.y;
+                x = x.x;
+            }
+            if(x !== undefined &amp;&amp; y !== undefined){
+                data.xoffset = x;
+                data.yoffset = y;
+            }
+            self.execStrict(&#x27;mouseMove&#x27;, {}, data, done);
+        }).catch(done);
+    },
+
+    /**
+     * send mousedown
+     * @method mouseDown
+     * @public
+     * @param  {String} [key]
+     * @param  {Function} done callback function
+     */
+    mouseDown(key, done){
+        let self = this;
+        if(typeof key === &#x27;function&#x27;){
+            key = undefined;
+        }
+        done = getDone(arguments);
+        if(typeof key === &#x27;string&#x27;){
+            let MouseButtons = self.MouseButtons;
+            key = key.toUpperCase();
+            key = MouseButtons[key] || 0;
+        }
+        self.execStrict(&#x27;mouseDown&#x27;, {}, {
+            button: key || 0
+        }, done);
+    },
+
+    /**
+     * send mouseup
+     * @method mouseUp
+     * @public
+     * @param  {String} [key]
+     * @param  {Function} done callback function
+     */
+    mouseUp(key, done){
+        let self = this;
+        if(typeof key === &#x27;function&#x27;){
+            key = undefined;
+        }
+        done = getDone(arguments);
+        if(typeof key === &#x27;string&#x27;){
+            let MouseButtons = self.MouseButtons;
+            key = key.toUpperCase();
+            key = MouseButtons[key] || 0;
+        }
+        self.execStrict(&#x27;mouseUp&#x27;, {}, {
+            button: key || 0
+        }, done);
+    },
+
+    /**
+     * send click
+     * @method click
+     * @public
+     * @param  {String} [key]
+     * @param  {Function} done callback function
+     */
+    click(key, done){
+        let self = this;
+        if(typeof key === &#x27;function&#x27;){
+            key = undefined;
+        }
+        done = getDone(arguments);
+        if(typeof key === &#x27;string&#x27;){
+            let MouseButtons = self.MouseButtons;
+            key = key.toUpperCase();
+            key = MouseButtons[key] || 0;
+        }
+        self.execStrict(&#x27;click&#x27;, {}, {
+            button: key || 0
+        }, done);
+    },
+
+    /**
+     * send double Click
+     * @method dblClick
+     * @public
+     * @param  {Function} done callback function
+     */
+    dblClick(done){
+        this.execStrict(&#x27;doubleClick&#x27;, done);
+    },
+
+    /**
+     * drag one element to another
+     * @method dragDrop
+     * @public
+     * @param  {Elements} from
+     * @param  {Elements} to
+     * @param  {Function} done callback function
+     */
+    dragDrop(from, to, done){
+        let self = this;
+        let fromOffset;
+        if(from.selector){
+            fromOffset = {
+                x: from.x,
+                y: from.y
+            };
+            from = from.selector;
+        }
+        let toOffset;
+        if(to.selector){
+            toOffset = {
+                x: to.x,
+                y: to.y
+            };
+            to = to.selector;
+        }
+        self.mouseMove(from, fromOffset).mouseDown().mouseMove(to, toOffset).mouseUp().then(function(){
+            done();
+        }).catch(done);
+    },
+
+    /**
+     * find element
+     * @method find
+     * @public
+     * @param  {String} [using] find mode: class name|css selector|id|name|link text|partial link text|tag name|xpath
+     * @param  {String} value find pattern
+     * @param  {Function} done callback function
+     * @return {Elments}
+     */
+    find(using, value, done){
+        if(typeof value === &#x27;function&#x27;){
+            value = undefined;
+        }
+        done = getDone(arguments);
+        var elements = new Elements(this, using, value);
+        elements.init(function(error){
+            done(error, elements);
+        }).catch(done);
+    },
+
+    /**
+     * wait for element displayed or removed
+     * @method wait
+     * @public
+     * @param  {String} selector css selector or xpath
+     * @param  {String} [options]
+     * @param  {Function} done callback function
+     * @return {Elments}
+     */
+    wait(selector, options, done){
+        let self = this;
+        if(typeof options === &#x27;function&#x27;){
+            options = undefined;
+        }
+        done = getDone(arguments);
+        if(typeof options === &#x27;number&#x27;){
+            options = {
+                timeout: options
+            };
+        }
+        options = extend({}, {
+            timeout: 10000,
+            displayed: true,
+            removed: false
+        }, options);
+        let timeout = options.timeout;
+        let removed = options.removed;
+        let displayed = removed ? false : options.displayed;
+        let startTime = new Date().getTime();
+        let elements;
+        let _timer = setInterval(waitElement, 500);
+        waitElement();
+        function waitElement(){
+            self.find(selector, function(error, elements){
+                if(error){
+                    done(error);
+                }
+                else if(removed === true &amp;&amp; elements.length === 0){
+                    // removed
+                    clearInterval(_timer);
+                    done(null, elements);
+                }
+                else if(removed === false &amp;&amp; elements.length &gt; 0){
+                    if(displayed){
+                        // displayed
+                        elements.displayed(function(error, ret){
+                            if(ret){
+                                clearInterval(_timer);
+                                done(null, elements);
+                            }
+                        });
+                    }
+                    else{
+                        // wait dom
+                        clearInterval(_timer);
+                        done(null, elements);
+                    }
+                }
+                // timeout
+                if(new Date().getTime() - startTime &gt; timeout){
+                    self.log(&#x27;ERROR&#x27;, &#x27;Wait elelment &#x27;+(removed?&#x27;removed&#x27;:&#x27;displayed&#x27;)+&#x27; timeout: &#x27; + timeout + &#x27;ms&#x27;);
+                    clearInterval(_timer);
+                    if(displayed){
+                        elements = new Elements(self, &#x27;elements&#x27;, []);
+                        elements.init();
+                    }
+                    done(null, elements);
+                }
+            });
+        }
+    },
+
+    /**
+     * scroll to
+     * @method scrollTo
+     * @public
+     * @param  {Elements|String} [elements]
+     * @param  {Number} [x]
+     * @param  {Number} [y]
+     * @param  {Function} done callback function
+     */
+    scrollTo(elements, x, y, done){
+        let self = this;
+        if(typeof x === &#x27;function&#x27;){
+            x = undefined;
+            y = undefined;
+        }
+        else if(typeof y === &#x27;function&#x27;){
+            y = undefined;
+        }
+        done = getDone(arguments);
+        new Promise(function(resolve){
+            if(typeof elements === &#x27;string&#x27;){
+                resolve(self.find(elements));
+            }
+            else{
+                resolve(elements);
+            }
+        }).then(function(elements){
+            if(elements instanceof Elements){
+                return new Promise(function(resolve){
+                        elements.offset(function(error, offset){
+                        if(x !== undefined &amp;&amp; x.x !== undefined){
+                            y = x.y;
+                            x = x.x;
+                        }
+                        offset.x += x || 0;
+                        offset.y += y || 0;
+                        x = offset.x;
+                        y = offset.y;
+                        resolve({
+                            x: x,
+                            y: y
+                        });
+                    });
+                });
+            }
+            else{
+                // no elements
+                y = x;
+                x = elements;
+                if(x !== undefined &amp;&amp; x.x !== undefined){
+                    y = x.y;
+                    x = x.x;
+                }
+                return {
+                    x: x,
+                    y: y
+                };
+            }
+
+        }).then(function(offset){
+            let script = &#x27;function(x, y){window.scrollTo(x, y);}&#x27;;
+            self.eval(script, offset.x, offset.y, done);
+        }).catch(done);
+    },
+
+    /**
+     * upload file to browser machine
+     * @method uploadFileToServer
+     * @public
+     * @param  {String} localPath
+     * @param  {Function} done callback function
+     * @return {String} webdriver server filepath
+     */
+    uploadFileToServer(localPath, done){
+        let self = this;
+        if(fs.existsSync(localPath)){
+            let filedata = fs.readFileSync(localPath);
+            let zip = new Zip();
+            zip.file(path.basename(localPath), filedata);
+            let base64zip = zip.generate({base64:true, compression:&#x27;DEFLATE&#x27;});
+            self.execStrict(&#x27;uploadFile&#x27;, {}, {
+                file: base64zip
+            }, function(error, ret){
+                done(error, ret &amp;&amp; ret.value);
+            });
+        }
+        else{
+            done(&#x27;localPath no existed&#x27;);
+        }
+    },
+
+    /**
+     * close session
+     * @method close
+     * @public
+     * @param  {Function} done callback function
+     */
+    close(done){
+        let self = this;
+        Promise.resolve(self.exec(&#x27;delSession&#x27;)).then(function(){
+            let hostsProxy = self._hostsProxy;
+            if(hostsProxy){
+                hostsProxy.close(done);
+            }
+            else{
+                done();
+            }
+        });
+    }
+
+});
+
+
+// get done callback
+function getDone(args){
+    let done = args[args.length -1];
+    return typeof done === &#x27;function&#x27; ? done : null;
 }
 
-&#x2F;&#x2F;浏览器昵称
-var arrBrowserNickName = {
-	&#x27;ie&#x27;: &#x27;internet explorer&#x27;,
-	&#x27;ff&#x27;: &#x27;firefox&#x27;
-}
-
-&#x2F;&#x2F;鼠标按钮映射表
-var arrMouseButton = {
-	&#x27;left&#x27;: 0,
-	&#x27;middle&#x27;: 1,
-	&#x27;right&#x27;: 2
-}
-
-&#x2F;&#x2F;键盘特殊按键映射表
-var arrSpecKeys = {
-	&#x27;null&#x27;: &#x27;\uE000&#x27;,
-	&#x27;cancel&#x27;: &#x27;\uE001&#x27;,
-	&#x27;help&#x27;: &#x27;\uE002&#x27;,
-	&#x27;back&#x27;: &#x27;\uE003&#x27;,
-	&#x27;tab&#x27;: &#x27;\uE004&#x27;,
-	&#x27;clear&#x27;: &#x27;\uE005&#x27;,
-	&#x27;return&#x27;: &#x27;\uE006&#x27;,
-	&#x27;enter&#x27;: &#x27;\uE007&#x27;,
-	&#x27;shift&#x27;: &#x27;\uE008&#x27;,
-	&#x27;ctrl&#x27;: &#x27;\uE009&#x27;,
-	&#x27;alt&#x27;: &#x27;\uE00A&#x27;,
-	&#x27;pause&#x27;: &#x27;\uE00B&#x27;,
-	&#x27;esc&#x27;: &#x27;\uE00C&#x27;,
-	&#x27;space&#x27;: &#x27;\uE00D&#x27;,
-	&#x27;pageup&#x27;: &#x27;\uE00E&#x27;,
-	&#x27;pagedown&#x27;: &#x27;\uE00F&#x27;,
-	&#x27;end&#x27;: &#x27;\uE010&#x27;,
-	&#x27;home&#x27;: &#x27;\uE011&#x27;,
-	&#x27;left&#x27;: &#x27;\uE012&#x27;,
-	&#x27;up&#x27;: &#x27;\uE013&#x27;,
-	&#x27;right&#x27;: &#x27;\uE014&#x27;,
-	&#x27;down&#x27;: &#x27;\uE015&#x27;,
-	&#x27;insert&#x27;: &#x27;\uE016&#x27;,
-	&#x27;delete&#x27;: &#x27;\uE017&#x27;,
-	&#x27;semicolon&#x27;: &#x27;\uE018&#x27;,
-	&#x27;equals&#x27;: &#x27;\uE019&#x27;,
-	&#x27;num0&#x27;: &#x27;\uE01A&#x27;,
-	&#x27;num1&#x27;: &#x27;\uE01B&#x27;,
-	&#x27;num2&#x27;: &#x27;\uE01C&#x27;,
-	&#x27;num3&#x27;: &#x27;\uE01D&#x27;,
-	&#x27;num4&#x27;: &#x27;\uE01E&#x27;,
-	&#x27;num5&#x27;: &#x27;\uE01F&#x27;,
-	&#x27;num6&#x27;: &#x27;\uE020&#x27;,
-	&#x27;num7&#x27;: &#x27;\uE021&#x27;,
-	&#x27;num8&#x27;: &#x27;\uE022&#x27;,
-	&#x27;num9&#x27;: &#x27;\uE023&#x27;,
-	&#x27;multiply&#x27;: &#x27;\uE024&#x27;,
-	&#x27;add&#x27;: &#x27;\uE025&#x27;,
-	&#x27;separator&#x27;: &#x27;\uE026&#x27;,
-	&#x27;subtract&#x27;: &#x27;\uE027&#x27;,
-	&#x27;decimal&#x27;: &#x27;\uE028&#x27;,
-	&#x27;divide&#x27;: &#x27;\uE029&#x27;,
-	&#x27;f1&#x27;: &#x27;\uE031&#x27;,
-	&#x27;f2&#x27;: &#x27;\uE032&#x27;,
-	&#x27;f3&#x27;: &#x27;\uE033&#x27;,
-	&#x27;f4&#x27;: &#x27;\uE034&#x27;,
-	&#x27;f5&#x27;: &#x27;\uE035&#x27;,
-	&#x27;f6&#x27;: &#x27;\uE036&#x27;,
-	&#x27;f7&#x27;: &#x27;\uE037&#x27;,
-	&#x27;f8&#x27;: &#x27;\uE038&#x27;,
-	&#x27;f9&#x27;: &#x27;\uE039&#x27;,
-	&#x27;f10&#x27;: &#x27;\uE03A&#x27;,
-	&#x27;f11&#x27;: &#x27;\uE03B&#x27;,
-	&#x27;f12&#x27;: &#x27;\uE03C&#x27;,
-	&#x27;command&#x27;: &#x27;\uE03D&#x27;,
-	&#x27;meta&#x27;: &#x27;\uE03D&#x27;
-}
-
-var Browser = function(){
-	var self = this;
-	return self._init.apply(self, arguments);
-}
-
-Browser.prototype = {
-
-	&#x2F;**
-	 * 初始化浏览器对象
-	 * @method _init
-	 * @private
-	 * @param  {Object} config jWebDriver config
-	 * @param  {Object}   options  浏览器初始化参数
-	 * @param  {Function} callback 回调函数
-	 *&#x2F;
-	_init: function(config, options, callback){
-		var self = this;
-		self.sessionId = null;
-		self.logMode = config.logMode;
-		self.host = config.host;
-		self.port = config.port;
-		var browserName = options.browserName;
-		if(browserName &amp;&amp; (browserName = arrBrowserNickName[browserName])){
-			options.browserName = browserName;
-		}
-		var sessionOptions = {
-			&#x27;desiredCapabilities&#x27;: extend({}, defaultOptions, options)
-		};
-		self.doCommand(&#x27;setSession&#x27;, sessionOptions, callback);
-		self.windowHandle = &#x27;current&#x27;;
-	},
-
-	&#x2F;**
-	 * 输出日志
-	 * @method log
-	 * @public
-	 * @param  {String} type 日志类型
-	 * @param  {String} message 日志内容
-	 * @return {Browser}	当前Browser对象实例
-	 *&#x2F;
-	log: function(type, message){
-		var self = this;
-		if(message === undefined){
-			message = type;
-			type = &#x27;INFO&#x27;;
-		}
-		if(self.logMode === &#x27;all&#x27; || (self.logMode === &#x27;error&#x27; &amp;&amp; type === &#x27;ERROR&#x27;)){
-			var dateString = (new Date()).toString().match(&#x2F;\d\d:\d\d:\d\d&#x2F;)[0];
-			var mapColors = {
-				&#x27;COMMAND&#x27;: colors.violet,
-				&#x27;DATA&#x27;: colors.brown,
-				&#x27;RESULT&#x27;: colors.teal,
-				&#x27;ERROR&#x27;: colors.red,
-				&#x27;WARNING&#x27;: colors.yellow,
-				&#x27;INFO&#x27;: colors.white
-			}
-			if(message){
-				console.log(colors.dkgray +&#x27;[&#x27; + dateString + &#x27;]: &#x27; + colors.reset, mapColors[type] + type + colors.reset, &#x27;\t&#x27;, message);
-			}
-			else{
-				console.log(colors.dkgray +&#x27;[&#x27; + dateString + &#x27;]: &#x27; + colors.reset, mapColors[type] + type + colors.reset);
-			}
-		}
-		return self;
-	},
-
-	&#x2F;**
-	 * 检查返回值是否有错误，适用于所有WebDriver API的返回值
-	 * @method isError
-	 * @public
-	 * @param  {Object}  result 所有WebDriver API的返回值
-	 * @return {Boolean}        如果有错误返回true
-	 *&#x2F;
-	isError: function(result){
-		var status = result &amp;&amp; result.status;
-		return status !== undefined &amp;&amp; status !== 0;
-	},
-
-	&#x2F;**
-	 * 检查返回值是否正确，适用于所有WebDriver API的返回值
-	 * @method isOk
-	 * @public
-	 * @param  {Object}  result 所有WebDriver API的返回值
-	 * @return {Boolean}        如果正确返回true
-	 *&#x2F;
-	isOk: function(result){
-		return !this.isError(result);
-	},
-
-	&#x2F;**
-	 * 执行webdriver命令
-	 * @method doCommand
-	 * @public
-	 * @param  {String}   cmd      命令名称
-	 * @param  {Object}   data     命令数据
-	 * @param  {Function} [callback] 回调函数，如果省略此参数，则为同步模式，直接返回结果
-	 * @return {Object}            webdriver返回的JSON对象
-	 *&#x2F;
-	doCommand: function(cmd, data, callback){
-		var self = this, cmdInfo = arrCommands[cmd];
-		if(cmdInfo){
-			var method = cmdInfo[0], path = cmdInfo[1];
-			path = path.replace(&#x27;:sessionId&#x27;, self.sessionId);
-			var pathValues;
-			if(data &amp;&amp; (pathValues = data.pathValues)){
-				&#x2F;&#x2F;填充PATH中除sessionId以外的参数
-				for(var name in pathValues){
-					path = path.replace(&#x27;:&#x27;+name, encodeURIComponent(pathValues[name]));
-				}
-				delete data.pathValues;
-			}
-			var requestOptions = {
-				&#x27;method&#x27;: method,
-				&#x27;host&#x27;: self.host,
-				&#x27;port&#x27;: self.port,
-				&#x27;path&#x27;: &#x27;&#x2F;wd&#x2F;hub&#x27;+path
-		    };
-
-			function getResult(result){
-				if(result){
-					result = result.replace(&#x2F;\x00&#x2F;g,&#x27;&#x27;)
-					try{
-						result = JSON.parse(result);
-					}
-					catch(err){
-		                if (result !== &#x27;&#x27;) {
-		                	self.log(&#x27;ERROR&#x27;, err + &#x27;\n&#x27; + result + &#x27;\n&#x27;)
-		                }
-		                result = {status: -1, errorType: &#x27;jsonError&#x27;, errorMessage: &#x27;JSON.parse error.&#x27;};
-		                return callback?callback(result):result;
-					}
-
-					if (result.status === 0) {&#x2F;&#x2F;操作成功
-						self.log(&#x27;RESULT&#x27;, result.value);
-						result = result.value;
-					}
-		            else {
-			   			var responseInfo = responseCodes[result.status],
-							responseType = responseInfo.type,
-							responseMessage = responseInfo.message;
-
-						result.errorType = responseType;
-						result.errorMessage = responseMessage;
-
-						self.log(&#x27;ERROR&#x27;, responseType);
-		            }
-				}
-				if(callback){
-					callback(result);
-				}
-				else{
-					return result;
-				}
-			}
-			if(callback){
-				self._doRequest(requestOptions, data, getResult);
-			}
-			else{
-				var response = self._doRequest(requestOptions, data);
-				return getResult(response);
-			}
-		}
-	},
-
-	&#x2F;**
-	 * 发起HTTP请求到webdriver的接口
-	 * @method _doRequest
-	 * @private
-	 * @param  {Object}   requestOptions HTTP请求参数
-	 * @param  {Object}   data           HTTP BODY
-	 * @param  {Function} [callback]       回调函数，活力回调函数则为同步返回模式
-	 * @return {String}                  HTTP响应字符串
-	 *&#x2F;
-	_doRequest: function(requestOptions, data, callback){
-		var self = this, fiber = Fiber.current;
-
-		self.log(&#x27;COMMAND&#x27;, requestOptions.method + &#x27;\t&#x27; + requestOptions.path);
-
-		var responseStr = &#x27;&#x27;;
-
-		if(data){
-			data = JSON.stringify(data);
-			&#x2F;&#x2F;转义Unicode字符
-			data = data.replace(&#x2F;[^\x00-\xff]&#x2F;g, function(a){
-				return &#x27;\\&#x27;+escape(a).substr(1);
-			});
-			if(data !== &#x27;{}&#x27;){
-				self.log(&#x27;DATA&#x27;, data);
-			}
-		}
-		else{
-			data = &#x27;&#x27;;
-		}
-		requestOptions.headers = {
-			&#x27;Accept&#x27;: &#x27;application&#x2F;json; charset=utf-8&#x27;,
-			&#x27;Content-Type&#x27;: &#x27;application&#x2F;json;charset=UTF-8&#x27;,
-			&#x27;Content-Length&#x27;: data.length
-		}
-
-		var req = http.request(requestOptions, function(res){
-			if ( &#x2F;^302|303$&#x2F;.test(res.statusCode) &amp;&amp; self.sessionId === null) {
-	        	try{
-	        		var match = res.headers.location.match(&#x2F;wd\&#x2F;hub\&#x2F;session\&#x2F;(.+)$&#x2F;i);
-	        		if(match !== null){
-	        			self.sessionId = match[1];
-	        			self.log(&#x27;RESULT&#x27;, self.sessionId);
-	        		}
-	        	}
-	        	catch(e){
-	        	}
-	        	return doCallback(&#x27;&#x27;);
-			}
-			var arrResBuffers = [], resBufferSize = 0;
-		    res.on(&#x27;data&#x27;, function (data) {
-		        arrResBuffers.push(data);
-		        resBufferSize += data.length;
-		    });
-		    res.on(&#x27;end&#x27;, function () {
-		        var resBuffer = new Buffer(resBufferSize), pos = 0;
-		        for(var i = 0, c = arrResBuffers.length; i &lt; c; i++) {
-		            arrResBuffers[i].copy(resBuffer, pos);
-		            pos += arrResBuffers[i].length;
-		        }
-		        responseStr = resBuffer.toString(&#x27;utf-8&#x27;);
-		        doCallback(responseStr);
-		     });
-		});
-
-		req.on(&#x27;error&#x27;, function(err)
-		{
-			self.log(&#x27;ERROR&#x27;, &#x27;ERROR ON REQUEST&#x27;);
-		});
-
-		if(data){
-			req.write(data);
-		}
-		req.end();
-
-		function doCallback(data){
-	        if(callback){&#x2F;&#x2F;异步模式
-	        	callback(data);
-	        }
-	        else if(fiber){&#x2F;&#x2F;同步模式
-	        	fiber.run();
-	        }
-		}
-
-		if(callback === undefined &amp;&amp; fiber){
-			Fiber.yield();
-			return responseStr;
-		}
-	},
-
-	&#x2F;**
-	 * 延迟一定时间
-	 * @method sleep
-	 * @public
-	 * @param  {Number} ms 需要延迟的时间，单位毫秒
-	 * @return {Browser}	当前Browser对象实例
-	 *&#x2F;
-	sleep: function(ms){
-		var fiber = Fiber.current;
-		setTimeout(function(){
-			fiber.run();
-		},ms);
-		Fiber.yield();
-		return this;
-	},
-
-	&#x2F;**
-	 * 返回窗口句柄
-	 * @method window
-	 * @public
-	 * @param  {Boolean} [bAll] 是否返回所有窗口，设置为true返回所有窗口
-	 * @return {String|Array}       单个或数组形式的窗口句柄
-	 *&#x2F;
-	window: function(bAll){
-		return this.doCommand(bAll === true?&#x27;getWindows&#x27;:&#x27;getWindow&#x27;);
-	},
-
-	&#x2F;**
-	 * 切换到另一个Window或Frame
-	 * @method switchTo
-	 * @public
-	 * @param  {String|Element|Number} [target] 要切换的目标窗口句柄、Frame对象(Element)、Frame在页面中的序号(Number)，如果省略此参数则切换到主窗口
-	 * @return {Browser}	当前Browser对象实例
-	 *&#x2F;
-	switchTo: function(target){
-		var self = this;
-		if(typeof target === &#x27;string&#x27;){
-			self.windowHandle = target;
-			self.doCommand(&#x27;switchWindow&#x27;,{name: target});
-		}
-		else if(target instanceof Element){
-			self.doCommand(&#x27;switchFrame&#x27;,{id: target.toArray()});
-		}
-		else if(target === undefined){
-			self.doCommand(&#x27;switchFrame&#x27;,{id: null});
-		}
-		return self;
-	},
-
-	&#x2F;**
-	 * 返回或者设置当前窗口的大小
-	 * @method size
-	 * @public
-	 * @param  {Number|Object} [width]  宽度或者大小对象({width,height})
-	 * @param  {Number} [height] 高度
-	 * @return {Object|Browser}        如果无宽度和高度参数，则返回当前大小对象，否则返回当前Browser实例
-	 *&#x2F;
-	size: function(width, height){
-		var self = this,
-			windowHandle = self.windowHandle;
-		if(width === undefined){
-			&#x2F;&#x2F;返回首个窗口的大小
-			return self.doCommand(&#x27;getWindowSize&#x27;, {&#x27;pathValues&#x27;: {&#x27;windowHandle&#x27;: windowHandle}});
-		}
-		else if(width.width !== undefined){
-			height = width.height;
-			width = width.width;
-		}
-		self.doCommand(&#x27;setWindowSize&#x27;, {
-			&#x27;pathValues&#x27;: {&#x27;windowHandle&#x27;: windowHandle},
-			&#x27;width&#x27;: width,
-			&#x27;height&#x27;: height
-		});
-		return self;
-	},
-
-	&#x2F;**
-	 * 最大化当前窗口
-	 * @method maximize
-	 * @public
-	 * @return {Browser}	当前Browser对象实例
-	 *&#x2F;
-	maximize: function(){
-		var self = this;
-		self.doCommand(&#x27;maximizeWindow&#x27;, {&#x27;pathValues&#x27;: {&#x27;windowHandle&#x27;: self.windowHandle}});
-		return self;
-	},
-
-	&#x2F;**
-	 * 返回或者设置当前窗口的坐标
-	 * @method offset
-	 * @public
-	 * @param  {Number|Object} [x]  x坐标或者坐标对象({x,y})
-	 * @param  {Number} [y] y坐标
-	 * @return {Object|Browser}        如果无x坐标和y坐标参数，则返回当前坐标对象，否则返回当前Browser实例
-	 *&#x2F;
-	offset: function(x, y){
-		var self = this,
-			windowHandle = self.windowHandle;
-		if(x === undefined){
-			&#x2F;&#x2F;返回首个窗口的大小
-			return self.doCommand(&#x27;getWindowOffset&#x27;, {&#x27;pathValues&#x27;: {&#x27;windowHandle&#x27;: windowHandle}});
-		}
-		else if(x.x !== undefined){
-			y = x.y;
-			x = x.x;
-		}
-		self.doCommand(&#x27;setWindowOffset&#x27;, {
-			&#x27;pathValues&#x27;: {&#x27;windowHandle&#x27;: windowHandle},
-			&#x27;x&#x27;: x,
-			&#x27;y&#x27;: y
-		});
-		return self;
-	},
-
-	&#x2F;**
-	 * 关闭当前窗口
-	 * @method close
-	 * @public
-	 * @return {Browser}	当前Browser对象实例
-	 *&#x2F;
-	close: function(){
-		var self = this;
-		self.doCommand(&#x27;closeWindow&#x27;);
-		return self;
-	},
-
-	&#x2F;**
-	 * 结束浏览器会话
-	 * @method end
-	 * @public
-	 * @return {Browser}	当前Browser对象实例
-	 *&#x2F;
-	end: function(){
-		var self = this;
-		self.doCommand(&#x27;delSession&#x27;);
-		return self;
-	},
-
-	&#x2F;**
-	 * 设置操作超时时间
-	 * &lt;p&gt;
-	 * 注：script包括同步和异步两种代码
-	 * &lt;&#x2F;p&gt;
-	 * @method setTimeout
-	 * @public
-	 * @param  {String} type 操作类型(script|ascript|implicit|page load)
-	 * @param  {Number} ms   超时时间
-	 * @return {Browser}	当前Browser对象实例
-	 *&#x2F;
-	setTimeout: function(type, ms){
-		var self = this;
-		if(type === &#x27;ascript&#x27;){
-			self.doCommand(&#x27;setAscriptTimeout&#x27;, {&#x27;ms&#x27;: ms});
-		}
-		else{
-			self.doCommand(&#x27;setTimeouts&#x27;, {&#x27;type&#x27;: type, &#x27;ms&#x27;: ms});
-		}
-		return self;
-	},
-
-	&#x2F;**
-	 * 打开或者返回当前URL
-	 * @method url
-	 * @public
-	 * @param  {String} [url] 需要打开的URL网址，若省略此参数则返回当前浏览器URL
-	 * @return {String|Browser}     若打开URL则返回当前Browser对象实例，否则返回URL地址
-	 *&#x2F;
-	url: function(url){
-		var self = this;
-		if(url){
-			self.doCommand(&#x27;setUrl&#x27;, {&#x27;url&#x27;: url});
-			return self;
-		}
-		else {
-			return self.doCommand(&#x27;getUrl&#x27;);
-		}
-	},
-
-	&#x2F;**
-	 * 控制浏览器回到后一个URL
-	 * @method forward
-	 * @public
-	 * @return {Browser} 当前Browser对象实例
-	 *&#x2F;
-	forward: function(){
-		var self = this;
-		self.doCommand(&#x27;setForward&#x27;);
-		return self;
-	},
-
-	&#x2F;**
-	 * 控制浏览器回到前一个URL
-	 * @method back
-	 * @public
-	 * @return {Browser} 当前Browser对象实例
-	 *&#x2F;
-	back: function(){
-		var self = this;
-		self.doCommand(&#x27;setBack&#x27;);
-		return self;
-	},
-
-	&#x2F;**
-	 * 刷新当前页面
-	 * @method refresh
-	 * @public
-	 * @return {Browser} 当前Browser对象实例
-	 *&#x2F;
-	refresh: function(){
-		var self = this;
-		self.doCommand(&#x27;setRefresh&#x27;);
-		return self;
-	},
-
-	&#x2F;**
-	 * 返回当前页面title
-	 * @method title
-	 * @public
-	 * @return {String} 页面title
-	 *&#x2F;
-	title: function(){
-		return this.doCommand(&#x27;getTitle&#x27;);
-	},
-
-	&#x2F;**
-	 * 返回当前页面源代码
-	 * @method source
-	 * @public
-	 * @return {String} 页面源代码
-	 *&#x2F;
-	source: function(){
-		return this.doCommand(&#x27;getSource&#x27;);
-	},
-
-	&#x2F;**
-	 * 返回当前页面下所有cookie
-	 * @method getCookies
-	 * @public
-	 * @return {Array} cookie对象数组
-	 *&#x2F;
-	getCookies: function(){
-		return this.doCommand(&#x27;getAllCookie&#x27;);
-	},
-
-	&#x2F;**
-	 * 添加cookie到当前页面
-	 * &lt;p&gt;
-	 * 这里可以查看WebDriver官方定义的&lt;a href=&quot;http:&#x2F;&#x2F;code.google.com&#x2F;p&#x2F;selenium&#x2F;wiki&#x2F;JsonWireProtocol#Cookie_JSON_Object&quot; target=&quot;_blank&quot;&gt;cookie对象&lt;&#x2F;a&gt;
-	 * &lt;&#x2F;p&gt;
-	 * @method addCookie
-	 * @public
-	 * @param {Object} cookie cookie对象
-	 * @return {Browser} 当前Browser对象实例
-	 *&#x2F;
-	addCookie: function(cookie){
-		var self = this;
-		self.doCommand(&#x27;setCookie&#x27;, {&#x27;cookie&#x27;: cookie});
-		return self;
-	},
-
-	&#x2F;**
-	 * 删除cookie
-	 * @method delCookies
-	 * @public
-	 * @param  {String} name cookie name
-	 * @return {Browser} 当前Browser对象实例
-	 *&#x2F;
-	delCookies: function(name){
-		var self = this;
-		if(name !== undefined){
-			self.doCommand(&#x27;delCookie&#x27;, {&#x27;pathValues&#x27;: {&#x27;name&#x27;: name}});
-		}
-		else{
-			self.doCommand(&#x27;delAllCookies&#x27;);
-		}
-		return self;
-	},
-
-	&#x2F;**
-	 * 执行Javascript脚本
-	 * @method exec
-	 * @public
-	 * @param  {String} script Javascript代码
-	 * @param  {Array|Object} [args]   传递给脚本的参数，此参数可省略
-	 * @param  {Boolean} bAsync 是否异步，如果是异步必需要调用callback返回，否则一直阻塞
-	 * @return {Object}        Javascript脚本的返回值
-	 *&#x2F;
-	exec: function(script, args, bAsync){
-		if(typeof args === &#x27;boolean&#x27;){
-			bAsync = args;
-			args = [];
-		}
-		args = args?args:[];
-		if(Object.prototype.toString.apply(args) !== &#x27;[object Array]&#x27;){
-			&#x2F;&#x2F;单参数模式
-			args = [args];
-		}
-		var arg;
-		for(var i in args){
-			arg = args[i];
-			if(arg instanceof Element){
-				&#x2F;&#x2F;转换为原生Element对象
-				args[i] = arg.toArray();
-			}
-		}
-		var data = {&#x27;script&#x27;: script, args: args};
-		return this.doCommand(bAsync === true?&#x27;executeAsync&#x27;:&#x27;execute&#x27;, data);
-	},
-
-	&#x2F;**
-	 * 获取弹出窗口的文本(alert, confirm, prompt)
-	 * @method getAlert
-	 * @public
-	 * @return {String} 弹出窗口的文本
-	 *&#x2F;
-	getAlert: function(){
-		return this.doCommand(&#x27;getAlert&#x27;);
-	},
-
-	&#x2F;**
-	 * 输入prompt中的值
-	 * @method setAlert
-	 * @public
-	 * @return {Browser} 当前Browser对象实例
-	 *&#x2F;
-	setAlert: function(str){
-		var self = this;
-		self.doCommand(&#x27;setAlert&#x27;, {&#x27;text&#x27;: str});
-		return self;
-	},
-
-	&#x2F;**
-	 * 关闭弹出窗口
-	 * @method closeAlert
-	 * @public
-	 * @param  {String} [btn] 点击哪个按钮关闭窗口：ok|cancel,默认cancel
-	 * @return {Browser} 当前Browser对象实例
-	 *&#x2F;
-	closeAlert: function(btn){
-		var self = this;
-		self.doCommand(&#x2F;^ok$&#x2F;i.test(btn)?&#x27;acceptAlert&#x27;:&#x27;dismissAlert&#x27;);
-		return self;
-	},
-
-	&#x2F;**
-	 * 获取或保存当前网页截图
-	 * &lt;p&gt;
-	 * filePath为可选项，若有则保存到文件
-	 * &lt;&#x2F;p&gt;
-	 * @method getScreenshot
-	 * @public
-	 * @param  {String} [filePath] 保存截图的文件路径
-	 * @return {String}          Base64格式的网页截图
-	 *&#x2F;
-	getScreenshot: function(filePath){
-		var data = this.doCommand(&#x27;getScreenshot&#x27;);
-		if(filePath){
-			fs.writeFileSync(filePath, data, &quot;base64&quot;);
-		}
-		return data;
-	},
-
-	&#x2F;**
-	 * 获取按键映射后的字符数组
-	 * @method _getKeyArray
-	 * @private
-	 * @param  {String} str 原始字符串
-	 * @return {Array}     经过映射后的字符数组
-	 *&#x2F;
-	_getKeyArray: function(str){
-		str = str.replace(&#x2F;{(\w+)}&#x2F;g, function(all, name){
-			var key = arrSpecKeys[name.toLowerCase()];
-			return key?key:all;
-		});
-		return str.split(&#x27;&#x27;);
-	},
-
-	&#x2F;**
-	 * 发送按键序列到当前焦点对象上
-	 * @method sendKeys
-	 * @public
-	 * @param  {String} str 原始字符串
-	 * @return {Browser} 当前Browser对象实例
-	 *&#x2F;
-	sendKeys: function(str){
-		var self = this;
-		self.doCommand(&#x27;sendKeys&#x27;, {&#x27;value&#x27;: self._getKeyArray(str)});
-		return self;
-	},
-
-	&#x2F;**
-	 * 在当前光标处触发单击事件
-	 * @method click
-	 * @public
-	 * @param  {String} mouseBtn 鼠标按钮类型：left|middle|right
-	 * @return {Browser} 当前Browser对象实例
-	 *&#x2F;
-	click: function(mouseBtn){
-		var self = this, data = {};
-		if(mouseBtn){
-			var button = arrMouseButton[mouseBtn.toLowerCase()];
-			if(button){
-				data.button = button;
-			}
-		}
-		self.doCommand(&#x27;click&#x27;, data);
-		return self;
-	},
-
-	&#x2F;**
-	 * 在当前光标处触发双击事件
-	 * @method dblclick
-	 * @public
-	 * @return {Browser} 当前Browser对象实例
-	 *&#x2F;
-	dblclick: function(){
-		var self = this;
-		self.doCommand(&#x27;dblclick&#x27;);
-		return self;
-	},
-
-	&#x2F;**
-	 * 在当前光标处触发鼠标左键按下
-	 * @method mousedown
-	 * @public
-	 * @return {Browser} 当前Browser对象实例
-	 *&#x2F;
-	mousedown: function(){
-		var self = this;
-		self.doCommand(&#x27;mousedown&#x27;);
-		return self;
-	},
-
-	&#x2F;**
-	 * 移动到指定对象中间或坐标点
-	 * @method mousemove
-	 * @public
-	 * @param  {Number|Element|Object} x X坐标或Element对象或{x,y}
-	 * @param  {Number} y y坐标
-	 * @return {Browser} 当前Browser对象实例
-	 *&#x2F;
-	mousemove: function(x, y){
-		var self = this, data = {};
-		if(x instanceof Element){
-			data.element = x.toArray().ELEMENT;
-		}
-		else if(x.x &amp;&amp; x.y){
-			data.xoffset = x.x;
-			data.yoffset = x.y;
-		}
-		else{
-			data.xoffset = x;
-			data.yoffset = y;
-		}
-		if(data.element === undefined){
-			data.xoffset = Math.round(data.xoffset);
-			data.yoffset = Math.round(data.yoffset);
-		}
-		self.doCommand(&#x27;mousemove&#x27;, data);
-		return self;
-	},
-
-	&#x2F;**
-	 * 在当前光标处触发鼠标左键按起
-	 * @method mouseup
-	 * @public
-	 * @return {Browser} 当前Browser对象实例
-	 *&#x2F;
-	mouseup: function(){
-		var self = this;
-		self.doCommand(&#x27;mouseup&#x27;);
-		return self;
-	},
-
-	&#x2F;**
-	 * 拖放
-	 * @method dragDrop
-	 * @public
-	 * @param  {Element|Object} from 源对象或源坐标({x,y})
-	 * @param  {Element|Object} to   目标对象或目标坐标({x,y})
-	 * @return {Browser} 当前Browser对象实例
-	 *&#x2F;
-	dragDrop: function(from, to){
-		var self = this;
-		self.mousemove(from).mousedown().mousemove(to).mouseup();
-		return self;
-	},
-
-	&#x2F;**
-	 * 等待对象出现或消失
-	 * @method waitFor
-	 * @public
-	 * @param  {String} [using]  对象选择类型，留空默认为：css selector(class name|css selector|id|name|link text|partial link text|tag name|xpath)
-	 * @param  {String} value  对象选择值
-	 * @param  {Boolean} [targetExist] 测试目标是对象存在或不存在
-	 * @param  {Number} [timeout] 等待超时时间，单位毫秒，默认30000毫秒
-	 * @return {Element|Object} 等待的目标如果存在，则返回Element对象，如果不存在或者超时则返回错误对象
-	 *&#x2F;
-	waitFor: function(using, value, targetExist, timeout){
-		var self = this,
-			fiber = Fiber.current,
-			ret, bExist, bTimeout = false;
-		if(typeof value !== &#x27;string&#x27;){
-			&#x2F;&#x2F;默认css选择器
-			timeout = targetExist;
-			targetExist = value;
-			value = using;
-			using = &#x27;css selector&#x27;;
-		}
-		if(typeof targetExist === &#x27;number&#x27;){
-			timeout = targetExist;
-			targetExist = true;
-		}
-		if(targetExist === undefined){
-			targetExist = true;
-		}
-		if(timeout === undefined){
-			timeout = 30000;
-		}
-		var _timer1, _timer2;
-		function waitElement(){
-			self.doCommand(&#x27;getElement&#x27;, {&#x27;using&#x27;: using,&#x27;value&#x27;: value}, function(result){
-				bExist  = self.isOk(result);
-				ret = result;
-				if(bExist === targetExist){
-					clearTimeout(_timer2);
-					fiber.run();
-				}
-				else if(bTimeout === true){
-					fiber.run();
-				}
-				else if(_timer1 !== null){
-					&#x2F;&#x2F;每隔500毫秒确认目标是否存在
-					_timer1 = setTimeout(waitElement, 500);
-				}
-			});
-		}
-		_timer1 = setTimeout(waitElement, 1);
-		_timer2 = setTimeout(function(){
-			self.log(&#x27;ERROR&#x27;, &#x27;waitFor timeout: &#x27; + using + &#x27; , &#x27; + value);
-			&#x2F;&#x2F;标记超时，getElement返回时结束当前等待请求
-			bTimeout = true;
-		}, timeout);
-		Fiber.yield();
-		return bExist === true ? self.element(&#x27;element&#x27;, ret.ELEMENT) : ret;
-	},
-
-	&#x2F;**
-	 * 返回Element对象实例
-	 * &lt;p&gt;
-	 * 此方法不建议直接调用，建议使用run函数的第二个参数$符，例如:
-	 * &lt;pre&gt;
-	 * wd.run(function(browser, $){
-	 * 	$(&#x27;#id&#x27;).val(&#x27;test&#x27;);
-	 * })
-	 * &lt;&#x2F;pre&gt;
-	 * &lt;&#x2F;p&gt;
-	 * @method element
-	 * @public
-	 * @param  {String} [using] 对象选择类型，留空默认为：css selector(class name|css selector|id|name|link text|partial link text|tag name|xpath)
-	 * @param  {String} [value] 对象选择值，留空返回当前焦点所在对象
-	 * @return {Element}       Element的实例对象，如果对象不存在，返回原始消息
-	 *&#x2F;
-	element: function(using, value){
-		var self = this;
-		var element = new Element(self, using, value);
-		return self.isError(element._id) ? element._id : element;
-	}
-
+// get local ip
+function getLocalIP() {
+    var ifaces = os.networkInterfaces();
+    for (var dev in ifaces) {
+        var iface = ifaces[dev];
+        for (var i = 0; i &lt; iface.length; i++) {
+            var alias = iface[i];
+            if (alias.family === &#x27;IPv4&#x27; &amp;&amp; alias.address !== &#x27;127.0.0.1&#x27; &amp;&amp; !alias.internal){
+                return alias.address;
+            }
+        }
+    }
 }
 
 module.exports = Browser;
+
     </pre>
 </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
 <script>prettyPrint();</script>
-<script src="..&#x2F;assets/js/yui-prettify.js"></script>
-<script src="..&#x2F;assets/../api.js"></script>
-<script src="..&#x2F;assets/js/api-filter.js"></script>
-<script src="..&#x2F;assets/js/api-list.js"></script>
-<script src="..&#x2F;assets/js/api-search.js"></script>
-<script src="..&#x2F;assets/js/apidocs.js"></script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
 </body>
 </html>

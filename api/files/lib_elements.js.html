@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>lib\elements.js - jwebdriver</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+                <h1><img src="https://raw.github.com/yaniswang/jWebDriver/master/logo_s.png" title="jwebdriver"></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 1.0.0</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/Browser.html">Browser</a></li>
+                                <li><a href="../classes/Elements.html">Elements</a></li>
+                                <li><a href="../classes/JWebDriver.html">JWebDriver</a></li>
+                            </ul>
+                
+                
+                            <ul id="api-modules" class="apis modules">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: lib\elements.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&#x27;use strict&#x27;;
+/**
+ * This class is used for control elements.
+ * @class Elements
+ */
+
+const PromiseClass = require(&#x27;promiseclass&#x27;);
+
+const Elements = PromiseClass.create({
+
+    /**
+     * init elements instance
+     * @method constructor
+     * @private
+     * @param  {Browser} browser Browser instance
+     * @param  {string} [using] find mode: class name|css selector|id|name|link text|partial link text|tag name|xpath
+     * @param  {string} value find pattern
+     */
+    constructor(browser, using, value){
+        let self = this;
+        self._browser = browser;
+        self.using = using;
+        self.value = value;
+        self.MouseButtons = browser.MouseButtons;
+        self.Keys = browser.Keys;
+    },
+
+    /**
+     * init elements
+     * @method init
+     * @private
+     * @param  {Function} done callback function
+     */
+    init(done){
+        let self = this;
+        let browser = self._browser;
+        let using = self.using;
+        let value = self.value;
+        if(value === undefined){
+            // detect xpath or css selector
+            value = using;
+            // get current active element
+            if(value === &#x27;active&#x27;){
+                return browser.execStrict(&#x27;getActiveElement&#x27;, function(error, ret){
+                    if(error){
+                        done(error);
+                    }
+                    else{
+                        self.elementIds = [ret.value.ELEMENT];
+                        self.length = 1;
+                        done();
+                    }
+                });
+            }
+            using = /^\//.test(value)?&#x27;xpath&#x27;:&#x27;css selector&#x27;;
+            self.using = using;
+            self.value = value;
+        }
+        if(using === &#x27;elements&#x27;){
+            self.elementIds = value;
+            self.length = value.length;
+            return done();
+        }
+        else{
+            browser.execStrict(&#x27;findElements&#x27;, {}, {
+                using: using,
+                value: value
+            }, function(error, ret){
+                if(error){
+                    done(error);
+                }
+                else{
+                    let arrElements = ret.value;
+                    let elementIds = arrElements.map(function(element){
+                        return element.ELEMENT;
+                    });
+                    self.elementIds = elementIds;
+                    self.length = elementIds.length;
+                    done();
+                }
+            });
+        }
+    },
+
+    /**
+     * save log
+     * @method log
+     * @public
+     * @param  {COMMAND|DATA|RESULT|ERROR|WARNING|INFO} type log type
+     * @param  {Object} message log message
+     */
+    log(type, message){
+        this._browser.log(type, message);
+    },
+
+    /**
+     * execute protocal command with this elements
+     * @method exec
+     * @public
+     * @param  {String} cmd protocal command, defined in command.js
+     * @param  {Object} [pathData] replace the path parameters, no need to add sessionId
+     * @param  {Object} [data] send data to protocal api
+     * @param  {Function} done callback function
+     * @return {Object} the return object from webdriver server
+     */
+    exec(cmd, pathData, data, done){
+        let self = this;
+        if(typeof pathData === &#x27;function&#x27;){
+            pathData = undefined;
+            data = undefined;
+        }
+        else if(typeof data === &#x27;function&#x27;){
+            data = undefined;
+        }
+        done = getDone(arguments);
+        if(self.length &gt; 0){
+            let browser = self._browser;
+            let elementIds = self.elementIds.concat();
+            pathData = pathData || {};
+            if(/^!/.test(cmd)){
+                cmd = cmd.substr(1);
+                function execNext(){
+                    let id = elementIds.shift();
+                    if(id !== undefined){
+                        pathData.id = id;
+                        browser.exec(cmd, pathData, data, function(error){
+                            if(error){
+                                done(error);
+                            }
+                            else{
+                                execNext();
+                            }
+                        });
+                    }
+                    else{
+                        done();
+                    }
+                }
+                execNext();
+            }
+            else{
+                pathData.id = elementIds[0];
+                browser.exec(cmd, pathData, data, function(error, ret){
+                    done(error, ret);
+                });
+            }
+        }
+        else{
+            done(&#x27;Elements empty&#x27;);
+        }
+    },
+
+    /**
+     * execute protocal command strictly with this elements
+     * @method execStrict
+     * @public
+     * @param  {String} cmd protocal command, defined in command.js
+     * @param  {Object} [pathData] replace the path parameters, no need to add sessionId
+     * @param  {Object} [data] send data to protocal api
+     * @param  {Function} done callback function
+     * @return {Object} the return object from webdriver server
+     */
+    execStrict(cmd, pathData, data, done){
+        let self = this;
+        if(typeof pathData === &#x27;function&#x27;){
+            pathData = undefined;
+            data = undefined;
+        }
+        else if(typeof data === &#x27;function&#x27;){
+            data = undefined;
+        }
+        done = getDone(arguments);
+        if(self.length &gt; 0){
+            let browser = self._browser;
+            let elementIds = self.elementIds.concat();
+            pathData = pathData || {};
+            if(/^!/.test(cmd)){
+                cmd = cmd.substr(1);
+                function execNext(){
+                    let id = elementIds.shift();
+                    if(id !== undefined){
+                        pathData.id = id;
+                        browser.execStrict(cmd, pathData, data, function(error){
+                            if(error){
+                                done(error);
+                            }
+                            else{
+                                execNext();
+                            }
+                        });
+                    }
+                    else{
+                        done();
+                    }
+                }
+                execNext();
+            }
+            else{
+                pathData.id = elementIds[0];
+                browser.execStrict(cmd, pathData, data, function(error, ret){
+                    done(error, ret);
+                });
+            }
+        }
+        else{
+            done(&#x27;Elements empty&#x27;);
+        }
+    },
+
+    /**
+     * sleep sync
+     * @method sleep
+     * @public
+     * @param  {Number} ms millisecond
+     * @param  {Function} done callback function
+     */
+    sleep(ms, done){
+        this._browser.sleep(ms, done);
+    },
+
+    /**
+     * get element by index
+     * @method get
+     * @public
+     * @param  {Number} index
+     * @return {Elments}
+     */
+    get(index){
+        let self = this;
+        if(index &gt;= 0 &amp;&amp; index &lt; self.length){
+            return new Elements(self._browser, &#x27;elements&#x27;, [self.elementIds[index]]);
+        }
+    },
+
+    /**
+     * get webdriver ELEMENT object (first element)
+     * @method toJSON
+     * @public
+     * @return {Object} {ELEMENT: 1}
+     */
+    toJSON(){
+        let self = this;
+        if(self.length &gt; 0){
+            return {ELEMENT: self.elementIds[0]};
+        }
+    },
+
+    /**
+     * get tagName (first element)
+     * @method tagName
+     * @public
+     * @param  {Function} done callback function
+     * @return {String}
+     */
+    tagName(done){
+        this.execStrict(&#x27;getElementTagName&#x27;, function(error, ret){
+            done(error, ret &amp;&amp; ret.value);
+        });
+    },
+
+    /**
+     * get attribute value (first element)
+     * @method attr
+     * @public
+     * @param  {String} name attribute name
+     * @param  {Function} done callback function
+     * @return {String}
+     */
+    attr(name, done){
+        this.execStrict(&#x27;getElementAttr&#x27;, {
+            name: name
+        }, function(error, ret){
+            done(error, ret &amp;&amp; ret.value);
+        });
+    },
+
+    /**
+     * get css value (first element)
+     * @method css
+     * @public
+     * @param  {String} name css name
+     * @param  {Function} done callback function
+     * @return {String}
+     */
+    css(name, done){
+        this.execStrict(&#x27;getElementCss&#x27;, {
+            propertyName: name
+        }, function(error, ret){
+            done(error, ret &amp;&amp; ret.value);
+        });
+    },
+
+    /**
+     * get text (first element)
+     * @method text
+     * @public
+     * @param  {Function} done callback function
+     * @return {String}
+     */
+    text(done){
+        this.execStrict(&#x27;getElementText&#x27;, function(error, ret){
+            done(error, ret &amp;&amp; ret.value);
+        });
+    },
+
+    /**
+     * clear input or textarea
+     * @method clear
+     * @public
+     * @param  {Function} done callback function
+     * @return {this}
+     */
+    clear(done){
+        this.execStrict(&#x27;!setElementClear&#x27;, done);
+    },
+
+    /**
+     * get offset of element (first element)
+     * @method offset
+     * @public
+     * @param  {Boolean} [isInview]
+     * @param  {Function} done callback function
+     * @return {Object} return {x:1,y:1}
+     */
+    offset(isInview, done){
+        let self = this;
+        if(typeof isInview === &#x27;function&#x27;){
+            isInview = undefined;
+        }
+        done = getDone(arguments);
+        if(isInview){
+            self.execStrict(&#x27;getElementOffsetInView&#x27;, function(error, ret){
+                done(error, ret &amp;&amp; ret.value);
+            });
+        }
+        else{
+            self.execStrict(&#x27;getElementOffset&#x27;, function(error, ret){
+                done(error, ret &amp;&amp; ret.value);
+            });
+        }
+    },
+
+    /**
+     * get size of element (first element)
+     * @method size
+     * @public
+     * @param  {Function} done callback function
+     * @return {Object} return {width:1, height:1}
+     */
+    size(done){
+        this.execStrict(&#x27;getElementSize&#x27;, function(error, ret){
+            done(error, ret &amp;&amp; ret.value);
+        });
+    },
+
+    /**
+     * check element displayed (first element)
+     * @method displayed
+     * @public
+     * @param  {Function} done callback function
+     * @return {Boolean}
+     */
+    displayed(done){
+        this.execStrict(&#x27;getElementDisplayed&#x27;, function(error, ret){
+            done(error, ret &amp;&amp; ret.value);
+        });
+    },
+
+    /**
+     * check element enabled (first element)
+     * @method enabled
+     * @public
+     * @param  {Function} done callback function
+     * @return {Boolean}
+     */
+    enabled(done){
+        this.execStrict(&#x27;getElementEnabled&#x27;, function(error, ret){
+            done(error, ret &amp;&amp; ret.value);
+        });
+    },
+
+    /**
+     * check element selected (first element)
+     * @method selected
+     * @public
+     * @param  {Function} done callback function
+     * @return {Boolean}
+     */
+    selected(done){
+        this.execStrict(&#x27;getElementSelected&#x27;, function(error, ret){
+            done(error, ret &amp;&amp; ret.value);
+        });
+    },
+
+    /**
+     * send keys to element
+     * @method sendKeys
+     * @public
+     * @param  {String} text
+     * @param  {Function} done callback function
+     */
+    sendKeys(text, done){
+        let self = this;
+        let Keys = self._browser.Keys;
+        text = text.replace(/{(\w+)}/g, function(all, name){
+            let key = Keys[name.toUpperCase()];
+            return key?key:all;
+        });
+        self.execStrict(&#x27;!sendElementKeys&#x27;, {}, {
+            value: text.split(&#x27;&#x27;)
+        }, done);
+    },
+
+    /**
+     * clear and send keys to element
+     * @method setValue
+     * @public
+     * @param  {String} text
+     * @param  {Function} done callback function
+     */
+    setValue(text, done){
+        let self = this;
+        self.clear().sendKeys(text).then(function(){
+            done();
+        }).catch(done);
+    },
+
+    /**
+     * click to element
+     * @method click
+     * @public
+     * @param  {Function} done callback function
+     */
+    click(done){
+        this.execStrict(&#x27;setElementClick&#x27;, done);
+    },
+
+    /**
+     * double click to element
+     * @method dblClick
+     * @public
+     * @param  {Function} done callback function
+     */
+    dblClick(done){
+        let self = this;
+        self._browser.mouseMove(self).dblClick().then(function(){
+            done();
+        }).catch(done);
+    },
+
+    /**
+     * drag the element drop to another element
+     * @method dragDropTo
+     * @public
+     * @param  {Elements} selector
+     * @param  {Number} [x]
+     * @param  {Number} [y]
+     * @param  {Function} done callback function
+     */
+    dragDropTo(selector, x, y, done){
+        let self = this;
+        if(typeof x === &#x27;function&#x27;){
+            x = undefined;
+            y = undefined;
+        }
+        done = getDone(arguments);
+        let to;
+        if(selector.selector){
+            to = selector;
+        }
+        else{
+            to = {
+                selector: selector,
+                x: x,
+                y: y
+            };
+        }
+        self._browser.dragDrop(self, to, done);
+    },
+
+    /**
+     * submit form
+     * @method submit
+     * @public
+     * @param  {Function} done callback function
+     */
+    submit(done){
+        this.execStrict(&#x27;setElementSubmit&#x27;, done);
+    },
+
+    /**
+     * upload file to browser machine, then set to this element
+     * @method uploadFile
+     * @public
+     * @param  {String} localPath
+     * @param  {Function} done callback function
+     */
+    uploadFile(localPath, done){
+        let self = this;
+        self._browser.uploadFileToServer(localPath).then(function(tmpPath){
+            return self.sendKeys(tmpPath);
+        }).then(function(){
+           done();
+        }).catch(done);
+    },
+
+    /**
+     * find all child elements
+     * @method find
+     * @public
+     * @param  {String} [using] find mode: class name|css selector|id|name|link text|partial link text|tag name|xpath
+     * @param  {String} value find pattern
+     * @param  {Function} done callback function
+     * @return {Elments}
+     */
+    find(using, value, done){
+        let self = this;
+        if(typeof value === &#x27;function&#x27;){
+            value = undefined;
+        }
+        done = getDone(arguments);
+        if(value === undefined){
+            // detect xpath or css selector
+            value = using;
+            using = /^\//.test(value)?&#x27;xpath&#x27;:&#x27;css selector&#x27;;
+        }
+        self.execStrict(&#x27;findChildElements&#x27;, {}, {
+            using: using,
+            value: value
+        }, function(error, ret){
+            if(error){
+                done(error);
+            }
+            else{
+                let arrELEMENTS = ret.value;
+                let elementIds = arrELEMENTS.map(function(ELEMENT){
+                    return ELEMENT.ELEMENT;
+                });
+                let elements = new Elements(self._browser, &#x27;elements&#x27;, elementIds);
+                elements.init();
+                done(null, elements);
+            }
+        });
+    },
+
+    /**
+     * test if two elements refer to the same DOM element.
+     * @method equal
+     * @public
+     * @param  {Elements|String} elements
+     * @param  {Function} done callback function
+     * @return {Boolean}
+     */
+    equal(elements, done){
+        let self = this;
+        new Promise(function(resolve){
+            if(typeof elements === &#x27;string&#x27;){
+                resolve(self._browser.find(elements));
+            }
+            else{
+                resolve(elements);
+            }
+        }).then(function(elements){
+            if(self.length === elements.length){
+                let elementIds = elements.elementIds;
+                let i = 0;
+                function testNext(){
+                    if(i &lt; self.length){
+                        self.get(i).execStrict(&#x27;getElementEquals&#x27;, {
+                            other: elementIds[i]
+                        }, function(error, ret){
+                            if(error){
+                                done(error);
+                            }
+                            else if(ret.value === false){
+                                done(null, false);
+                            }
+                            else{
+                                testNext();
+                            }
+                        });
+                    }
+                    else{
+                        done(null, true);
+                    }
+                    i++;
+                }
+                testNext();
+            }
+            else{
+                done(null ,false);
+            }
+        }).catch(done);
+    }
+
+});
+
+// get done callback
+function getDone(args){
+    let done = args[args.length -1];
+    return typeof done === &#x27;function&#x27; ? done : null;
+}
+
+module.exports = Elements;
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

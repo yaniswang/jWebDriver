@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for jWebDriver\lib\commands.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../prettify.css">
+    <link rel="stylesheet" href="../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">jWebDriver\lib\commands.js</span></h1>
+    <h2>
+        Statements: <span class="metric">100% <small>(2 / 2)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">100% <small>(0 / 0)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(0 / 0)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">100% <small>(2 / 2)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../index.html">All files</a> &#187; <a href="index.html">jWebDriver/lib/</a> &#187; commands.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict';
+// http://code.google.com/p/selenium/wiki/JsonWireProtocol#Command_Reference
+&nbsp;
+let mapCommands = {
+    // /status
+	'getStatus' : ['GET', '/status'],
+&nbsp;
+    // session
+    'getSessions' : ['GET', '/sessions'],
+    'getSessionInfo' : ['GET', '/session/:sessionId'],
+	'newSession' : ['POST', '/session'],
+	'delSession' : ['DELETE', '/session/:sessionId'],
+&nbsp;
+	// window &amp; frame
+	'getCurrentWindowHandle' : ['GET', '/session/:sessionId/window_handle'],
+	'getAllWindowHandles' : ['GET', '/session/:sessionId/window_handles'],
+	'switchWindow' : ['POST', '/session/:sessionId/window'],
+	'closeWindow' : ['DELETE', '/session/:sessionId/window'],
+	'getWindowSize' : ['GET', '/session/:sessionId/window/:windowHandle/size'],
+	'setWindowSize' : ['POST', '/session/:sessionId/window/:windowHandle/size'],
+	'maximizeWindow' : ['POST', '/session/:sessionId/window/:windowHandle/maximize'],
+	'getWindowOffset' : ['GET', '/session/:sessionId/window/:windowHandle/position'],
+	'setWindowOffset' : ['POST', '/session/:sessionId/window/:windowHandle/position'],
+	'switchFrame' : ['POST', '/session/:sessionId/frame'],
+    'switchFrameParent' : ['POST', '/session/:sessionId/frame/parent'],
+&nbsp;
+	// cookie
+	'getAllCookies' : ['GET', '/session/:sessionId/cookie'],
+	'clearAllCookies' : ['DELETE', '/session/:sessionId/cookie'],
+	'setCookie' : ['POST', '/session/:sessionId/cookie'],
+	'delCookie' : ['DELETE', '/session/:sessionId/cookie/:name'],
+&nbsp;
+	// local storage
+	'getAllLocalStorageKeys' : ['GET', '/session/:sessionId/local_storage'],
+	'clearAllLocalStorages' : ['DELETE', '/session/:sessionId/local_storage'],
+	'getLocalStorage' : ['GET', '/session/:sessionId/local_storage/key/:key'],
+	'setLocalStorage' : ['POST', '/session/:sessionId/local_storage'],
+	'deleteLocalStorage' : ['DELETE', '/session/:sessionId/local_storage/key/:key'],
+&nbsp;
+	// session storage
+	'getAllSessionStorageKeys' : ['GET', '/session/:sessionId/session_storage'],
+	'clearAllSessionStorages' : ['DELETE', '/session/:sessionId/session_storage'],
+	'getSessionStorage' : ['GET', '/session/:sessionId/session_storage/key/:key'],
+	'setSessionStorage' : ['POST', '/session/:sessionId/session_storage'],
+	'deleteSessionStorage' : ['DELETE', '/session/:sessionId/session_storage/key/:key'],
+&nbsp;
+	// timeout
+	'configTimeouts' : ['POST', '/session/:sessionId/timeouts'],
+	'configAsyncScriptTimeout' : ['POST', '/session/:sessionId/timeouts/async_script'],
+    'configImplicitTimeout' : ['POST', '/session/:sessionId/timeouts/implicit_wait'],
+&nbsp;
+	// browser
+	'getScreenshot' : ['GET', '/session/:sessionId/screenshot'],
+	'setUrl' : ['POST', '/session/:sessionId/url'],
+	'getUrl' : ['GET', '/session/:sessionId/url'],
+	'setForward' : ['POST', '/session/:sessionId/forward'],
+	'setBack' : ['POST', '/session/:sessionId/back'],
+	'setRefresh' : ['POST', '/session/:sessionId/refresh'],
+&nbsp;
+	'getTitle' : ['GET', '/session/:sessionId/title'],
+	'getHtml' : ['GET', '/session/:sessionId/source'],
+&nbsp;
+	'eval' : ['POST', '/session/:sessionId/execute'],
+	'evalASync' : ['POST', '/session/:sessionId/execute_async'],
+&nbsp;
+	// alert
+	'getAlert' : ['GET', '/session/:sessionId/alert_text'],
+	'setAlert' : ['POST', '/session/:sessionId/alert_text'],
+	'acceptAlert' : ['POST', '/session/:sessionId/accept_alert'],
+	'dismissAlert' : ['POST', '/session/:sessionId/dismiss_alert'],
+&nbsp;
+	// key &amp; mouse
+	'sendKeys' : ['POST', '/session/:sessionId/keys'],
+	'click' : ['POST', '/session/:sessionId/click'],
+	'doubleClick' : ['POST', '/session/:sessionId/doubleclick'],
+	'mouseDown' : ['POST', '/session/:sessionId/buttondown'],
+	'mouseMove' : ['POST', '/session/:sessionId/moveto'],
+	'mouseUp' : ['POST', '/session/:sessionId/buttonup'],
+&nbsp;
+	// element
+	'getActiveElement': ['POST', '/session/:sessionId/element/active'],
+	'findElements': ['POST', '/session/:sessionId/elements'],
+	'findChildElements': ['POST', '/session/:sessionId/element/:id/elements'],
+&nbsp;
+    'getElementTagName': ['GET', '/session/:sessionId/element/:id/name'],
+	'getElementAttr': ['GET', '/session/:sessionId/element/:id/attribute/:name'],
+	'getElementCss': ['GET', '/session/:sessionId/element/:id/css/:propertyName'],
+	'sendElementKeys': ['POST', '/session/:sessionId/element/:id/value'],
+	'setElementClear': ['POST', '/session/:sessionId/element/:id/clear'],
+	'getElementText': ['GET', '/session/:sessionId/element/:id/text'],
+&nbsp;
+	'getElementDisplayed': ['GET', '/session/:sessionId/element/:id/displayed'],
+    'getElementEnabled': ['GET', '/session/:sessionId/element/:id/enabled'],
+    'getElementSelected': ['GET', '/session/:sessionId/element/:id/selected'],
+	'getElementOffset': ['GET', '/session/:sessionId/element/:id/location'],
+	'getElementOffsetInView': ['GET', '/session/:sessionId/element/:id/location_in_view'],
+	'getElementSize': ['GET', '/session/:sessionId/element/:id/size'],
+&nbsp;
+	'setElementClick': ['POST', '/session/:sessionId/element/:id/click'],
+    'setElementSubmit': ['POST', '/session/:sessionId/element/:id/submit'],
+&nbsp;
+	'getElementEquals': ['GET', '/session/:sessionId/element/:id/equals/:other'],
+&nbsp;
+    // mobile &amp; pad
+    'touchClick': ['POST', '/session/:sessionId/touch/click'],
+    'touchDown': ['POST', '/session/:sessionId/touch/down'],
+    'touchUp': ['POST', '/session/:sessionId/touch/up'],
+    'touchMove': ['POST', '/session/:sessionId/touch/move'],
+    'touchScroll': ['POST', '/session/:sessionId/touch/scroll'],
+    'touchDoubleClick': ['POST', '/session/:sessionId/touch/doubleclick'],
+    'touchLongclick': ['POST', '/session/:sessionId/touch/longclick'],
+    'touchFlick': ['POST', '/session/:sessionId/touch/flick'],
+    'getOrientation': ['GET', '/session/:sessionId/orientation'],
+    'setOrientation': ['POST', '/session/:sessionId/orientation'],
+&nbsp;
+    // geo location
+    'getLocation': ['GET', '/session/:sessionId/location'],
+    'setLocation': ['POST', '/session/:sessionId/location'],
+&nbsp;
+    // file upload
+    'uploadFile': ['POST', '/session/:sessionId/file']
+};
+&nbsp;
+module.exports = mapCommands;
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Nov 09 2015 09:37:20 GMT+0800 (中国标准时间)</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

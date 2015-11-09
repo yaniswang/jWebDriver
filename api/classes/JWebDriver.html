@@ -2,24 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JWebDriver - jWebDriver API</title>
-    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.7.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
-    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
-    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
-    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
-    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.7.0&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+    <title>JWebDriver - jwebdriver</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
 
 <div id="doc">
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
-            
-                <h1><img src="https:&#x2F;&#x2F;raw.github.com&#x2F;yaniswang&#x2F;jWebDriver&#x2F;master&#x2F;logo_s.png" title="jWebDriver API"></h1>
-            
+                <h1><img src="https://raw.github.com/yaniswang/jWebDriver/master/logo_s.png" title="jwebdriver"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 0.9.3</em>
+            <em>API Docs for: 1.0.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -27,648 +25,898 @@
         <div class="yui3-u-1-4">
             <div id="docs-sidebar" class="sidebar apidocs">
                 <div id="api-list">
-    <h2 class="off-left">APIs</h2>
-    <div id="api-tabview" class="tabview">
-        <ul class="tabs">
-            <li><a href="#api-classes">Classes</a></li>
-            <li><a href="#api-modules">Modules</a></li>
-        </ul>
-
-        <div id="api-tabview-filter">
-            <input type="search" id="api-filter" placeholder="Type to filter APIs">
-        </div>
-
-        <div id="api-tabview-panel">
-            <ul id="api-classes" class="apis classes">
-            
-                <li><a href="..&#x2F;classes/Browser.html">Browser</a></li>
-            
-                <li><a href="..&#x2F;classes/Element.html">Element</a></li>
-            
-                <li><a href="..&#x2F;classes/JWebDriver.html">JWebDriver</a></li>
-            
-            </ul>
-
-            <ul id="api-modules" class="apis modules">
-            
-            </ul>
-        </div>
-    </div>
-</div>
-
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/Browser.html">Browser</a></li>
+                                <li><a href="../classes/Elements.html">Elements</a></li>
+                                <li><a href="../classes/JWebDriver.html">JWebDriver</a></li>
+                            </ul>
+                
+                
+                            <ul id="api-modules" class="apis modules">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="yui3-u-3-4">
                 <div id="api-options">
-        Show:
-        <label for="api-show-inherited">
-            <input type="checkbox" id="api-show-inherited" checked>
-            Inherited
-        </label>
-
-        <label for="api-show-protected">
-            <input type="checkbox" id="api-show-protected">
-            Protected
-        </label>
-
-        <label for="api-show-private">
-            <input type="checkbox" id="api-show-private">
-            Private
-        </label>
-        <label for="api-show-deprecated">
-            <input type="checkbox" id="api-show-deprecated">
-            Deprecated
-        </label>
-
-    </div>
-
-
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>JWebDriver Class</h1>
+<h1>JWebDriver Class</h1>
 <div class="box meta">
-    
 
-    
 
-    
         <div class="foundat">
-            Defined in: <a href="..&#x2F;files&#x2F;lib_jwebdriver.js.html#l1"><code>lib\jwebdriver.js:1</code></a>
+            Defined in: <a href="../files/lib_jwebdriver.js.html#l2"><code>lib\jwebdriver.js:2</code></a>
         </div>
-    
 
-    
 
-    
 </div>
-
 
 
 <div class="box intro">
     <p>A webdriver client for Node.js</p>
-
 <p>
-此对象是jwebdriver组件的入口，主要用来初始化及同步运行测试代码。
+You can use JWebDriver connect to local webdriver or webdriver grid.
 </p>
-
-<pre>
-var JWebDriver = require('jwebdriver');
-JWebDriver.config({
-    'logMode': 'all',
-    'host': 'localhost',
-    'port': 4444
-});
-var wd = new JWebDriver({'browserName':'chrome'});
-wd.run(function(browser, $){
-    browser.url("http://www.baidu.com/");
-    var kw = $('#kw');
-    kw.val('mp3').submit();
-    browser.end();
-});
-</pre>
 </div>
-
 
 
 <div id="classdocs" class="tabview">
     <ul class="api-class-tabs">
         <li class="api-class-tab index"><a href="#index">Index</a></li>
 
-        
             <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
-        
-        
-        
-        
     </ul>
 
     <div>
         <div id="index" class="api-class-tabpanel index">
             <h2 class="off-left">Item Index</h2>
 
-            
                 <div class="index-section methods">
                     <h3>Methods</h3>
 
                     <ul class="index-list methods">
-                        
                             <li class="index-item method private">
-                                <a href="#method__init">_init</a>
+                                <a href="#method_constructor">constructor</a>
 
-                                
-                                
                             </li>
-                        
-                            <li class="index-item method private">
-                                <a href="#method__run">_run</a>
-
-                                
-                                
-                            </li>
-                        
                             <li class="index-item method public">
-                                <a href="#method_config">config</a>
+                                <a href="#method_exec">exec</a>
 
-                                
-                                    <span class="flag static">static</span>
-                                
-                                
                             </li>
-                        
                             <li class="index-item method public">
-                                <a href="#method_end">end</a>
+                                <a href="#method_execStrict">execStrict</a>
 
-                                
-                                
                             </li>
-                        
                             <li class="index-item method public">
-                                <a href="#method_run">run</a>
+                                <a href="#method_info">info</a>
 
-                                
-                                
                             </li>
-                        
+                            <li class="index-item method public">
+                                <a href="#method_log">log</a>
+
+                            </li>
+                            <li class="index-item method public">
+                                <a href="#method_requestSync">requestSync</a>
+
+                            </li>
+                            <li class="index-item method public">
+                                <a href="#method_session">session</a>
+
+                            </li>
+                            <li class="index-item method public">
+                                <a href="#method_sessions">sessions</a>
+
+                            </li>
+                            <li class="index-item method public">
+                                <a href="#method_sleep">sleep</a>
+
+                            </li>
                     </ul>
                 </div>
-            
 
-            
 
-            
 
-            
         </div>
 
-        
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
 
-                
-                    <div id="method__init" class="method item private">
-    <h3 class="name"><code>_init</code></h3>
+<div id="method_constructor" class="method item private">
+    <h3 class="name"><code>constructor</code></h3>
 
-    
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
-            
                 <li class="arg">
-                    
-                        <code>options</code>
-                    
+                        <code class="optional">[host]</code>
                 </li>
-            
                 <li class="arg">
-                    
-                        <code>onError</code>
-                    
+                        <code class="optional">[port]</code>
                 </li>
-            
             </ul><span class="paren">)</span>
         </div>
-    
 
-    
 
-    
 
-    
         <span class="flag private">private</span>
-    
 
-    
 
-    
 
-    
 
-    
 
     <div class="meta">
-        
-            
-                
                 <p>
-                
                 Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;lib_jwebdriver.js.html#l65"><code>lib\jwebdriver.js:65</code></a>
-        
+        <a href="../files/lib_jwebdriver.js.html#l76"><code>lib\jwebdriver.js:76</code></a>
         </p>
 
 
-        
 
-        
     </div>
 
     <div class="description">
-        <p>初始化函数</p>
+        <p>init driver</p>
+
     </div>
 
-    
         <div class="params">
             <h4>Parameters:</h4>
 
             <ul class="params-list">
-            
                 <li class="param">
-                    
-                        <code class="param-name">options</code>
-                        <span class="type">Object</span>
-                    
+                        <code class="param-name optional">[host]</code>
+                        <span class="type">String | Object</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
 
-                    
 
                     <div class="param-description">
-                        <p>初始化选项</p>
+                        <p>webdriver server ip or options</p>
+
                     </div>
 
-                    
                 </li>
-            
                 <li class="param">
-                    
-                        <code class="param-name">onError</code>
-                        <span class="type">Function</span>
-                    
+                        <code class="param-name optional">[port]</code>
+                        <span class="type">String</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
 
-                    
 
                     <div class="param-description">
-                        <p>失败回调函数</p>
+                        <p>webdriver server port</p>
+
                     </div>
 
-                    
                 </li>
-            
             </ul>
         </div>
-    
 
-    
 
-    
+
 </div>
+<div id="method_exec" class="method item public">
+    <h3 class="name"><code>exec</code></h3>
 
-                
-                    <div id="method__run" class="method item private">
-    <h3 class="name"><code>_run</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-
-    
-
-    
-        <span class="flag private">private</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;lib_jwebdriver.js.html#l111"><code>lib\jwebdriver.js:111</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>运行队列中的任务</p>
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_config" class="method item public">
-    <h3 class="name"><code>config</code></h3>
-
-    
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
-            
                 <li class="arg">
-                    
-                        <code>options</code>
-                    
+                        <code>cmd</code>
                 </li>
-            
+                <li class="arg">
+                        <code class="optional">[pathData]</code>
+                </li>
+                <li class="arg">
+                        <code class="optional">[data]</code>
+                </li>
+                <li class="arg">
+                        <code>done</code>
+                </li>
             </ul><span class="paren">)</span>
         </div>
-    
 
-    
-
-    
-
-    
-        <span class="flag public">public</span>
-    
-
-    
-
-    
-        <span class="flag static">static</span>
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;lib_jwebdriver.js.html#l42"><code>lib\jwebdriver.js:42</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>设置全局配置</p>
-
-<p>
-设置JWebDriver全局配置，后续所有实例共享此配置
-</p>
-
-<pre>
-JWebDriver.config({
-    'logMode': 'all',
-    'host': 'localhost',
-    'port': 4444
-});
-</pre>
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">options</code>
-                        <span class="type">Object</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>选项参数</p>
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_end" class="method item public">
-    <h3 class="name"><code>end</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-
-    
-
-    
-        <span class="flag public">public</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;lib_jwebdriver.js.html#l133"><code>lib\jwebdriver.js:133</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>结束WebDriver会话</p>
-
-<p>
-本接口仅能取消后续未执行的任务队列，已经在执行中的无法中断，并且会在当前任务执行完毕后才中断。
-</p>
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_run" class="method item public">
-    <h3 class="name"><code>run</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>func</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
         <span class="returns-inline">
-            <span class="type"><a href="..\classes\JWebDriver.html" class="crosslink">JWebDriver</a></span>
+            <span class="type">Object</span>
         </span>
-    
 
-    
 
-    
         <span class="flag public">public</span>
-    
 
-    
 
-    
 
-    
 
-    
 
     <div class="meta">
-        
-            
-                
                 <p>
-                
                 Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;lib_jwebdriver.js.html#l91"><code>lib\jwebdriver.js:91</code></a>
-        
+        <a href="../files/lib_jwebdriver.js.html#l171"><code>lib\jwebdriver.js:171</code></a>
         </p>
 
 
-        
 
-        
     </div>
 
     <div class="description">
-        <p>加入任务队列</p>
+        <p>execute protocal command</p>
 
-<p>
-若当前队列为空，则直接运行
-</p>
     </div>
 
-    
         <div class="params">
             <h4>Parameters:</h4>
 
             <ul class="params-list">
-            
                 <li class="param">
-                    
-                        <code class="param-name">func</code>
-                        <span class="type">Function</span>
-                    
+                        <code class="param-name">cmd</code>
+                        <span class="type">String</span>
 
-                    
 
                     <div class="param-description">
-                        <p>需要运行的函数</p>
+                        <p>protocal command, defined in command.js</p>
+
                     </div>
 
-                    
                 </li>
-            
+                <li class="param">
+                        <code class="param-name optional">[pathData]</code>
+                        <span class="type">Object</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+
+
+                    <div class="param-description">
+                        <p>replace the path parameters</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name optional">[data]</code>
+                        <span class="type">Object</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+
+
+                    <div class="param-description">
+                        <p>send data to protocal api</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">done</code>
+                        <span class="type">Function</span>
+
+
+                    <div class="param-description">
+                        <p>callback function</p>
+
+                    </div>
+
+                </li>
             </ul>
         </div>
-    
 
-    
         <div class="returns">
             <h4>Returns:</h4>
 
             <div class="returns-description">
-                
-                    
-                        <span class="type"><a href="..\classes\JWebDriver.html" class="crosslink">JWebDriver</a></span>:
-                    
-                    当前JWebDriver对象实例
-                
+                        <span class="type">Object</span>:
+                    <p>the return object from webdriver server</p>
+
             </div>
         </div>
-    
 
-    
+
 </div>
+<div id="method_execStrict" class="method item public">
+    <h3 class="name"><code>execStrict</code></h3>
 
-                
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>cmd</code>
+                </li>
+                <li class="arg">
+                        <code class="optional">[pathData]</code>
+                </li>
+                <li class="arg">
+                        <code class="optional">[data]</code>
+                </li>
+                <li class="arg">
+                        <code>done</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+        <span class="flag public">public</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_jwebdriver.js.html#l284"><code>lib\jwebdriver.js:284</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>execute protocal command strictly</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">cmd</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>protocal command, defined in command.js</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name optional">[pathData]</code>
+                        <span class="type">Object</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+
+
+                    <div class="param-description">
+                        <p>replace the path parameters</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name optional">[data]</code>
+                        <span class="type">Object</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+
+
+                    <div class="param-description">
+                        <p>send data to protocal api</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">done</code>
+                        <span class="type">Function</span>
+
+
+                    <div class="param-description">
+                        <p>callback function</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>the return object from webdriver server</p>
+
             </div>
-        
+        </div>
 
-        
 
-        
+</div>
+<div id="method_info" class="method item public">
+    <h3 class="name"><code>info</code></h3>
 
-        
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>done</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+        <span class="flag public">public</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_jwebdriver.js.html#l99"><code>lib\jwebdriver.js:99</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>get webdriver server info</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">done</code>
+                        <span class="type">Function</span>
+
+
+                    <div class="param-description">
+                        <p>callback function</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_log" class="method item public">
+    <h3 class="name"><code>log</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>type</code>
+                </li>
+                <li class="arg">
+                        <code>message</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+        <span class="flag public">public</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_jwebdriver.js.html#l111"><code>lib\jwebdriver.js:111</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>save log</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">type</code>
+                        <span class="type">COMMAND | DATA | RESULT | ERROR | WARNING | INFO</span>
+
+
+                    <div class="param-description">
+                        <p>log type</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">message</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>log message</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_requestSync" class="method item public">
+    <h3 class="name"><code>requestSync</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>options</code>
+                </li>
+                <li class="arg">
+                        <code>done</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+        <span class="flag public">public</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_jwebdriver.js.html#l154"><code>lib\jwebdriver.js:154</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>request sync</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">options</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">done</code>
+                        <span class="type">Function</span>
+
+
+                    <div class="param-description">
+                        <p>callback function</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>error, {response:{}, body:{}}</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_session" class="method item public">
+    <h3 class="name"><code>session</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>browserName</code>
+                </li>
+                <li class="arg">
+                        <code>version</code>
+                </li>
+                <li class="arg">
+                        <code>platform</code>
+                </li>
+                <li class="arg">
+                        <code>done</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Browser.html" class="crosslink">Browser</a></span>
+        </span>
+
+
+        <span class="flag public">public</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_jwebdriver.js.html#l357"><code>lib\jwebdriver.js:357</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>init new session or attach to a session id</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">browserName</code>
+                        <span class="type">String | Object</span>
+
+
+                    <div class="param-description">
+                        <p>or capabilitie object</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">version</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">platform</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">done</code>
+                        <span class="type">Function</span>
+
+
+                    <div class="param-description">
+                        <p>callback function</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"><a href="../classes/Browser.html" class="crosslink">Browser</a></span>:
+                    <p>Browser object</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_sessions" class="method item public">
+    <h3 class="name"><code>sessions</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>done</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Array</span>
+        </span>
+
+
+        <span class="flag public">public</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_jwebdriver.js.html#l320"><code>lib\jwebdriver.js:320</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>get all sessions</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">done</code>
+                        <span class="type">Function</span>
+
+
+                    <div class="param-description">
+                        <p>callback function</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Array</span>:
+                    <p>sessions array</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_sleep" class="method item public">
+    <h3 class="name"><code>sleep</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>ms</code>
+                </li>
+                <li class="arg">
+                        <code>done</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+        <span class="flag public">public</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_jwebdriver.js.html#l142"><code>lib\jwebdriver.js:142</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>sleep sync</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">ms</code>
+                        <span class="type">Number</span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">done</code>
+                        <span class="type">Function</span>
+
+
+                    <div class="param-description">
+                        <p>callback function</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+            </div>
+
+
+
     </div>
 </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
 <script>prettyPrint();</script>
-<script src="..&#x2F;assets/js/yui-prettify.js"></script>
-<script src="..&#x2F;assets/../api.js"></script>
-<script src="..&#x2F;assets/js/api-filter.js"></script>
-<script src="..&#x2F;assets/js/api-list.js"></script>
-<script src="..&#x2F;assets/js/api-search.js"></script>
-<script src="..&#x2F;assets/js/apidocs.js"></script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
 </body>
 </html>

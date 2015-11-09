@@ -1,0 +1,741 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for jWebDriver\lib\hostsproxy.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../prettify.css">
+    <link rel="stylesheet" href="../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">jWebDriver\lib\hostsproxy.js</span></h1>
+    <h2>
+        Statements: <span class="metric">88.49% <small>(123 / 139)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">68% <small>(17 / 25)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">78.13% <small>(25 / 32)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">88.49% <small>(123 / 139)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../index.html">All files</a> &#187; <a href="index.html">jWebDriver/lib/</a> &#187; hostsproxy.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">30</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">28</span>
+<span class="cline-any cline-yes">28</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">28</span>
+<span class="cline-any cline-yes">28</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">28</span>
+<span class="cline-any cline-yes">28</span>
+<span class="cline-any cline-yes">28</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">28</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">28</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-yes">66</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-yes">33</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict';
+const net = require('net');
+const http = require('http');
+const url = require('url');
+const util = require('util');
+const EventEmitter = require('events').EventEmitter;
+const extend = require('xtend');
+&nbsp;
+process.on('uncaughtException', <span class="fstat-no" title="function not covered" >function(err) {</span>
+<span class="cstat-no" title="statement not covered" >  console.log('Caught exception: ', err);</span>
+});
+&nbsp;
+const defaultConfig = {
+    hosts: ''
+};
+&nbsp;
+const HostsProxyServer = function(){
+    let self = this;
+    return self._init.apply(self, arguments);
+};
+util.inherits(HostsProxyServer, EventEmitter);
+&nbsp;
+const HostsProxyServerPrototype = HostsProxyServer.prototype;
+&nbsp;
+HostsProxyServerPrototype._init = function(config){
+    let self = this;
+    config = extend({}, defaultConfig, config);
+&nbsp;
+    self.port = null;
+    self.workPort = null;
+    self.httpPort = null;
+&nbsp;
+    self._portSever = null;
+    self._httpServer = null;
+&nbsp;
+    <span class="missing-if-branch" title="if path not taken" >I</span>if(config.mode === 'forward'){
+<span class="cstat-no" title="statement not covered" >        self.setForward(config.forwardHost, config.forwardPort);</span>
+    }
+    else{
+        self.setHosts(config.hosts);
+    }
+};
+&nbsp;
+// set hosts
+HostsProxyServerPrototype.setHosts = function(strHosts){
+    let self = this;
+    self.forwardHost = null;
+    self.forwardPort = null;
+    let mapHosts = {};
+    let arrLines = strHosts.split(/\r?\n/);
+    arrLines.forEach(function(line){
+        let match = line.match(/^\s*([\da-z\-\.]{3,})\s+([^#]+)/i);
+        <span class="missing-if-branch" title="else path not taken" >E</span>if(match){
+            match[2].trim().split(/\s+/).forEach(function(domain){
+                domain = domain.toLowerCase();
+                <span class="missing-if-branch" title="else path not taken" >E</span>if(mapHosts[domain] === undefined){
+                    mapHosts[domain] = match[1];
+                }
+            });
+        }
+    });
+    self._mapHosts = mapHosts;
+};
+&nbsp;
+// set forward proxy
+HostsProxyServerPrototype.setForward = <span class="fstat-no" title="function not covered" >function(forwardHost, forwardPort){</span>
+<span class="cstat-no" title="statement not covered" >    let self = this;</span>
+<span class="cstat-no" title="statement not covered" >    self.forwardHost = forwardHost;</span>
+<span class="cstat-no" title="statement not covered" >    self.forwardPort = forwardPort;</span>
+};
+&nbsp;
+// get new hostname
+HostsProxyServerPrototype._getNewHostname = function(hostname){
+    let self = this;
+    let mapHosts = self._mapHosts;
+    for(let domain in mapHosts){
+        if(shExpMatch(hostname, domain)){
+            return mapHosts[domain];
+        }
+    }
+    return hostname;
+};
+&nbsp;
+// start proxy server
+HostsProxyServerPrototype.listen = function(port, callback){
+    let self = this;
+    self.port = port;
+&nbsp;
+    <span class="missing-if-branch" title="else path not taken" >E</span>if(callback !== undefined){
+        self.on('ready', callback);
+    }
+    // create port proxy
+    let portSever = self._portSever = net.createServer(function(client) {
+        let forwardPort = self.forwardPort || self.httpPort;
+        let forwardHost = self.forwardHost || '127.0.0.1';
+        let forwardServer = net.connect(forwardPort, forwardHost, function() {
+            forwardServer.pipe(client);
+        });
+        client.pipe(forwardServer);
+        forwardServer.on('error', <span class="fstat-no" title="function not covered" >function(err){</span>
+<span class="cstat-no" title="statement not covered" >            client.end();</span>
+<span class="cstat-no" title="statement not covered" >            self.emit('error', err);</span>
+        });
+        client.on('error', function(err){
+            forwardServer.end();
+            self.emit('error', err);
+        });
+    });
+    let mapConnection1 = self._mapConnection1 = {};
+    portSever.on('connection', function(conn){
+        let key = conn.remoteAddress + ':' + conn.remotePort;
+        mapConnection1[key] = conn;
+        conn.on('close', function() {
+            delete mapConnection1[key];
+        });
+    });
+    portSever.listen(port, function() {
+        let workPort = self.workPort =portSever.address().port;
+        self.emit('ready', {
+            port: workPort
+        });
+    });
+    portSever.on('error', <span class="fstat-no" title="function not covered" >function(err){</span>
+<span class="cstat-no" title="statement not covered" >        self.emit('error', err);</span>
+    });
+    // create http proxy
+    let httpServer = self._httpServer = http.createServer(function (clientRequest, clientResponse) {
+        let urlInfo = url.parse(clientRequest.url);
+        let userIp = clientRequest.connection.remoteAddress ||
+<span class="branch-1 cbranch-no" title="branch not covered" >            clientRequest.socket.remoteAddress </span>||
+<span class="branch-2 cbranch-no" title="branch not covered" >            clientRequest.connection.socket.remoteAddress;</span>
+        clientRequest.headers['X-Forwarded-For'] = userIp;
+        let reqOptions = {
+            hostname: self._getNewHostname(urlInfo.hostname),
+            port: urlInfo.port || <span class="branch-1 cbranch-no" title="branch not covered" >80,</span>
+            method: clientRequest.method,
+            path: urlInfo.path,
+            headers: clientRequest.headers,
+            agent: false
+        };
+        let remoteServer = http.request(reqOptions, function (remoteResponse) {
+            clientResponse.writeHead(remoteResponse.statusCode, remoteResponse.headers);
+            remoteResponse.pipe(clientResponse);
+        });
+        remoteServer.on('error', <span class="fstat-no" title="function not covered" >function (err) {</span>
+<span class="cstat-no" title="statement not covered" >            clientResponse.end();</span>
+<span class="cstat-no" title="statement not covered" >            self.emit('error', err);</span>
+        });
+        clientRequest.pipe(remoteServer);
+    });
+    // create https proxy
+    httpServer.on('connect', function (httpRequest, reqSocket) {
+        let urlInfo = url.parse('http://' + httpRequest.url);
+        let remoteSocket = net.connect(urlInfo.port, self._getNewHostname(urlInfo.hostname), function () {
+            reqSocket.write("HTTP/1.1 200 Connection established\r\n\r\n");
+            remoteSocket.pipe(reqSocket).pipe(remoteSocket);
+        });
+        remoteSocket.on('error', <span class="fstat-no" title="function not covered" >function (err) {</span>
+<span class="cstat-no" title="statement not covered" >            reqSocket.end();</span>
+<span class="cstat-no" title="statement not covered" >            self.emit('error', err);</span>
+        });
+    });
+    httpServer.on('error', <span class="fstat-no" title="function not covered" >function(err){</span>
+<span class="cstat-no" title="statement not covered" >        self.emit('error', err);</span>
+    });
+    let mapConnection2 = self._mapConnection2 = {};
+    httpServer.on('connection', function(conn){
+        let key = conn.remoteAddress + ':' + conn.remotePort;
+        mapConnection2[key] = conn;
+        conn.on('close', function() {
+            delete mapConnection2[key];
+        });
+    });
+    httpServer.listen(0, function() {
+        let httpPort = self.httpPort = httpServer.address().port;
+        self.emit('httpReady', {
+            port: httpPort
+        });
+    });
+};
+&nbsp;
+// close proxy
+HostsProxyServerPrototype.close = function(callback){
+    let self = this;
+    let httpServer = self._httpServer;
+    let portSever = self._portSever;
+    <span class="missing-if-branch" title="else path not taken" >E</span>if(httpServer !== null){
+        let closeCount = 0;
+        httpServer.close(checkAllClose);
+        portSever.close(checkAllClose);
+        // destroy all connection
+        let mapConnection1 = self._mapConnection1;
+        for (let key in mapConnection1){
+<span class="cstat-no" title="statement not covered" >            mapConnection1[key].destroy();</span>
+        }
+        let mapConnection2 = self._mapConnection2;
+        for (let key in mapConnection2){
+<span class="cstat-no" title="statement not covered" >            mapConnection2[key].destroy();</span>
+        }
+        function checkAllClose(){
+            closeCount ++;
+            if(closeCount == 2){
+                callback &amp;&amp; callback();
+                self._httpServer = null;
+                self._portSever = null;
+                self.emit('close');
+            }
+        }
+    }
+};
+&nbsp;
+const hostsproxy = {
+    Server: HostsProxyServer,
+    createServer: function(config){
+        return new HostsProxyServer(config);
+    }
+};
+&nbsp;
+// check shExp match
+function shExpMatch(text, exp){
+    exp = exp.replace(/\.|\*|\?/g, function(c){
+        return { '.': '\\.', '*': '.*?', '?': '.' }[c];
+    });
+    try{
+        return new RegExp('^'+exp+'$').test(text);
+    }
+    catch(e){
+<span class="cstat-no" title="statement not covered" >        return false;</span>
+    }
+}
+&nbsp;
+module.exports = hostsproxy;
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Nov 09 2015 09:37:20 GMT+0800 (中国标准时间)</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>
