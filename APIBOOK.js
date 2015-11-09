@@ -40,10 +40,10 @@ co(function*(){
     // set hosts
     var chrome = yield driver.session({
         'browserName':'chrome',
-        'hosts': '127.0.0.1 www.alibaba.com'
+        'hosts': '192.168.1.1 www.alibaba.com\r\n192.168.1.1 www.google.com'
     });
     // attach session
-    var chrome = yield driver.session('xxxxxxxxxx');
+    var chrome = yield driver.session('xxxxxxxxxx'); // session id
 
     // get session info
     var capabilities = yield chrome.info(); // get capabilities

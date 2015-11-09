@@ -46,8 +46,8 @@ module.exports = function(grunt) {
                 stdout: true,
                 stderr: true
             },
-            coverUnix: {
-                command: (isWin32?'set':'export')+' coverunix=1 & "./node_modules/.bin/istanbul" cover "./node_modules/mocha/bin/_mocha"',
+            coverPhantomjs: {
+                command: (isWin32?'set':'export')+' phantomjs=1 & "./node_modules/.bin/istanbul" cover "./node_modules/mocha/bin/_mocha"',
                 stdout: true,
                 stderr: true
             }
@@ -93,7 +93,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('dev', ['jshint', 'exec:test']);
 
-    grunt.registerTask('unix', ['jshint', 'clean', 'startPhantomjs', 'exec:coverUnix', 'closePhantomjs', 'yuidoc']);
+    grunt.registerTask('unix', ['jshint', 'clean', 'startPhantomjs', 'exec:coverPhantomjs', 'closePhantomjs', 'yuidoc']);
 
     grunt.registerTask('win32', ['jshint', 'clean', 'exec:cover', 'yuidoc']);
 

@@ -5,10 +5,10 @@ var co = require('co');
 var JWebDriver = require('../');
 var expect  = require("expect.js");
 var isWin32 = process.platform === 'win32';
-var coverUnix = process.env['coverunix'] || !isWin32;
+var phantomjs = process.env['phantomjs'] || !isWin32;
 
 var driverPort = 4444;
-if(coverUnix){
+if(phantomjs){
     driverPort = 4445;
     runBrowserTest('phantomjs');
 }
@@ -87,7 +87,7 @@ function runBrowserTest(browserName){
 
 		});
 
-        if(!coverUnix){
+        if(!phantomjs){
             it('hosts mode should work', function(done){
 
                 co(function*(){

@@ -79,11 +79,14 @@ API Book
 
 jWebDriver have 3 Class: Driver, Broswer, Elemenets
 
-All api can used with chain promise and all support generator & es7 async:
+All api can used with chain promise and support generator & es7 async:
 
-    browser.find('#kw').then(function(kw){
-        return kw.setValue('test').submit();
+    browser.find('#kw').then(function(elements){
+        return elements.setValue('test').submit();
     }).then(function(){
+        return browser.title();
+    }).then(function(title){
+        console.log(title);
         console.log('done!');
     }).catch(function(error){
         console.log(error);
@@ -134,10 +137,10 @@ You can search all api here, include all mode of api:
         // set hosts
         var chrome = yield driver.session({
             'browserName':'chrome',
-            'hosts': '127.0.0.1 www.alibaba.com'
+            'hosts': '192.168.1.1 www.alibaba.com\r\n192.168.1.1 www.google.com'
         });
         // attach session
-        var chrome = yield driver.session('xxxxxxxxxx');
+        var chrome = yield driver.session('xxxxxxxxxx'); // session id
 
         // get session info
         var capabilities = yield chrome.info(); // get capabilities
@@ -430,7 +433,6 @@ You can search all api here, include all mode of api:
     }).catch(function(error){
         console.log(error);
     });
-
 
 API Doc: [http://jwebdriver.com/api/](http://jwebdriver.com/api/)
 
