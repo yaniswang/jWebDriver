@@ -1,6 +1,11 @@
 jWebDriver change log
 ====================
 
+## ver 1.0.1 (2015-11-9)
+
+1. Update PromiseClass to v0.9.5: support generator callback function
+2. Fix examples
+
 ## ver 1.0.0 (2015-11-9)
 
 1. All api reconstructed

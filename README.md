@@ -13,7 +13,7 @@ A webdriver client for Node.js
 
 Official Site: [http://jwebdriver.com/](http://jwebdriver.com/)
 
-Coverage: [86.82%](http://jwebdriver.com/coverage/)
+Coverage: [86.76%](http://jwebdriver.com/coverage/)
 
 Features
 ================
@@ -39,30 +39,81 @@ Quick start
 
 	> java -jar selenium-server-standalone-2.26.0.jar
 
-3. Insall JWebDriver
+3. Insall jWebDriver
 
     > npm install jwebdriver
 
 4. Run test code
 
-    > node test.js
+    > node baidu.js
 
         var JWebDriver = require('jwebdriver');
-        var co = require('co');
 
-        co(function*(){
-            var driver = new JWebDriver();
-            var chrome = yield driver.session('chrome');
+        var driver = new JWebDriver();
+        driver.session('chrome', function*(error, chrome){
             yield chrome.url('https://www.baidu.com/');
             var elemement = yield chrome.find('#kw');
             yield elemement.setValue('mp3').submit();
+
             console.log(yield chrome.title());
+
             yield chrome.close();
         }).then(function(){
-            console.log('All done!');
+            console.log('all done');
         }).catch(function(error){
-            console.log('Catched error:', error);
+            console.log(error);
         });
+
+    > node mocha.js
+
+        var JWebDriver = require('jwebdriver');
+        var expect  = require("expect.js");
+        require('mocha-generators').install();
+
+        describe('jWebDriver test', function(){
+
+            var browser;
+            before(function*(){
+                var driver = new JWebDriver();
+                browser = yield driver.session('chrome');
+            });
+
+            it('should open url', function*(){
+                yield browser.url('https://www.baidu.com/');
+                var kw = yield browser.find('#kw');
+                expect(kw.length).to.be(1);
+
+                yield kw.setValue('mp3').submit();
+
+                var url = yield browser.url();
+                expect(url).to.contain('wd=mp3');
+            });
+
+            after(function*(){
+                yield browser.close();
+            });
+
+        });
+
+    > node promise.js
+
+        var JWebDriver = require('jwebdriver');
+
+        var driver = new JWebDriver();
+        driver.session('chrome', function(error, chrome) {
+            chrome.url('https://www.baidu.com/')
+                  .find('#kw')
+                  .then(function(kw) {
+                      return kw.setValue('mp3')
+                               .submit();
+                  })
+                  .title()
+                  .then(function(title) {
+                      console.log(title);
+                  })
+                  .close();
+        });
+
 
 More examples
 ================
@@ -70,9 +121,11 @@ More examples
 1. [Baidu test](https://github.com/yaniswang/jWebDriver/blob/master/example/baidu.js)
 2. [Gooogle test](https://github.com/yaniswang/jWebDriver/blob/master/example/google.js)
 3. [Mocha test](https://github.com/yaniswang/jWebDriver/blob/master/example/mocha.js)
-4. [ES7 async](https://github.com/yaniswang/jWebDriver/blob/master/example/es7async.js)
+4. [Promise test](https://github.com/yaniswang/jWebDriver/blob/master/example/promise.js)
 5. [Upload test](https://github.com/yaniswang/jWebDriver/blob/master/example/upload.js)
 6. [Drag Drop test](https://github.com/yaniswang/jWebDriver/blob/master/example/dragdrop.js)
+7. [Co test](https://github.com/yaniswang/jWebDriver/blob/master/example/co.js)
+8. [ES7 async](https://github.com/yaniswang/jWebDriver/blob/master/example/es7async.js)
 
 API Book
 ================
@@ -82,14 +135,12 @@ jWebDriver have 3 Class: Driver, Broswer, Elemenets
 All api can used with chain promise and support generator & es7 async:
 
     browser.find('#kw').then(function(elements){
-        return elements.setValue('test').submit();
-    }).then(function(){
-        return browser.title();
-    }).then(function(title){
+        return elements.setValue('test')
+                       .submit();
+    })
+    .title()
+    .then(function(title){
         console.log(title);
-        console.log('done!');
-    }).catch(function(error){
-        console.log(error);
     });
 
 

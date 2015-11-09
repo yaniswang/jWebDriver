@@ -1,13 +1,12 @@
 {
   "name": "jwebdriver",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A webdriver client for node.js",
   "homepage": "http://jwebdriver.com/",
   "main": "./index",
   "dependencies": {
-    "co": "4.6.0",
     "node-zip": "1.1.1",
-    "promiseclass": "0.9.4",
+    "promiseclass": "0.9.5",
     "request": "2.65.0",
     "xtend": "2.0.3"
   },
@@ -24,7 +23,9 @@
     "istanbul": "0.3.22",
     "istanbul-coveralls": "1.0.3",
     "mocha": "2.3.3",
-    "phantomjs": "1.9.18"
+    "mocha-generators": "1.2.0",
+    "phantomjs": "1.9.18",
+    "co": "4.6.0"
   },
   "scripts": {
     "test": "mocha"
