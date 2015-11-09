@@ -34,7 +34,7 @@
 
 <p>Official Site: <a href="http://jwebdriver.com/">http://jwebdriver.com/</a></p>
 
-<p>Coverage: <a href="http://jwebdriver.com/coverage/">86.82%</a></p>
+<p>Coverage: <a href="http://jwebdriver.com/coverage/">86.76%</a></p>
 
 <h1>
 <a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h1>
@@ -71,7 +71,7 @@
 </blockquote>
 </li>
 <li>
-<p>Insall JWebDriver</p>
+<p>Insall jWebDriver</p>
 
 <blockquote>
 <p>npm install jwebdriver</p>
@@ -81,24 +81,80 @@
 <p>Run test code</p>
 
 <blockquote>
-<p>node test.js</p>
+<p>node baidu.js</p>
 </blockquote>
 
 <pre><code>var JWebDriver = require('jwebdriver');
-var co = require('co');
 
-co(function*(){
-    var driver = new JWebDriver();
-    var chrome = yield driver.session('chrome');
+var driver = new JWebDriver();
+driver.session('chrome', function*(error, chrome){
     yield chrome.url('https://www.baidu.com/');
     var elemement = yield chrome.find('#kw');
     yield elemement.setValue('mp3').submit();
+
     console.log(yield chrome.title());
+
     yield chrome.close();
 }).then(function(){
-    console.log('All done!');
+    console.log('all done');
 }).catch(function(error){
-    console.log('Catched error:', error);
+    console.log(error);
+});
+</code></pre>
+
+<blockquote>
+<p>node mocha.js</p>
+</blockquote>
+
+<pre><code>var JWebDriver = require('jwebdriver');
+var expect  = require("expect.js");
+require('mocha-generators').install();
+
+describe('jWebDriver test', function(){
+
+    var browser;
+    before(function*(){
+        var driver = new JWebDriver();
+        browser = yield driver.session('chrome');
+    });
+
+    it('should open url', function*(){
+        yield browser.url('https://www.baidu.com/');
+        var kw = yield browser.find('#kw');
+        expect(kw.length).to.be(1);
+
+        yield kw.setValue('mp3').submit();
+
+        var url = yield browser.url();
+        expect(url).to.contain('wd=mp3');
+    });
+
+    after(function*(){
+        yield browser.close();
+    });
+
+});
+</code></pre>
+
+<blockquote>
+<p>node promise.js</p>
+</blockquote>
+
+<pre><code>var JWebDriver = require('jwebdriver');
+
+var driver = new JWebDriver();
+driver.session('chrome', function(error, chrome) {
+    chrome.url('https://www.baidu.com/')
+          .find('#kw')
+          .then(function(kw) {
+              return kw.setValue('mp3')
+                       .submit();
+          })
+          .title()
+          .then(function(title) {
+              console.log(title);
+          })
+          .close();
 });
 </code></pre>
 </li>
@@ -111,9 +167,11 @@ co(function*(){
 <li><a href="https://github.com/yaniswang/jWebDriver/blob/master/example/baidu.js">Baidu test</a></li>
 <li><a href="https://github.com/yaniswang/jWebDriver/blob/master/example/google.js">Gooogle test</a></li>
 <li><a href="https://github.com/yaniswang/jWebDriver/blob/master/example/mocha.js">Mocha test</a></li>
-<li><a href="https://github.com/yaniswang/jWebDriver/blob/master/example/es7async.js">ES7 async</a></li>
+<li><a href="https://github.com/yaniswang/jWebDriver/blob/master/example/promise.js">Promise test</a></li>
 <li><a href="https://github.com/yaniswang/jWebDriver/blob/master/example/upload.js">Upload test</a></li>
 <li><a href="https://github.com/yaniswang/jWebDriver/blob/master/example/dragdrop.js">Drag Drop test</a></li>
+<li><a href="https://github.com/yaniswang/jWebDriver/blob/master/example/co.js">Co test</a></li>
+<li><a href="https://github.com/yaniswang/jWebDriver/blob/master/example/es7async.js">ES7 async</a></li>
 </ol>
 
 <h1>
@@ -124,14 +182,12 @@ co(function*(){
 <p>All api can used with chain promise and support generator &amp; es7 async:</p>
 
 <pre><code>browser.find('#kw').then(function(elements){
-    return elements.setValue('test').submit();
-}).then(function(){
-    return browser.title();
-}).then(function(title){
+    return elements.setValue('test')
+                   .submit();
+})
+.title()
+.then(function(title){
     console.log(title);
-    console.log('done!');
-}).catch(function(error){
-    console.log(error);
 });
 </code></pre>
 
