@@ -11,9 +11,9 @@ A webdriver client for Node.js
 [![NPM count](https://img.shields.io/npm/dm/jwebdriver.svg?style=flat)](https://www.npmjs.com/package/jwebdriver)
 [![NPM count](https://img.shields.io/npm/dt/jwebdriver.svg?style=flat)](https://www.npmjs.com/package/jwebdriver)
 
-Official Site: [http://jwebdriver.com/](http://jwebdriver.com/)
-
-Coverage: [86.76%](http://jwebdriver.com/coverage/)
+1. Official Site: [http://jwebdriver.com/](http://jwebdriver.com/)
+3. API Doc: [http://jwebdriver.com/api/](http://jwebdriver.com/api/)
+2. Coverage: [http://jwebdriver.com/coverage/](http://jwebdriver.com/coverage/) (86.76%)
 
 Features
 ================
@@ -484,8 +484,6 @@ You can search all api here, include all mode of api:
     }).catch(function(error){
         console.log(error);
     });
-
-API Doc: [http://jwebdriver.com/api/](http://jwebdriver.com/api/)
 
 License
 ================
