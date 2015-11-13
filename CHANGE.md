@@ -1,6 +1,12 @@
 jWebDriver change log
 ====================
 
+## ver 1.0.2 (2015-11-13)
+
+1. add elements.select: used for select `<option>`
+2. add elements.val api, used for get and set value from element
+3. delete elements.setValue api
+
 ## ver 1.0.1 (2015-11-9)
 
 1. Update PromiseClass to v0.9.5: support generator callback function

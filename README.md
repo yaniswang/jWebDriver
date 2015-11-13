@@ -13,7 +13,7 @@ A webdriver client for Node.js
 
 1. Official Site: [http://jwebdriver.com/](http://jwebdriver.com/)
 3. API Doc: [http://jwebdriver.com/api/](http://jwebdriver.com/api/)
-2. Coverage: [http://jwebdriver.com/coverage/](http://jwebdriver.com/coverage/) (86.76%)
+2. Coverage: [http://jwebdriver.com/coverage/](http://jwebdriver.com/coverage/) (86.88%)
 
 Features
 ================
@@ -53,7 +53,7 @@ Quick start
         driver.session('chrome', function*(error, chrome){
             yield chrome.url('https://www.baidu.com/');
             var elemement = yield chrome.find('#kw');
-            yield elemement.setValue('mp3').submit();
+            yield elemement.val('mp3').submit();
 
             console.log(yield chrome.title());
 
@@ -83,7 +83,7 @@ Quick start
                 var kw = yield browser.find('#kw');
                 expect(kw.length).to.be(1);
 
-                yield kw.setValue('mp3').submit();
+                yield kw.val('mp3').submit();
 
                 var url = yield browser.url();
                 expect(url).to.contain('wd=mp3');
@@ -104,7 +104,7 @@ Quick start
             chrome.url('https://www.baidu.com/')
                   .find('#kw')
                   .then(function(kw) {
-                      return kw.setValue('mp3')
+                      return kw.val('mp3')
                                .submit();
                   })
                   .title()
@@ -135,7 +135,7 @@ jWebDriver have 3 Class: Driver, Broswer, Elemenets
 All api can used with chain promise and support generator & es7 async:
 
     browser.find('#kw').then(function(elements){
-        return elements.setValue('test')
+        return elements.val('test')
                        .submit();
     })
     .title()
@@ -396,6 +396,8 @@ You can search all api here, include all mode of api:
         }
 
         var tagName = yield element.tagName(); // get tagname (first element)
+        var value = element.val(); // equal to element.attr('value');
+        yield element.val('mp3'); // equal to: element.clear().sendKeys('mp3');
         var value = yield element.attr('id'); // get attr value (first element)
         var value = yield element.css('border'); // get css value (first element)
         yield element.clear(); // clear input & textarea value
@@ -408,11 +410,18 @@ You can search all api here, include all mode of api:
         var isEnabled = yield element.enabled(); //is element enabled (first element)
         var isSelected = yield element.selected(); // is element selected (first element)
 
+        // select option
+        yield element.select(0); // select index
+        yield element.select('book'); // select value
+        yield element.select({
+            type: 'value', // index | value | text
+            value: 'book'
+        });
+
         yield element.sendKeys('abc'); // send keys to element
         var Keys = chrome.Keys;
         yield element.sendKeys('a'+Keys.LEFT);
         yield element.sendKeys('{CTRL}a{CTRL}');
-        yield element.setValue('mp3'); // equal to: element.clear().sendKeys('mp3');
 
         yield element.click(); // click element
         yield element.dblClick(); // dblClick element
@@ -484,6 +493,7 @@ You can search all api here, include all mode of api:
     }).catch(function(error){
         console.log(error);
     });
+
 
 License
 ================

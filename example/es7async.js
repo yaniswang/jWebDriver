@@ -9,7 +9,7 @@ var openGoogle = async function(){
 
     await chrome.url('https://www.google.com/');
     var elemement = await chrome.find('input[name=q]');
-    await elemement.setValue('mp3').submit();
+    await elemement.val('mp3').submit();
 
     console.log(await chrome.title());
 

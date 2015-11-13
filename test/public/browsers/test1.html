@@ -1,3 +1,16 @@
-<!DOCTYPE HTML><html><head><meta charset="UTF-8"><title>testtitle</title></head>
-<p style="padding:20px;"><input type="text" id="kw" onclick="this.value=1" ondblclick="this.value=2"><script>document.getElementById("kw").focus();</script><input type="text" id="testmouse" onmousedown="this.value=3" onmouseup="this.value=4"><input type="button" id="alert" onclick="alert(111)" value="alert"><input type="button" id="confirm" onclick="this.value=confirm(222)" value="confirm"><input type="button" id="prompt" onclick="this.value=prompt(333)" value="prompt"></p><a href="test2.html" target="_blank" id="testwindow">test2</a><iframe src="test2.html" id="testiframe"></iframe>
-<body></body></html>
+<!DOCTYPE HTML>
+<html>
+<head><meta charset="UTF-8"><title>testtitle</title></head>
+<body>
+    <p style="padding:20px;">
+        <input type="text" id="kw" onclick="this.value=1" ondblclick="this.value=2">
+        <script>document.getElementById("kw").focus();</script>
+        <input type="text" id="testmouse" onmousedown="this.value=3" onmouseup="this.value=4">
+        <input type="button" id="alert" onclick="alert(111)" value="alert">
+        <input type="button" id="confirm" onclick="this.value=confirm(222)" value="confirm">
+        <input type="button" id="prompt" onclick="this.value=prompt(333)" value="prompt">
+    </p>
+    <a href="test2.html" target="_blank" id="testwindow">test2</a>
+    <iframe src="test2.html" id="testiframe"></iframe>
+</body>
+</html>

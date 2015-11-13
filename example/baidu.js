@@ -4,7 +4,7 @@ var driver = new JWebDriver();
 driver.session('chrome', function*(error, chrome){
     yield chrome.url('https://www.baidu.com/');
     var elemement = yield chrome.find('#kw');
-    yield elemement.setValue('mp3').submit();
+    yield elemement.val('mp3').submit();
 
     console.log(yield chrome.title());
 

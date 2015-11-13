@@ -15,7 +15,7 @@ describe('jWebDriver test', function(){
         var kw = yield browser.find('#kw');
         expect(kw.length).to.be(1);
 
-        yield kw.setValue('mp3').submit();
+        yield kw.val('mp3').submit();
 
         var url = yield browser.url();
         expect(url).to.contain('wd=mp3');

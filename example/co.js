@@ -9,7 +9,7 @@ co(function*(){
 
     yield chrome.url('https://www.baidu.com/');
     var elemement = yield chrome.find('#kw');
-    yield elemement.setValue('前端').submit();
+    yield elemement.val('前端').submit();
 
     console.log(yield chrome.title());
 

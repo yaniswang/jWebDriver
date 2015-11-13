@@ -90,18 +90,18 @@ function runBrowserTest(browserName){
 
         });
 
-        it('should setValue', function*(){
+        it('should get or set value', function*(){
 
             var kw = yield browser.find('#kw');
-            var value = yield kw.setValue('testval').attr('value');
-            expect(value).to.be('testval');
+            var value = yield kw.val('testval123').val();
+            expect(value).to.be('testval123');
 
         });
 
         it('should clear value', function*(){
 
             var kw = yield browser.find('#kw');
-            yield kw.setValue('test872');
+            yield kw.val('test872');
             var value = yield kw.clear().attr('value');
             expect(value).to.be('');
 
@@ -159,6 +159,36 @@ function runBrowserTest(browserName){
             expect(yield check1.selected()).to.be(true);
             var check2 = yield browser.find('#check2');
             expect(yield check2.selected()).to.be(false);
+
+        });
+
+
+        it('should select option', function*(){
+
+            var selecttest = yield browser.find('#selecttest');
+            // index test
+            yield selecttest.select(0);
+            expect(yield selecttest.attr('value')).to.be('v1');
+            yield selecttest.select(1);
+            expect(yield selecttest.attr('value')).to.be('v2');
+            yield selecttest.select(2);
+            expect(yield selecttest.attr('value')).to.be('v3');
+            // value test
+            yield selecttest.select('v2');
+            expect(yield selecttest.attr('value')).to.be('v2');
+            yield selecttest.select('v4');
+            expect(yield selecttest.attr('value')).to.be('v4');
+            // text test
+            yield selecttest.select({
+                type: 'text',
+                value: 'test1'
+            });
+            expect(yield selecttest.attr('value')).to.be('v1');
+            yield selecttest.select({
+                type: 'text',
+                value: 'test3'
+            });
+            expect(yield selecttest.attr('value')).to.be('v3');
 
         });
 

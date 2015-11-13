@@ -5,7 +5,7 @@ driver.session('chrome', function(error, chrome) {
     chrome.url('https://www.baidu.com/')
           .find('#kw')
           .then(function(kw) {
-              return kw.setValue('mp3')
+              return kw.val('mp3')
                        .submit();
           })
           .title()

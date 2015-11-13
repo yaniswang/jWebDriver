@@ -3,6 +3,7 @@ var os = require('os');
 var express = require('express');
 var JWebDriver = require('../');
 var expect  = require("expect.js");
+var co  = require("co");
 require('mocha-generators').install();
 
 var isWin32 = process.platform === 'win32';
@@ -96,7 +97,7 @@ function runBrowserTest(browserName){
 
             yield browser.url(testPath + 'test1.html');
             var element = yield browser.find('#kw');
-            yield element.setValue('refresh');
+            yield element.val('refresh');
             expect(yield element.attr('value')).to.be('refresh');
             yield browser.refresh();
             element = yield browser.find('#kw');
@@ -181,73 +182,78 @@ function runBrowserTest(browserName){
 
         });
 
-		it('should eval javascript', function*(){
+		it('should eval javascript', function(done){
 
-            var ret = yield browser.eval('return document.title;');
-            expect(ret).to.be('testtitle');
+            co(function*(){
+                var ret = yield browser.eval('return document.title;');
+                expect(ret).to.be('testtitle');
 
-            ret = yield browser.eval(function(){
-                return document.title;
-            });
-            expect(ret).to.be('testtitle');
+                ret = yield browser.eval(function(){
+                    return document.title;
+                });
+                expect(ret).to.be('testtitle');
 
-            ret = yield browser.eval(function(arg1, arg2){
-                return arg2;
-            }, 123, 321);
-            expect(ret).to.be(321);
+                ret = yield browser.eval(function(arg1, arg2){
+                    return arg2;
+                }, 123, 321);
+                expect(ret).to.be(321);
 
-            ret = yield browser.eval(function(arg1, arg2){
-                return arg2;
-            }, [123, 321]);
-            expect(ret).to.be(321);
+                ret = yield browser.eval(function(arg1, arg2){
+                    return arg2;
+                }, [123, 321]);
+                expect(ret).to.be(321);
 
-            var element = yield browser.find('#kw');
-            ret = yield browser.eval(function(element){
-                return element.tagName;
-            }, element);
-            expect(ret).to.be('INPUT');
+                var element = yield browser.find('#kw');
+                ret = yield browser.eval(function(element){
+                    return element.tagName;
+                }, element);
+                expect(ret).to.be('INPUT');
 
-            browser.config({
-                asyncScriptTimeout: 50
-            });
+                browser.config({
+                    asyncScriptTimeout: 50
+                });
 
-            ret = yield browser.eval(function(done){
-                setTimeout(function(){
-                    done(document.title);
-                }, 10);
-            });
-            expect(ret).to.be('testtitle');
+                ret = yield browser.eval(function(done){
+                    setTimeout(function(){
+                        done(document.title);
+                    }, 10);
+                });
+                expect(ret).to.be('testtitle');
 
-            ret = yield browser.eval(function(args1, arg2, done){
-                setTimeout(function(){
-                    done(arg2);
-                }, 10);
-            }, 123, 321);
-            expect(ret).to.be(321);
+                ret = yield browser.eval(function(args1, arg2, done){
+                    setTimeout(function(){
+                        done(arg2);
+                    }, 10);
+                }, 123, 321);
+                expect(ret).to.be(321);
 
-            yield browser.config({
-                asyncScriptTimeout: 10
-            });
+                yield browser.config({
+                    asyncScriptTimeout: 10
+                });
 
-            try{
                 ret = yield browser.eval(function(done){
                     setTimeout(function(){
                         done();
                     }, 50);
+                }).catch(function(error){
+                    expect(error).to.be('eval timeout');
                 });
-            }
-            catch(e){}
-            expect(ret).to.be(321);
+                expect(ret).to.be(undefined);
 
-            try{
                 ret = yield browser.eval(function(done){
-                    setTimeout(function(){
-                        false && done();
-                    }, 5);
+                    false && done();
+                }).catch(function(error){
+                    expect(error).to.be('eval timeout');
                 });
-            }
-            catch(e){}
-            expect(ret).to.be(321);
+                expect(ret).to.be(undefined);
+            }).then(done).catch(function(error){
+                if(error === 'eval timeout'){
+                    done();
+                }
+                else{
+                    done(error);
+                }
+            });
 
 		});
 
@@ -300,7 +306,7 @@ function runBrowserTest(browserName){
             yield browser.url(testPath + 'test1.html');
             var kw = yield browser.find('#kw');
             //mouseMove: element
-            yield kw.setValue('test');
+            yield kw.val('test');
             expect(yield kw.attr('value')).to.be('test');
             yield browser.mouseMove(kw).click().sleep(200);
             expect(yield kw.attr('value')).to.be('1');
