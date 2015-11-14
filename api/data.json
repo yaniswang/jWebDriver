@@ -2,7 +2,7 @@
     "project": {
         "name": "jwebdriver",
         "description": "A webdriver client for node.js",
-        "version": "1.0.0",
+        "version": "1.0.2",
         "url": "http://jwebdriver.com/",
         "logo": "https://raw.github.com/yaniswang/jWebDriver/master/logo_s.png"
     },
@@ -1683,7 +1683,7 @@
         },
         {
             "file": "lib\\elements.js",
-            "line": 235,
+            "line": 237,
             "description": "get webdriver ELEMENT object (first element)",
             "itemtype": "method",
             "name": "toJSON",
@@ -1697,7 +1697,7 @@
         },
         {
             "file": "lib\\elements.js",
-            "line": 248,
+            "line": 250,
             "description": "get tagName (first element)",
             "itemtype": "method",
             "name": "tagName",
@@ -1718,7 +1718,7 @@
         },
         {
             "file": "lib\\elements.js",
-            "line": 261,
+            "line": 263,
             "description": "get attribute value (first element)",
             "itemtype": "method",
             "name": "attr",
@@ -1744,7 +1744,7 @@
         },
         {
             "file": "lib\\elements.js",
-            "line": 277,
+            "line": 279,
             "description": "get css value (first element)",
             "itemtype": "method",
             "name": "css",
@@ -1770,7 +1770,7 @@
         },
         {
             "file": "lib\\elements.js",
-            "line": 293,
+            "line": 295,
             "description": "get text (first element)",
             "itemtype": "method",
             "name": "text",
@@ -1791,7 +1791,7 @@
         },
         {
             "file": "lib\\elements.js",
-            "line": 306,
+            "line": 308,
             "description": "clear input or textarea",
             "itemtype": "method",
             "name": "clear",
@@ -1812,7 +1812,7 @@
         },
         {
             "file": "lib\\elements.js",
-            "line": 317,
+            "line": 319,
             "description": "get offset of element (first element)",
             "itemtype": "method",
             "name": "offset",
@@ -1839,7 +1839,7 @@
         },
         {
             "file": "lib\\elements.js",
-            "line": 343,
+            "line": 345,
             "description": "get size of element (first element)",
             "itemtype": "method",
             "name": "size",
@@ -1860,7 +1860,7 @@
         },
         {
             "file": "lib\\elements.js",
-            "line": 356,
+            "line": 358,
             "description": "check element displayed (first element)",
             "itemtype": "method",
             "name": "displayed",
@@ -1881,7 +1881,7 @@
         },
         {
             "file": "lib\\elements.js",
-            "line": 369,
+            "line": 371,
             "description": "check element enabled (first element)",
             "itemtype": "method",
             "name": "enabled",
@@ -1902,7 +1902,7 @@
         },
         {
             "file": "lib\\elements.js",
-            "line": 382,
+            "line": 384,
             "description": "check element selected (first element)",
             "itemtype": "method",
             "name": "selected",
@@ -1923,7 +1923,33 @@
         },
         {
             "file": "lib\\elements.js",
-            "line": 395,
+            "line": 397,
+            "description": "select option",
+            "itemtype": "method",
+            "name": "select",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "{type:'index', value:'test'} type:index | value | text",
+                    "type": "Number|String|Object"
+                },
+                {
+                    "name": "done",
+                    "description": "callback function",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "Elements"
+        },
+        {
+            "file": "lib\\elements.js",
+            "line": 453,
             "description": "send keys to element",
             "itemtype": "method",
             "name": "sendKeys",
@@ -1945,17 +1971,18 @@
         },
         {
             "file": "lib\\elements.js",
-            "line": 414,
-            "description": "clear and send keys to element",
+            "line": 472,
+            "description": "get or set value",
             "itemtype": "method",
-            "name": "setValue",
+            "name": "val",
             "access": "public",
             "tagname": "",
             "params": [
                 {
                     "name": "text",
                     "description": "",
-                    "type": "String"
+                    "type": "String",
+                    "optional": true
                 },
                 {
                     "name": "done",
@@ -1967,7 +1994,7 @@
         },
         {
             "file": "lib\\elements.js",
-            "line": 428,
+            "line": 495,
             "description": "click to element",
             "itemtype": "method",
             "name": "click",
@@ -1984,7 +2011,7 @@
         },
         {
             "file": "lib\\elements.js",
-            "line": 438,
+            "line": 505,
             "description": "double click to element",
             "itemtype": "method",
             "name": "dblClick",
@@ -2001,7 +2028,7 @@
         },
         {
             "file": "lib\\elements.js",
-            "line": 451,
+            "line": 518,
             "description": "drag the element drop to another element",
             "itemtype": "method",
             "name": "dragDropTo",
@@ -2035,7 +2062,7 @@
         },
         {
             "file": "lib\\elements.js",
-            "line": 481,
+            "line": 548,
             "description": "submit form",
             "itemtype": "method",
             "name": "submit",
@@ -2052,7 +2079,7 @@
         },
         {
             "file": "lib\\elements.js",
-            "line": 491,
+            "line": 558,
             "description": "upload file to browser machine, then set to this element",
             "itemtype": "method",
             "name": "uploadFile",
@@ -2074,7 +2101,7 @@
         },
         {
             "file": "lib\\elements.js",
-            "line": 507,
+            "line": 574,
             "description": "find all child elements",
             "itemtype": "method",
             "name": "find",
@@ -2106,7 +2133,7 @@
         },
         {
             "file": "lib\\elements.js",
-            "line": 546,
+            "line": 613,
             "description": "test if two elements refer to the same DOM element.",
             "itemtype": "method",
             "name": "equal",

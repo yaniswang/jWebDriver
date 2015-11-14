@@ -17,7 +17,7 @@
                 <h1><img src="https://raw.github.com/yaniswang/jWebDriver/master/logo_s.png" title="jwebdriver"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.0</em>
+            <em>API Docs for: 1.0.2</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -1267,7 +1267,7 @@ const Browser = PromiseClass.create({
                 data.element = elements.elementIds[0];
             }
             else{
-                done(&#x27;Elements empty!&#x27;);
+                return done(&#x27;Elements empty: &#x27;+ elements.value+&#x27; (&#x27;+elements.using+&#x27;)&#x27;);
             }
             if(x !== undefined &amp;&amp; x.x !== undefined){
                 y = x.y;

@@ -17,7 +17,7 @@
                 <h1><img src="https://raw.github.com/yaniswang/jWebDriver/master/logo_s.png" title="jwebdriver"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.0</em>
+            <em>API Docs for: 1.0.2</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -136,7 +136,7 @@ const Elements = PromiseClass.create({
                     }
                 });
             }
-            using = /^\//.test(value)?&#x27;xpath&#x27;:&#x27;css selector&#x27;;
+            using = /^\.?\//.test(value)?&#x27;xpath&#x27;:&#x27;css selector&#x27;;
             self.using = using;
             self.value = value;
         }
@@ -230,7 +230,7 @@ const Elements = PromiseClass.create({
             }
         }
         else{
-            done(&#x27;Elements empty&#x27;);
+            done(&#x27;Elements empty: &#x27;+ self.value+&#x27; (&#x27;+self.using+&#x27;)&#x27;);
         }
     },
 
@@ -287,7 +287,7 @@ const Elements = PromiseClass.create({
             }
         }
         else{
-            done(&#x27;Elements empty&#x27;);
+            done(&#x27;Elements empty: &#x27;+ self.value+&#x27; (&#x27;+self.using+&#x27;)&#x27;);
         }
     },
 
@@ -312,7 +312,9 @@ const Elements = PromiseClass.create({
     get(index){
         let self = this;
         if(index &gt;= 0 &amp;&amp; index &lt; self.length){
-            return new Elements(self._browser, &#x27;elements&#x27;, [self.elementIds[index]]);
+            let elements = new Elements(self._browser, &#x27;elements&#x27;, [self.elementIds[index]]);
+            elements.init();
+            return elements;
         }
     },
 
@@ -477,6 +479,62 @@ const Elements = PromiseClass.create({
     },
 
     /**
+     * select option
+     * @method select
+     * @public
+     * @param  {Number|String|Object} value {type:&#x27;index&#x27;, value:&#x27;test&#x27;} type:index | value | text
+     * @param  {Function} done callback function
+     * @return {Boolean}
+     */
+    select(value, done){
+        let type = &#x27;index&#x27;;
+        if(typeof value === &#x27;number&#x27;){
+            type = &#x27;index&#x27;;
+        }
+        else if(typeof value === &#x27;string&#x27;){
+            type = &#x27;value&#x27;;
+        }
+        else{
+            type = value.type;
+            value = value.value;
+        }
+
+        let filter;
+        let quote = /&quot;/.test(value) ? &quot;&#x27;&quot; : &#x27;&quot;&#x27;;
+        switch(type){
+            case &#x27;index&#x27;:
+                filter = &#x27;&#x27;;
+                break;
+            case &#x27;value&#x27;:
+                filter = &#x27;[normalize-space(@value)=&#x27;+quote+String(value).trim()+quote+&#x27;]&#x27;;
+                break;
+            case &#x27;text&#x27;:
+                filter = &#x27;[normalize-space(.)=&#x27;+quote+String(value).trim()+quote+&#x27;]&#x27;;
+                break;
+        }
+        this.find(&#x27;./option&#x27;+filter+&#x27; | ./optgroup/option&#x27;+filter, function(error, elements){
+            if(error){
+                done(error);
+            }
+            else{
+                if( elements.length &gt; 0){
+                    elements.get( type === &#x27;index&#x27; ? value : 0, function(error, option){
+                        if(option){
+                            option.click(done);
+                        }
+                        else{
+                            done(&#x27;Index overflow&#x27;);
+                        }
+                    });
+                }
+                else{
+                    done(&#x27;&lt;option&gt; no found: &#x27;+value+&#x27; (&#x27;+type+&#x27;)&#x27;);
+                }
+            }
+        });
+    },
+
+    /**
      * send keys to element
      * @method sendKeys
      * @public
@@ -496,17 +554,26 @@ const Elements = PromiseClass.create({
     },
 
     /**
-     * clear and send keys to element
-     * @method setValue
+     * get or set value
+     * @method val
      * @public
-     * @param  {String} text
+     * @param  {String} [text]
      * @param  {Function} done callback function
      */
-    setValue(text, done){
+    val(text, done){
         let self = this;
-        self.clear().sendKeys(text).then(function(){
-            done();
-        }).catch(done);
+        if(typeof text === &#x27;function&#x27;){
+            text = undefined;
+        }
+        done = getDone(arguments);
+        if(text){
+            self.clear().sendKeys(text).then(function(){
+                done();
+            }).catch(done);
+        }
+        else{
+            self.attr(&#x27;value&#x27;, done).catch(done);
+        }
     },
 
     /**
@@ -606,7 +673,7 @@ const Elements = PromiseClass.create({
         if(value === undefined){
             // detect xpath or css selector
             value = using;
-            using = /^\//.test(value)?&#x27;xpath&#x27;:&#x27;css selector&#x27;;
+            using = /^\.?\//.test(value)?&#x27;xpath&#x27;:&#x27;css selector&#x27;;
         }
         self.execStrict(&#x27;findChildElements&#x27;, {}, {
             using: using,
