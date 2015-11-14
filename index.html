@@ -32,9 +32,13 @@
 <a href="https://www.npmjs.com/package/jwebdriver"><img src="https://img.shields.io/npm/dm/jwebdriver.svg?style=flat" alt="NPM count"></a>
 <a href="https://www.npmjs.com/package/jwebdriver"><img src="https://img.shields.io/npm/dt/jwebdriver.svg?style=flat" alt="NPM count"></a></p>
 
-<p>Official Site: <a href="http://jwebdriver.com/">http://jwebdriver.com/</a></p>
-
-<p>Coverage: <a href="http://jwebdriver.com/coverage/">86.76%</a></p>
+<ol>
+<li>Official Site: <a href="http://jwebdriver.com/">http://jwebdriver.com/</a>
+</li>
+<li>API Doc: <a href="http://jwebdriver.com/api/">http://jwebdriver.com/api/</a>
+</li>
+<li>Coverage: <a href="http://jwebdriver.com/coverage/">http://jwebdriver.com/coverage/</a> (86.88%)</li>
+</ol>
 
 <h1>
 <a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h1>
@@ -90,7 +94,7 @@ var driver = new JWebDriver();
 driver.session('chrome', function*(error, chrome){
     yield chrome.url('https://www.baidu.com/');
     var elemement = yield chrome.find('#kw');
-    yield elemement.setValue('mp3').submit();
+    yield elemement.val('mp3').submit();
 
     console.log(yield chrome.title());
 
@@ -123,7 +127,7 @@ describe('jWebDriver test', function(){
         var kw = yield browser.find('#kw');
         expect(kw.length).to.be(1);
 
-        yield kw.setValue('mp3').submit();
+        yield kw.val('mp3').submit();
 
         var url = yield browser.url();
         expect(url).to.contain('wd=mp3');
@@ -147,7 +151,7 @@ driver.session('chrome', function(error, chrome) {
     chrome.url('https://www.baidu.com/')
           .find('#kw')
           .then(function(kw) {
-              return kw.setValue('mp3')
+              return kw.val('mp3')
                        .submit();
           })
           .title()
@@ -182,7 +186,7 @@ driver.session('chrome', function(error, chrome) {
 <p>All api can used with chain promise and support generator &amp; es7 async:</p>
 
 <pre><code>browser.find('#kw').then(function(elements){
-    return elements.setValue('test')
+    return elements.val('test')
                    .submit();
 })
 .title()
@@ -443,6 +447,8 @@ co(function*(){
     }
 
     var tagName = yield element.tagName(); // get tagname (first element)
+    var value = element.val(); // equal to element.attr('value');
+    yield element.val('mp3'); // equal to: element.clear().sendKeys('mp3');
     var value = yield element.attr('id'); // get attr value (first element)
     var value = yield element.css('border'); // get css value (first element)
     yield element.clear(); // clear input &amp; textarea value
@@ -455,11 +461,18 @@ co(function*(){
     var isEnabled = yield element.enabled(); //is element enabled (first element)
     var isSelected = yield element.selected(); // is element selected (first element)
 
+    // select option
+    yield element.select(0); // select index
+    yield element.select('book'); // select value
+    yield element.select({
+        type: 'value', // index | value | text
+        value: 'book'
+    });
+
     yield element.sendKeys('abc'); // send keys to element
     var Keys = chrome.Keys;
     yield element.sendKeys('a'+Keys.LEFT);
     yield element.sendKeys('{CTRL}a{CTRL}');
-    yield element.setValue('mp3'); // equal to: element.clear().sendKeys('mp3');
 
     yield element.click(); // click element
     yield element.dblClick(); // dblClick element
@@ -532,8 +545,6 @@ co(function*(){
     console.log(error);
 });
 </code></pre>
-
-<p>API Doc: <a href="http://jwebdriver.com/api/">http://jwebdriver.com/api/</a></p>
 
 <h1>
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h1>
