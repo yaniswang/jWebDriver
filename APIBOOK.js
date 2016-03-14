@@ -26,9 +26,15 @@ co(function*(){
     // new session
     var chrome = yield driver.session('chrome', '40.0', 'windows');
     var chrome = yield driver.session({
-        'browserName':'chrome'
+        'browserName':'chrome',
+        'version': 'ANY',
+        'platform': 'ANY'
     });
-    // set proxy manual
+    // attach session
+    var chrome = yield driver.session({
+        sessionId: 'xxxxxxxxxx'
+    });
+    // set manual proxy
     var chrome = yield driver.session({
         'browserName':'chrome',
         'proxy': {
@@ -37,12 +43,12 @@ co(function*(){
             'sslProxy': '192.168.1.1:1080'
         }
     });
-    // set proxy pac
+    // set pac proxy
     var chrome = yield driver.session({
         'browserName':'chrome',
         'proxy': {
             'proxyType': 'pac',
-            'proxyAutoconfigUrl': 'http://192.168.1.1/xxx.pac'
+            'proxyAutoconfigUrl': 'http://x.x.x.x/test.pac'
         }
     });
     // set hosts
