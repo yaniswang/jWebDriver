@@ -174,9 +174,15 @@ You can search all api here, include all mode of api:
         // new session
         var chrome = yield driver.session('chrome', '40.0', 'windows');
         var chrome = yield driver.session({
-            'browserName':'chrome'
+            'browserName':'chrome',
+            'version': 'ANY',
+            'platform': 'ANY'
         });
-        // set proxy
+        // attach session
+        var chrome = yield driver.session({
+            sessionId: 'xxxxxxxxxx'
+        });
+        // set manual proxy
         var chrome = yield driver.session({
             'browserName':'chrome',
             'proxy': {
@@ -185,14 +191,19 @@ You can search all api here, include all mode of api:
                 'sslProxy': '192.168.1.1:1080'
             }
         });
+        // set pac proxy
+        var chrome = yield driver.session({
+            'browserName':'chrome',
+            'proxy': {
+                'proxyType': 'pac',
+                'proxyAutoconfigUrl': 'http://x.x.x.x/test.pac'
+            }
+        });
         // set hosts
         var chrome = yield driver.session({
             'browserName':'chrome',
             'hosts': '192.168.1.1 www.alibaba.com\r\n192.168.1.1 www.google.com'
         });
-        // attach session
-        var chrome = yield driver.session('xxxxxxxxxx'); // session id
-
         // get session info
         var capabilities = yield chrome.info(); // get capabilities
         var isSupported = yield chrome.support('javascript'); // get capability supported: javascript, cssselector, screenshot, storage, alert, database, rotatable
