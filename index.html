@@ -20,7 +20,7 @@
 
     <section class="main-content">
       <h1>
-<a id="jwebdriver" class="anchor" href="#jwebdriver" aria-hidden="true"><span class="octicon octicon-link"></span></a>jWebDriver</h1>
+<a id="jwebdriver" class="anchor" href="#jwebdriver" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>jWebDriver</h1>
 
 <p><img src="https://raw.github.com/yaniswang/jWebDriver/master/logo.png" alt="jWebDriver logo"></p>
 
@@ -41,7 +41,7 @@
 </ol>
 
 <h1>
-<a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h1>
+<a id="features" class="anchor" href="#features" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Features</h1>
 
 <ol>
 <li>Support all webdriver protocols: <a href="https://code.google.com/p/selenium/wiki/JsonWireProtocol">https://code.google.com/p/selenium/wiki/JsonWireProtocol</a>
@@ -55,7 +55,7 @@
 </ol>
 
 <h1>
-<a id="quick-start" class="anchor" href="#quick-start" aria-hidden="true"><span class="octicon octicon-link"></span></a>Quick start</h1>
+<a id="quick-start" class="anchor" href="#quick-start" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Quick start</h1>
 
 <ol>
 <li>
@@ -165,7 +165,7 @@ driver.session('chrome', function(error, chrome) {
 </ol>
 
 <h1>
-<a id="more-examples" class="anchor" href="#more-examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>More examples</h1>
+<a id="more-examples" class="anchor" href="#more-examples" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>More examples</h1>
 
 <ol>
 <li><a href="https://github.com/yaniswang/jWebDriver/blob/master/example/baidu.js">Baidu test</a></li>
@@ -179,7 +179,7 @@ driver.session('chrome', function(error, chrome) {
 </ol>
 
 <h1>
-<a id="api-book" class="anchor" href="#api-book" aria-hidden="true"><span class="octicon octicon-link"></span></a>API Book</h1>
+<a id="api-book" class="anchor" href="#api-book" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>API Book</h1>
 
 <p>jWebDriver have 3 Class: Driver, Broswer, Elemenets</p>
 
@@ -225,9 +225,15 @@ co(function*(){
     // new session
     var chrome = yield driver.session('chrome', '40.0', 'windows');
     var chrome = yield driver.session({
-        'browserName':'chrome'
+        'browserName':'chrome',
+        'version': 'ANY',
+        'platform': 'ANY'
     });
-    // set proxy
+    // attach session
+    var chrome = yield driver.session({
+        sessionId: 'xxxxxxxxxx'
+    });
+    // set manual proxy
     var chrome = yield driver.session({
         'browserName':'chrome',
         'proxy': {
@@ -236,14 +242,19 @@ co(function*(){
             'sslProxy': '192.168.1.1:1080'
         }
     });
+    // set pac proxy
+    var chrome = yield driver.session({
+        'browserName':'chrome',
+        'proxy': {
+            'proxyType': 'pac',
+            'proxyAutoconfigUrl': 'http://x.x.x.x/test.pac'
+        }
+    });
     // set hosts
     var chrome = yield driver.session({
         'browserName':'chrome',
         'hosts': '192.168.1.1 www.alibaba.com\r\n192.168.1.1 www.google.com'
     });
-    // attach session
-    var chrome = yield driver.session('xxxxxxxxxx'); // session id
-
     // get session info
     var capabilities = yield chrome.info(); // get capabilities
     var isSupported = yield chrome.support('javascript'); // get capability supported: javascript, cssselector, screenshot, storage, alert, database, rotatable
@@ -547,7 +558,7 @@ co(function*(){
 </code></pre>
 
 <h1>
-<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h1>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h1>
 
 <p>jWebDriver is released under the MIT license:</p>
 
@@ -576,7 +587,7 @@ THE SOFTWARE.</p>
 </blockquote>
 
 <h1>
-<a id="thanks" class="anchor" href="#thanks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Thanks</h1>
+<a id="thanks" class="anchor" href="#thanks" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Thanks</h1>
 
 <ul>
 <li>Selenium: <a href="http://code.google.com/p/selenium/">http://code.google.com/p/selenium/</a>
