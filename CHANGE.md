@@ -1,6 +1,10 @@
 jWebDriver change log
 ====================
 
+## ver 1.0.8 (2016-5-11)
+
+1. fix element.val when used with select tag
+
 ## ver 1.0.2 (2015-11-13)
 
 1. add elements.select: used for select `<option>`
