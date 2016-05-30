@@ -37,7 +37,7 @@
 </li>
 <li>API Doc: <a href="http://jwebdriver.com/api/">http://jwebdriver.com/api/</a>
 </li>
-<li>Coverage: <a href="http://jwebdriver.com/coverage/">http://jwebdriver.com/coverage/</a> (86.88%)</li>
+<li>Coverage: <a href="http://jwebdriver.com/coverage/">http://jwebdriver.com/coverage/</a> (80.46%)</li>
 </ol>
 
 <h1>
@@ -223,19 +223,19 @@ co(function*(){
         yield arrSessions[i].close();
     }
     // new session
-    var chrome = yield driver.session('chrome', '40.0', 'windows');
-    var chrome = yield driver.session({
-        'browserName':'chrome',
+    var browser = yield driver.session('browser', '40.0', 'windows');
+    var browser = yield driver.session({
+        'browserName':'browser',
         'version': 'ANY',
         'platform': 'ANY'
     });
     // attach session
-    var chrome = yield driver.session({
+    var browser = yield driver.session({
         sessionId: 'xxxxxxxxxx'
     });
     // set manual proxy
-    var chrome = yield driver.session({
-        'browserName':'chrome',
+    var browser = yield driver.session({
+        'browserName':'browser',
         'proxy': {
             'proxyType': 'manual',
             'httpProxy': '192.168.1.1:1080',
@@ -243,151 +243,154 @@ co(function*(){
         }
     });
     // set pac proxy
-    var chrome = yield driver.session({
-        'browserName':'chrome',
+    var browser = yield driver.session({
+        'browserName':'browser',
         'proxy': {
             'proxyType': 'pac',
             'proxyAutoconfigUrl': 'http://x.x.x.x/test.pac'
         }
     });
     // set hosts
-    var chrome = yield driver.session({
-        'browserName':'chrome',
+    var browser = yield driver.session({
+        'browserName':'browser',
         'hosts': '192.168.1.1 www.alibaba.com\r\n192.168.1.1 www.google.com'
     });
+    // attach session
+    var browser = yield driver.session('xxxxxxxxxx'); // session id
+
     // get session info
-    var capabilities = yield chrome.info(); // get capabilities
-    var isSupported = yield chrome.support('javascript'); // get capability supported: javascript, cssselector, screenshot, storage, alert, database, rotatable
-    yield chrome.config({
+    var capabilities = yield browser.info(); // get capabilities
+    var isSupported = yield browser.support('javascript'); // get capability supported: javascript, cssselector, screenshot, storage, alert, database, rotatable
+    yield browser.config({
         pageloadTimeout: 5000, // page onload timeout
         scriptTimeout: 1000, // sync script timeout
         asyncScriptTimeout: 1000, // async script timeout
         implicitTimeout: 1000 // implicit timeout
     });
-    yield chrome.close(); // close session
-    yield chrome.sleep(1000); // sleep
+    yield browser.close(); // close session
+    yield browser.sleep(1000); // sleep
 
     // ========================== window ==========================
 
-    var curWindowHandle = yield chrome.windowHandle(); // get current window handle
-    var arrWindowHandles = yield chrome.windowHandles(); // get all windows
-    yield chrome.switchWindow('handleid'); // focus to window
-    yield chrome.switchWindow(0); // focus to first window
-    yield chrome.switchWindow(1); // focus to second window
-    var newWindowHandle = yield chrome.newWindow('http://www.alibaba.com/', 'testwindow', 'width=200,height=200'); // open new window and return windowHandle
-    yield chrome.closeWindow(); // close current window
+    var curWindowHandle = yield browser.windowHandle(); // get current window handle
+    var arrWindowHandles = yield browser.windowHandles(); // get all windows
+    yield browser.switchWindow('handleid'); // focus to window
+    yield browser.switchWindow(0); // focus to first window
+    yield browser.switchWindow(1); // focus to second window
+    var newWindowHandle = yield browser.newWindow('http://www.alibaba.com/', 'testwindow', 'width=200,height=200'); // open new window and return windowHandle
+    yield browser.closeWindow(); // close current window
 
     // ========================== frame ==========================
 
-    var elements = yield chrome.frames(); // get all frames
-    yield chrome.switchFrame(0); // focus to frame 0
-    yield chrome.switchFrame(1); // focus to frame 1
-    yield chrome.switchFrame('#iframe_id'); // focus to frame #iframe_id
-    yield chrome.switchFrame(null); // focus to main page
-    yield chrome.switchFrameParent(); // focus to parent context
+    var elements = yield browser.frames(); // get all frames
+    yield browser.switchFrame(0); // focus to frame 0
+    yield browser.switchFrame(1); // focus to frame 1
+    yield browser.switchFrame('#iframe_id'); // focus to frame #iframe_id
+    yield browser.switchFrame(null); // focus to main page
+    yield browser.switchFrameParent(); // focus to parent context
 
     // ========================== position &amp; size &amp; maximize &amp; screenshot ==========================
 
-    var offset = yield chrome.offset(); // return {x: 1, y: 1}
-    yield chrome.offset(10, 10); // set offset
-    yield chrome.offset({
+    var offset = yield browser.offset(); // return {x: 1, y: 1}
+    yield browser.offset(10, 10); // set offset
+    yield browser.offset({
         x: 10,
         y: 10
     });
-    var info = yield chrome.size(); // return {width: 100, height: 100}
-    yield chrome.size(100, 100); // set size
-    yield chrome.size({
+    var info = yield browser.size(); // return {width: 100, height: 100}
+    yield browser.size(100, 100); // set size
+    yield browser.size({
         width: 100,
         height: 100
     });
-    yield chrome.maximize();
-    var png_base64  = yield chrome.getScreenshot();// get the screen shot, base64 type
+    yield browser.maximize();
+    var png_base64  = yield browser.getScreenshot();// get the screen shot, base64 type
 
     // ========================== url &amp; title &amp; html ==========================
 
-    yield chrome.url('http://www.alibaba.com/'); // goto url
-    var url = yield chrome.url(); // get url
-    var title = yield chrome.title(); // get title
-    var html = yield chrome.html(); // get html code
+    yield browser.url('http://www.alibaba.com/'); // goto url
+    var url = yield browser.url(); // get url
+    var title = yield browser.title(); // get title
+    var html = yield browser.html(); // get html code
 
     // ========================== navigator ==========================
 
-    yield chrome.refresh(); // refresh page
-    yield chrome.back(); // back to previous page
-    yield chrome.forward(); // forward to next page
+    yield browser.refresh(); // refresh page
+    yield browser.back(); // back to previous page
+    yield browser.forward(); // forward to next page
 
-    yield chrome.scrollTo('#id'); // scroll to element (first element)
-    yield chrome.scrollTo('#id', 10, 10); // scroll to element (first element)
-    yield chrome.scrollTo('#id', { // scroll to element (first element)
+    yield browser.scrollTo('#id'); // scroll to element (first element)
+    yield browser.scrollTo('#id', 10, 10); // scroll to element (first element)
+    yield browser.scrollTo('#id', { // scroll to element (first element)
         x: 10,
         y: 10
     });
-    yield chrome.scrollTo(10, 10);
-    yield chrome.scrollTo({
+    yield browser.scrollTo(10, 10);
+    yield browser.scrollTo({
         x: 10,
         y: 10
     });
 
     // ========================== cookie ==========================
 
-    var value = yield chrome.cookie('test'); // get cookie
-    yield chrome.cookie('test', '123'); // set cookie
-    yield chrome.cookie('test', '123', { // https://code.google.com/p/selenium/wiki/JsonWireProtocol#Cookie_JSON_Object
+    var value = yield browser.cookie('test'); // get cookie
+    yield browser.cookie('test', '123'); // set cookie
+    yield browser.cookie('test', '123', { // https://code.google.com/p/selenium/wiki/JsonWireProtocol#Cookie_JSON_Object
         path: '',
         domain: '',
         secure: '',
         httpOnly: '',
         expiry: ''
     });
-    yield chrome.cookie('test',123, {
+    yield browser.cookie('test',123, {
         expiry: '7 day' // second|minute|hour|day|month|year
     });
-    yield chrome.removeCookie('test'); // delete cookie
-    var mapCookies = yield chrome.cookies(); // get all cookie
-    yield chrome.clearCookies(); // delete all cookies
+    yield browser.removeCookie('test'); // delete cookie
+    var mapCookies = yield browser.cookies(); // get all cookie
+    yield browser.clearCookies(); // delete all cookies
 
     // ========================== local storage &amp;&amp; session storage ==========================
 
-    var arrKeys = yield chrome.localStorageKeys(); // get all local storage keys
-    var value = yield chrome.localStorage('test'); // get local storage value
-    yield chrome.localStorage('test', '1'); // set local storage value
-    yield chrome.removeLocalStorage('test'); // delete local storage
-    yield chrome.clearLocalStorages(); // clear all local sotrage
+    var arrKeys = yield browser.localStorageKeys(); // get all local storage keys
+    var value = yield browser.localStorage('test'); // get local storage value
+    yield browser.localStorage('test', '1'); // set local storage value
+    yield browser.removeLocalStorage('test'); // delete local storage
+    yield browser.clearLocalStorages(); // clear all local sotrage
 
-    var arrKeys = yield chrome.sessionStorageKeys(); // get all session storage keys
-    var value = yield chrome.sessionStorage('test'); // get session storage value
-    yield chrome.sessionStorage('test', '1'); // set session storage value
-    yield chrome.removeSessionStorage('test'); // delete session storage
-    yield chrome.clearSessionStorages(); // clear all session sotrage
+    var arrKeys = yield browser.sessionStorageKeys(); // get all session storage keys
+    var value = yield browser.sessionStorage('test'); // get session storage value
+    yield browser.sessionStorage('test', '1'); // set session storage value
+    yield browser.removeSessionStorage('test'); // delete session storage
+    yield browser.clearSessionStorages(); // clear all session sotrage
 
     // ========================== alert, confirm, prompt ==========================
 
-    var msg = yield chrome.getAlert();// get alert text
+    var msg = yield browser.getAlert();// get alert text
     if(msg !== null){
-        yield chrome.setAlert('test');// set msg to prompt
-        yield chrome.acceptAlert(); // accept alert
-        yield chrome.dismissAlert(); // dismiss alert
+        yield browser.setAlert('test');// set msg to prompt
+        yield browser.acceptAlert(); // accept alert
+        yield browser.dismissAlert(); // dismiss alert
     }
 
     // ========================== mouse ==========================
 
-    var MouseButtons = chrome.MouseButtons;
-    yield chrome.mouseMove(element); // move to center of element
-    yield chrome.mouseMove('#id'); // move to center of element
-    yield chrome.mouseMove('#id', 10, 10); // move to offset of the element
-    yield chrome.mouseMove('#id', {x: 10, y: 10}); // move to offset of the element
-    yield chrome.mouseDown(); // left mouse button down
-    yield chrome.mouseDown(MouseButtons.RIGHT); // right mouse button down
-    yield chrome.mouseDown('RIGHT'); // right mouse button down
-    yield chrome.mouseUp(); // left mouse button up
-    yield chrome.mouseUp(MouseButtons.RIGHT); // right mouse button up
-    yield chrome.mouseUp('RIGHT'); // right mouse button up
-    yield chrome.click();
-    yield chrome.click(MouseButtons.RIGHT);
-    yield chrome.click('RIGHT');
-    yield chrome.dblClick();
-    yield chrome.dragDrop('#a', '#b'); // drag a drop to b
-    yield chrome.dragDrop({
+    var MouseButtons = browser.MouseButtons;
+    yield browser.mouseMove(element); // move to center of element
+    yield browser.mouseMove('#id'); // move to center of element
+    yield browser.mouseMove('#id', 10, 10); // move to offset of the element
+    yield browser.mouseMove('#id', {x: 10, y: 10}); // move to offset of the element
+    yield browser.mouseDown(); // left mouse button down
+    yield browser.mouseDown(MouseButtons.RIGHT); // right mouse button down
+    yield browser.mouseDown('RIGHT'); // right mouse button down
+    yield browser.mouseUp(); // left mouse button up
+    yield browser.mouseUp(MouseButtons.RIGHT); // right mouse button up
+    yield browser.mouseUp('RIGHT'); // right mouse button up
+    yield browser.click();
+    yield browser.click(MouseButtons.RIGHT);
+    yield browser.click('RIGHT');
+    yield browser.dblClick();
+    yield browser.dragDrop('#a', '#b'); // drag a drop to b
+    yield browser.dragDrop({
         selector: '#a',
         x: 1,
         y: 1
@@ -399,56 +402,56 @@ co(function*(){
 
     // ========================== keyboard ==========================
 
-    yield chrome.sendKeys('abc');
-    var Keys = chrome.Keys;
-    yield chrome.keyDown(Keys.CTRL);
-    yield chrome.keyDown('CTRL');
-    yield chrome.sendKeys('a'+Keys.LEFT);
-    yield chrome.keyUp(Keys.CTRL);
-    yield chrome.keyUp('CTRL');
-    yield chrome.sendKeys('{CTRL}a{CTRL}');
+    yield browser.sendKeys('abc');
+    var Keys = browser.Keys;
+    yield browser.keyDown(Keys.CTRL);
+    yield browser.keyDown('CTRL');
+    yield browser.sendKeys('a'+Keys.LEFT);
+    yield browser.keyUp(Keys.CTRL);
+    yield browser.keyUp('CTRL');
+    yield browser.sendKeys('{CTRL}a{CTRL}');
 
     // ========================== eval ==========================
 
     // sync eval
-    var title = yield chrome.eval(function(){
+    var title = yield browser.eval(function(){
         return document.title;
     });
-    var value = yield chrome.eval(function(arg1, arg2){
+    var value = yield browser.eval(function(arg1, arg2){
         return arg1;
     }, 1, 2);
-    var value = yield chrome.eval(function(arg1, arg2){
+    var value = yield browser.eval(function(arg1, arg2){
         return arg1;
     }, [1, 2]);
     // async eval
-    var value = yield chrome.eval(function(arg1, arg2, done){
+    var value = yield browser.eval(function(arg1, arg2, done){
         setTimeout(function(){
             done(arg2);
         }, 2000);
     }, 1, 2);
     // pass element to eval
-    var tagName = yield chrome.eval(function(element){
+    var tagName = yield browser.eval(function(element){
         return element.tagName;
-    }, yield chrome.find('#id'));
+    }, yield browser.find('#id'));
 
     // ========================== element ==========================
 
-    var elements = yield chrome.wait('#id');// wait for element
+    var elements = yield browser.wait('#id');// wait for element
     if(elements.length === 1){
         console.log('#id displayed');
     }
     yield elements.sleep(300); // sleep ms
-    var elements = yield chrome.wait('#id', 5000);// wait for element, 5000 ms timeout
-    var elements = yield chrome.wait('#id', {
+    var elements = yield browser.wait('#id', 5000);// wait for element, 5000 ms timeout
+    var elements = yield browser.wait('#id', {
         timeout: 10000, // set timeout, default: 10000
         displayed: true, // wait for element displayed, default: true
         removed: false // wait for element removed, default: false
     });
 
-    var elements = yield chrome.find('#id'); // find element
-    var elements = yield chrome.find('active');// get active element
-    var elements = yield chrome.find('#id');// get element by css selector
-    var elements = yield chrome.find('//html/body');// get element by xpath
+    var elements = yield browser.find('#id'); // find element
+    var elements = yield browser.find('active');// get active element
+    var elements = yield browser.find('#id');// get element by css selector
+    var elements = yield browser.find('//html/body');// get element by xpath
     var elements = yield elements.find('.class'); // find all child element
     var isEqual = yield elements.equal('#bbb a'); // test if two elements refer to the same DOM element.
 
@@ -481,7 +484,7 @@ co(function*(){
     });
 
     yield element.sendKeys('abc'); // send keys to element
-    var Keys = chrome.Keys;
+    var Keys = browser.Keys;
     yield element.sendKeys('a'+Keys.LEFT);
     yield element.sendKeys('{CTRL}a{CTRL}');
 
@@ -498,53 +501,60 @@ co(function*(){
     yield fileElement.uploadFile('c:/test.jpg');// upload file to browser machine and set temp path to &lt;input type="file"&gt;
     yield element.submit();// submit form
 
-    // ========================== mobile ==========================
+    // ========================== mobile api ==========================
+    // touch down, touch move, touch up
+    yield browser.touchDown(10, 10);
+    yield browser.touchDown({
+        x: 10, // X coordinate on the screen.
+        y: 10  // Y coordinate on the screen.
+    });
+    yield browser.touchMove(10, 10);
+    yield browser.touchMove({
+        x: 10, // X coordinate on the screen.
+        y: 10  // Y coordinate on the screen.
+    });
+    yield browser.touchUp(10, 10);
+    yield browser.touchUp({
+        x: 10, // X coordinate on the screen.
+        y: 10  // Y coordinate on the screen.
+    });
+    // scroll
+    yield browser.touchScroll(10, 10); // Use this command if you don't care where the scroll starts on the screen
+    yield browser.touchScroll({
+        x: 10, // The x offset in pixels to scrollby.
+        y: 10  // The y offset in pixels to scrollby.
+    });
+    // flick
+    yield browser.touchFlick({ // Use this flick command if you don't care where the flick starts on the screen.
+        xspeed: 5, // The x speed in pixels per second.
+        yspeed: 0  // The y speed in pixels per second.
+    });
 
-    yield chrome.touchClick('#id');
-    yield chrome.touchDblClick('#id');
-    yield chrome.touchLongClick('#id');
-    yield chrome.touchDown(10, 10);
-    yield chrome.touchDown({
-        x: 10,
-        y: 10
+    // element api
+    var element = yield browser.find('#id');
+    yield element.touchClick();
+    yield element.touchDblClick();
+    yield element.touchLongClick();
+    yield element.touchScroll(10, 10);
+    yield element.touchScroll({
+        x: 10, // The x offset in pixels to scroll by.
+        y: 10  // The y offset in pixels to scroll by.
     });
-    yield chrome.touchUp(10, 10);
-    yield chrome.touchUp({
-        x: 10,
-        y: 10
+    yield element.touchFlick(10, 10, 5); // flick to x: 10, y: 10 with speed 5
+    yield element.touchFlick({
+        x: 10, // The x offset in pixels to flick by.
+        y: 10, // The y offset in pixels to flick by.
+        speed: 5 // The speed in pixels per seconds
     });
-    yield chrome.touchMove(10, 10);
-    yield chrome.touchMove({
-        x: 10,
-        y: 10
-    });
-    yield chrome.touchScroll('#id');
-    yield chrome.touchScroll('#id', 10, 10);
-    yield chrome.touchScroll('#id', {
-        x: 10,
-        y: 10
-    });
-    yield chrome.touchScroll(10, 10);
-    yield chrome.touchScroll({
-        x: 10,
-        y: 10
-    });
-    yield chrome.touchFlick('#id', {
-        x: 10,
-        y: 10,
-        speed: 5
-    });
-    yield chrome.touchFlick({
-        xspeed: 5,
-        yspeed: 0
-    });
-    var orientation = yield chrome.orientation(); // return LANDSCAPE|PORTRAIT
-    yield chrome.orientation('LANDSCAPE'); // set orientation: LANDSCAPE|PORTRAIT
+
+    var orientation = yield browser.orientation(); // return LANDSCAPE|PORTRAIT
+    yield browser.orientation('LANDSCAPE'); // set orientation: LANDSCAPE|PORTRAIT
 
     // ========================== geo location ==========================
 
-    var loc = yield chrome.geolocation(); // return {latitude: number, longitude: number, altitude: number}
-    yield chrome.geolocation({// set location
+    var loc = yield browser.geolocation(); // return {latitude: number, longitude: number, altitude: number}
+    yield browser.geolocation(1, 1, 1); // set location
+    yield browser.geolocation({
         latitude: 1,
         longitude: 1,
         altitude: 1
