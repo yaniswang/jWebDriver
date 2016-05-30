@@ -17,7 +17,7 @@
                 <h1><img src="https://raw.github.com/yaniswang/jWebDriver/master/logo_s.png" title="jwebdriver"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.2</em>
+            <em>API Docs for: 1.0.10</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -120,32 +120,6 @@ const colors = {
     reset: &#x27;\x1b[0m&#x27;
 };
 
-// webdriver response codes
-const mapResponseCodes = {
-    &#x27;-1&#x27;: {type: &#x27;RequestError&#x27;, message:   &#x27;Error on request.&#x27;},
-    &#x27;0&#x27;: {type: &#x27;Success&#x27;, message: &#x27;The command executed successfully.&#x27;},
-    &#x27;7&#x27;: {type: &#x27;NoSuchElement&#x27;, message: &#x27;An element could not be located on the page using the given search parameters.&#x27;},
-    &#x27;8&#x27;: {type: &#x27;NoSuchFrame&#x27;, message: &#x27;A request to switch to a frame could not be satisfied because the frame could not be found.&#x27;},
-    &#x27;9&#x27;: {type: &#x27;UnknownCommand&#x27;, message: &#x27;The requested resource could not be found, or a request was received using an HTTP method that is not supported by the mapped resource.&#x27;},
-    &#x27;10&#x27;: {type: &#x27;StaleElementReference&#x27;, message: &#x27;An element command failed because the referenced element is no longer attached to the DOM.&#x27;},
-    &#x27;11&#x27;: {type: &#x27;ElementNotVisible&#x27;, message: &#x27;An element command could not be completed because the element is not visible on the page.&#x27;},
-    &#x27;12&#x27;: {type: &#x27;InvalidElementState&#x27;, message: &#x27;An element command could not be completed because the element is in an invalid state (e.g. attempting to click a disabled element).&#x27;},
-    &#x27;13&#x27;: {type: &#x27;UnknownError&#x27;, message: &#x27;An unknown server-side error occurred while processing the command.&#x27;},
-    &#x27;15&#x27;: {type: &#x27;ElementIsNotSelectable&#x27;, message: &#x27;An attempt was made to select an element that cannot be selected.&#x27;},
-    &#x27;17&#x27;: {type: &#x27;JavaScriptError&#x27;, message: &#x27;An error occurred while executing user supplied JavaScript.&#x27;},
-    &#x27;19&#x27;: {type: &#x27;XPathLookupError&#x27;, message: &#x27;An error occurred while searching for an element by XPath.&#x27;},
-    &#x27;23&#x27;: {type: &#x27;NoSuchWindow&#x27;, message: &#x27;A request to switch to a different window could not be satisfied because the window could not be found.&#x27;},
-    &#x27;24&#x27;: {type: &#x27;InvalidCookieDomain&#x27;, message: &#x27;An illegal attempt was made to set a cookie under a different domain than the current page.&#x27;},
-    &#x27;25&#x27;: {type: &#x27;UnableToSetCookie&#x27;, message: &#x27;A request to set a cookie\&#x27;s value could not be satisfied.&#x27;},
-    &#x27;26&#x27;: {type: &#x27;UnexpectedAlertOpen&#x27;, message: &#x27;A modal dia&#x60; was open, blocking this operation&#x27;},
-    &#x27;27&#x27;: {type: &#x27;NoAlertOpenError&#x27;, message: &#x27;An attempt was made to operate on a modal dialog when one was not open.&#x27;},
-    &#x27;28&#x27;: {type: &#x27;ScriptTimeout&#x27;, message: &#x27;A script did not complete before its timeout expired.&#x27;},
-    &#x27;29&#x27;: {type: &#x27;InvalidElementCoordinates&#x27;, message: &#x27;The coordinates provided to an interactions operation are invalid.&#x27;},
-    &#x27;30&#x27;: {type: &#x27;IMENotAvailable&#x27;, message: &#x27;IME was not available.&#x27;},
-    &#x27;31&#x27;: {type : &#x27;IMEEngineActivationFailed&#x27;, message: &#x27;An IME engine could not be started.&#x27;},
-    &#x27;32&#x27;: {type: &#x27;InvalidSelector&#x27;, message: &#x27;Argument was an invalid selector (e.g. XPath/CSS).&#x27;}
-};
-
 // default config
 const defConfig = {
 	&#x27;host&#x27;: &#x27;127.0.0.1&#x27;,
@@ -187,7 +161,7 @@ const JWebDriver = PromiseClass.create({
      * @param  {Function} done callback function
      */
     info(done){
-        this.execStrict(&#x27;getStatus&#x27;, function(error, ret){
+        this.exec(&#x27;getStatus&#x27;, function(error, ret){
             done(error, ret &amp;&amp; ret.value);
         });
     },
@@ -308,6 +282,7 @@ const JWebDriver = PromiseClass.create({
                 url: url,
                 headers: headers,
                 body: data,
+                followAllRedirects: true,
                 timeout: 600000
             }, function(error, response){
                 if(error){
@@ -316,46 +291,39 @@ const JWebDriver = PromiseClass.create({
                 else{
                     let body = response.body;
                     response = response.response;
-                    try{
-                        body = JSON.parse(body);
+                    if(response.statusCode === 204){
+                        // no content
+                        self.log(&#x27;RESPONSE&#x27;, null);
+                        done(null, null);
                     }
-                    catch(e){
-                        return done(&#x27;JSON parse failed: &#x27;+e);
-                    }
-                    if(response.statusCode === 200){
+                    else{
+                        try{
+                            body = body.replace(/\x00/g,&#x27;&#x27;);
+                            body = JSON.parse(body);
+                        }
+                        catch(e){}
                         let wdStatus = body.status;
-                        if(wdStatus === 0){
-                            let value = body.value;
+                        let value = body.value;
+                        if(response.statusCode !== 200 || wdStatus !== 0){
+                            let errorInfo = value ? (value.message ? value.message : value) : body;
+                            self.log(&#x27;ERROR&#x27;, errorInfo);
+                            return done(errorInfo);
+                        }
+                        else{
                             if(value &amp;&amp; value.hCode !== undefined){
                                 delete value[&#x27;hCode&#x27;];
                                 delete value[&#x27;class&#x27;];
                             }
                             self.log(&#x27;RESPONSE&#x27;, value);
                         }
-                        else{
-                            let responseErrorInfo = mapResponseCodes[wdStatus];
-                            body.errorType = responseErrorInfo.type;
-                            body.errorMessage = responseErrorInfo.message;
-                            self.log(&#x27;WARNING&#x27;, responseErrorInfo.type);
+                        if(config.speed &gt; 0){
+                            self.sleep(config.speed, function(){
+                                done(null, body);
+                            });
                         }
-                    }
-                    else{
-                        let errorInfo = body.value;
-                        let newErrorInfo = {
-                            additionalInformation: errorInfo.additionalInformation,
-                            systemInformation: errorInfo.systemInformation,
-                            message: errorInfo.message
-                        };
-                        self.log(&#x27;ERROR&#x27;, newErrorInfo);
-                        return done(&#x27;The status of cmd response is: &#x27;+response.statusCode);
-                    }
-                    if(config.speed &gt; 0){
-                        self.sleep(config.speed, function(){
+                        else{
                             done(null, body);
-                        });
-                    }
-                    else{
-                        done(null, body);
+                        }
                     }
                 }
             });
@@ -363,42 +331,6 @@ const JWebDriver = PromiseClass.create({
         else{
             done(&#x27;Invalid cmd&#x27;);
         }
-    },
-
-    /**
-     * execute protocal command strictly
-     * @method execStrict
-     * @public
-     * @param  {String} cmd protocal command, defined in command.js
-     * @param  {Object} [pathData] replace the path parameters
-     * @param  {Object} [data] send data to protocal api
-     * @param  {Function} done callback function
-     * @return {Object} the return object from webdriver server
-     */
-    execStrict(cmd, pathData, data, done){
-        let self = this;
-        if(typeof pathData === &#x27;function&#x27;){
-            pathData = undefined;
-            data = undefined;
-        }
-        else if(typeof data === &#x27;function&#x27;){
-            data = undefined;
-        }
-        done = getDone(arguments);
-        self.exec(cmd, pathData, data, function(error, ret){
-            if(error){
-                done(error);
-            }
-            else{
-                let errorType = ret.errorType;
-                if(errorType){
-                    done(errorType);
-                }
-                else{
-                    done(null, ret);
-                }
-            }
-        });
     },
 
     /**
@@ -410,7 +342,7 @@ const JWebDriver = PromiseClass.create({
      */
     sessions(done){
         let self = this;
-        self.execStrict(&#x27;getSessions&#x27;, function(error, ret){
+        self.exec(&#x27;getSessions&#x27;, function(error, ret){
             if(error){
                 done(error);
             }

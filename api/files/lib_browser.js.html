@@ -17,7 +17,7 @@
                 <h1><img src="https://raw.github.com/yaniswang/jWebDriver/master/logo_s.png" title="jwebdriver"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.2</em>
+            <em>API Docs for: 1.0.10</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -295,7 +295,7 @@ const Browser = PromiseClass.create({
             let sessionOptions = {
                 &#x27;desiredCapabilities&#x27;: sessionInfo
             };
-            driver.execStrict(&#x27;newSession&#x27;, {}, sessionOptions, function(error, ret){
+            driver.exec(&#x27;newSession&#x27;, {}, sessionOptions, function(error, ret){
                 if(error){
                     done(error);
                 }
@@ -346,31 +346,6 @@ const Browser = PromiseClass.create({
         pathData = pathData || {};
         pathData.sessionId = self.sessionId;
         self._driver.exec(cmd, pathData, data, done);
-    },
-
-    /**
-     * execute protocal command strictly with this session
-     * @method execStrict
-     * @public
-     * @param  {String} cmd protocal command, defined in command.js
-     * @param  {Object} [pathData] replace the path parameters, no need to add sessionId
-     * @param  {Object} [data] send data to protocal api
-     * @param  {Function} done callback function
-     * @return {Object} the return object from webdriver server
-     */
-    execStrict(cmd, pathData, data, done){
-        let self = this;
-        if(typeof pathData === &#x27;function&#x27;){
-            pathData = undefined;
-            data = undefined;
-        }
-        else if(typeof data === &#x27;function&#x27;){
-            data = undefined;
-        }
-        done = getDone(arguments);
-        pathData = pathData || {};
-        pathData.sessionId = self.sessionId;
-        self._driver.execStrict(cmd, pathData, data, done);
     },
 
     /**
@@ -468,13 +443,13 @@ const Browser = PromiseClass.create({
         done = getDone(arguments);
         // goto url
         if(url){
-            self.execStrict(&#x27;setUrl&#x27;, {}, {
+            self.exec(&#x27;setUrl&#x27;, {}, {
                 &#x27;url&#x27;: url
             }, done);
         }
         // get url
         else{
-            self.execStrict(&#x27;getUrl&#x27;, function(error, ret){
+            self.exec(&#x27;getUrl&#x27;, function(error, ret){
                 done(error, ret &amp;&amp; ret.value);
             });
         }
@@ -509,6 +484,7 @@ const Browser = PromiseClass.create({
                 script = &#x27;function(){&#x27;+script+&#x27;}&#x27;;
             }
             script = &#x27;return (&#x27; + script + &#x27;).apply(null, arguments);&#x27;;
+            script = script.replace(/\n/g, &#x27;&#x27;);
             args = args.map(function(arg){
                 if(arg instanceof Elements){
                     arg.toJSON(function(error, obj){
@@ -517,7 +493,7 @@ const Browser = PromiseClass.create({
                 }
                 return arg;
             });
-            self.execStrict(isAsync?&#x27;evalASync&#x27;:&#x27;eval&#x27;, {}, {
+            self.exec(isAsync?&#x27;evalASync&#x27;:&#x27;eval&#x27;, {}, {
                 script: script,
                 args: args
             }, function(error, ret){
@@ -548,7 +524,7 @@ const Browser = PromiseClass.create({
             done(null, windowHandle);
         }
         else{
-            self.execStrict(&#x27;getCurrentWindowHandle&#x27;, function(error, ret){
+            self.exec(&#x27;getCurrentWindowHandle&#x27;, function(error, ret){
                 if(ret){
                     self._windowHandle = ret.value;
                 }
@@ -565,7 +541,7 @@ const Browser = PromiseClass.create({
      * @return {Array} window handle
      */
     windowHandles(done){
-        this.execStrict(&#x27;getAllWindowHandles&#x27;, function(error, ret){
+        this.exec(&#x27;getAllWindowHandles&#x27;, function(error, ret){
             done(error, ret &amp;&amp; ret.value);
         });
     },
@@ -595,7 +571,7 @@ const Browser = PromiseClass.create({
                 resolve(windowHandle);
             }
         }).then(function(windowHandle){
-            self.execStrict(&#x27;switchWindow&#x27;, {}, {
+            self.exec(&#x27;switchWindow&#x27;, {}, {
                 name: windowHandle
             }, function(error, ret){
                 self._windowHandle = windowHandle;
@@ -665,7 +641,7 @@ const Browser = PromiseClass.create({
                 return frame;
             }
         }).then(function(frame){
-            self.execStrict(&#x27;switchFrame&#x27;, {}, {
+            self.exec(&#x27;switchFrame&#x27;, {}, {
                 id : frame
             }, done);
         });
@@ -678,7 +654,7 @@ const Browser = PromiseClass.create({
      * @param  {Function} done callback function
      */
     switchFrameParent(done){
-        this.execStrict(&#x27;switchFrameParent&#x27;, done);
+        this.exec(&#x27;switchFrameParent&#x27;, done);
     },
 
     /**
@@ -688,7 +664,7 @@ const Browser = PromiseClass.create({
      * @param  {Function} done callback function
      */
     closeWindow(done){
-        this.execStrict(&#x27;closeWindow&#x27;, done);
+        this.exec(&#x27;closeWindow&#x27;, done);
     },
 
     /**
@@ -712,7 +688,7 @@ const Browser = PromiseClass.create({
         done = getDone(arguments);
         Promise.resolve(self.windowHandle(true)).then(function(windowHandle){
             if(x === undefined){
-                return self.execStrict(&#x27;getWindowOffset&#x27;, {
+                return self.exec(&#x27;getWindowOffset&#x27;, {
                     windowHandle: windowHandle
                 }, function(error, ret){
                     done(error, ret &amp;&amp; ret.value);
@@ -722,7 +698,7 @@ const Browser = PromiseClass.create({
                 y = x.y;
                 x = x.x;
             }
-            self.execStrict(&#x27;setWindowOffset&#x27;, {
+            self.exec(&#x27;setWindowOffset&#x27;, {
                 windowHandle: windowHandle
             }, {
                 x: x,
@@ -752,7 +728,7 @@ const Browser = PromiseClass.create({
         done = getDone(arguments);
         Promise.resolve(self.windowHandle(true)).then(function(windowHandle){
             if(width === undefined){
-                return self.execStrict(&#x27;getWindowSize&#x27;, {
+                return self.exec(&#x27;getWindowSize&#x27;, {
                     windowHandle: windowHandle
                 }, function(error, ret){
                     done(error, ret &amp;&amp; ret.value);
@@ -762,7 +738,7 @@ const Browser = PromiseClass.create({
                 height = width.height;
                 width = width.width;
             }
-            self.execStrict(&#x27;setWindowSize&#x27;, {
+            self.exec(&#x27;setWindowSize&#x27;, {
                 windowHandle: windowHandle
             }, {
                 width: width,
@@ -780,7 +756,7 @@ const Browser = PromiseClass.create({
     maximize(done){
         var self = this;
         Promise.resolve(self.windowHandle(true)).then(function(windowHandle){
-            self.execStrict(&#x27;maximizeWindow&#x27;, {
+            self.exec(&#x27;maximizeWindow&#x27;, {
                 windowHandle : windowHandle
             }, done);
         }).catch(done);
@@ -795,7 +771,7 @@ const Browser = PromiseClass.create({
      * @return {String} return screenshot by base64 format
      */
     getScreenshot(done){
-        this.execStrict(&#x27;getScreenshot&#x27;, function(error, ret){
+        this.exec(&#x27;getScreenshot&#x27;, function(error, ret){
             done(error, ret &amp;&amp; ret.value);
         });
     },
@@ -808,7 +784,7 @@ const Browser = PromiseClass.create({
      * @return {String} return document title
      */
     title(done){
-        this.execStrict(&#x27;getTitle&#x27;, function(error, ret){
+        this.exec(&#x27;getTitle&#x27;, function(error, ret){
             done(error, ret &amp;&amp; ret.value);
         });
     },
@@ -821,7 +797,7 @@ const Browser = PromiseClass.create({
      * @return {String} return document html
      */
     html(done){
-        this.execStrict(&#x27;getHtml&#x27;, function(error, ret){
+        this.exec(&#x27;getHtml&#x27;, function(error, ret){
             done(error, ret &amp;&amp; ret.value);
         });
     },
@@ -833,7 +809,7 @@ const Browser = PromiseClass.create({
      * @param  {Function} done callback function
      */
     refresh(done){
-        this.execStrict(&#x27;setRefresh&#x27;, done);
+        this.exec(&#x27;setRefresh&#x27;, done);
     },
 
     /**
@@ -843,7 +819,7 @@ const Browser = PromiseClass.create({
      * @param  {Function} done callback function
      */
     back(done){
-        this.execStrict(&#x27;setBack&#x27;, done);
+        this.exec(&#x27;setBack&#x27;, done);
     },
 
     /**
@@ -853,7 +829,7 @@ const Browser = PromiseClass.create({
      * @param  {Function} done callback function
      */
     forward(done){
-        this.execStrict(&#x27;setForward&#x27;, done);
+        this.exec(&#x27;setForward&#x27;, done);
     },
 
     /**
@@ -869,7 +845,7 @@ const Browser = PromiseClass.create({
             isArray = undefined;
         }
         done = getDone(arguments);
-        this.execStrict(&#x27;getAllCookies&#x27;, function(error, ret){
+        this.exec(&#x27;getAllCookies&#x27;, function(error, ret){
             if(error){
                 done(error);
             }
@@ -959,7 +935,7 @@ const Browser = PromiseClass.create({
                     done(&#x27;Bad format for expiry: &#x27; + expiry);
                 }
             }
-            self.execStrict(&#x27;setCookie&#x27;, {}, {
+            self.exec(&#x27;setCookie&#x27;, {}, {
                 cookie: cookieInfo
             }, done);
         }
@@ -973,7 +949,7 @@ const Browser = PromiseClass.create({
      * @param  {Function} done callback function
      */
     removeCookie(name, done){
-        this.execStrict(&#x27;delCookie&#x27;, {
+        this.exec(&#x27;delCookie&#x27;, {
             name: name
         }, done);
     },
@@ -985,7 +961,7 @@ const Browser = PromiseClass.create({
      * @param  {Function} done callback function
      */
     clearCookies(done){
-        this.execStrict(&#x27;clearAllCookies&#x27;, done);
+        this.exec(&#x27;clearAllCookies&#x27;, done);
     },
 
     /**
@@ -996,7 +972,7 @@ const Browser = PromiseClass.create({
      * @return {Array} return all local storage keys
      */
     localStorageKeys(done){
-        this.execStrict(&#x27;getAllLocalStorageKeys&#x27;, function(error, ret){
+        this.exec(&#x27;getAllLocalStorageKeys&#x27;, function(error, ret){
             done(error, ret &amp;&amp; ret.value);
         });
     },
@@ -1017,13 +993,13 @@ const Browser = PromiseClass.create({
         }
         done = getDone(arguments);
         if(value !== undefined){
-            self.execStrict(&#x27;setLocalStorage&#x27;, {}, {
+            self.exec(&#x27;setLocalStorage&#x27;, {}, {
                 key: String(name),
                 value: String(value)
             }, done);
         }
         else{
-            self.execStrict(&#x27;getLocalStorage&#x27;, {
+            self.exec(&#x27;getLocalStorage&#x27;, {
                 key: String(name)
             }, function(error, ret){
                 done(error, ret &amp;&amp; ret.value);
@@ -1039,7 +1015,7 @@ const Browser = PromiseClass.create({
      * @param  {Function} done callback function
      */
     removeLocalStorage(name, done){
-        this.execStrict(&#x27;deleteLocalStorage&#x27;, {
+        this.exec(&#x27;deleteLocalStorage&#x27;, {
             key: name
         }, done);
     },
@@ -1051,7 +1027,7 @@ const Browser = PromiseClass.create({
      * @param  {Function} done callback function
      */
     clearLocalStorages(done){
-        this.execStrict(&#x27;clearAllLocalStorages&#x27;, done);
+        this.exec(&#x27;clearAllLocalStorages&#x27;, done);
     },
 
     /**
@@ -1062,7 +1038,7 @@ const Browser = PromiseClass.create({
      * @return {Array} return all session storage keys
      */
     sessionStorageKeys(done){
-        this.execStrict(&#x27;getAllSessionStorageKeys&#x27;, function(error, ret){
+        this.exec(&#x27;getAllSessionStorageKeys&#x27;, function(error, ret){
             done(error, ret &amp;&amp; ret.value);
         });
     },
@@ -1083,13 +1059,13 @@ const Browser = PromiseClass.create({
         }
         done = getDone(arguments);
         if(value !== undefined){
-            self.execStrict(&#x27;setSessionStorage&#x27;, {}, {
+            self.exec(&#x27;setSessionStorage&#x27;, {}, {
                 key: String(name),
                 value: String(value)
             }, done);
         }
         else{
-            self.execStrict(&#x27;getSessionStorage&#x27;, {
+            self.exec(&#x27;getSessionStorage&#x27;, {
                 key: String(name)
             }, function(error, ret){
                 done(error, ret &amp;&amp; ret.value);
@@ -1105,7 +1081,7 @@ const Browser = PromiseClass.create({
      * @param  {Function} done callback function
      */
     removeSessionStorage(name, done){
-        this.execStrict(&#x27;deleteSessionStorage&#x27;, {
+        this.exec(&#x27;deleteSessionStorage&#x27;, {
             key: name
         }, done);
     },
@@ -1117,7 +1093,7 @@ const Browser = PromiseClass.create({
      * @param  {Function} done callback function
      */
     clearSessionStorages(done){
-        this.execStrict(&#x27;clearAllSessionStorages&#x27;, done);
+        this.exec(&#x27;clearAllSessionStorages&#x27;, done);
     },
 
     /**
@@ -1128,7 +1104,7 @@ const Browser = PromiseClass.create({
      * @return {String}
      */
     getAlert(done){
-        this.execStrict(&#x27;getAlert&#x27;, function(error, ret){
+        this.exec(&#x27;getAlert&#x27;, function(error, ret){
             done(error, ret &amp;&amp; ret.value);
         });
     },
@@ -1140,7 +1116,7 @@ const Browser = PromiseClass.create({
      * @param  {Function} done callback function
      */
     acceptAlert(done){
-        this.execStrict(&#x27;acceptAlert&#x27;, done);
+        this.exec(&#x27;acceptAlert&#x27;, done);
     },
 
     /**
@@ -1150,7 +1126,7 @@ const Browser = PromiseClass.create({
      * @param  {Function} done callback function
      */
     dismissAlert(done){
-        this.execStrict(&#x27;dismissAlert&#x27;, done);
+        this.exec(&#x27;dismissAlert&#x27;, done);
     },
 
     /**
@@ -1161,7 +1137,7 @@ const Browser = PromiseClass.create({
      * @param  {Function} done callback function
      */
     setAlert(text, done){
-        this.execStrict(&#x27;setAlert&#x27;, {}, {
+        this.exec(&#x27;setAlert&#x27;, {}, {
             text: text
         }, done);
     },
@@ -1180,7 +1156,7 @@ const Browser = PromiseClass.create({
             let key = Keys[name.toUpperCase()];
             return key?key:all;
         });
-        self.execStrict(&#x27;sendKeys&#x27;, {}, {
+        self.exec(&#x27;sendKeys&#x27;, {}, {
             value: text.split(&#x27;&#x27;)
         }, done);
     },
@@ -1277,7 +1253,7 @@ const Browser = PromiseClass.create({
                 data.xoffset = x;
                 data.yoffset = y;
             }
-            self.execStrict(&#x27;mouseMove&#x27;, {}, data, done);
+            self.exec(&#x27;mouseMove&#x27;, {}, data, done);
         }).catch(done);
     },
 
@@ -1299,7 +1275,7 @@ const Browser = PromiseClass.create({
             key = key.toUpperCase();
             key = MouseButtons[key] || 0;
         }
-        self.execStrict(&#x27;mouseDown&#x27;, {}, {
+        self.exec(&#x27;mouseDown&#x27;, {}, {
             button: key || 0
         }, done);
     },
@@ -1322,7 +1298,7 @@ const Browser = PromiseClass.create({
             key = key.toUpperCase();
             key = MouseButtons[key] || 0;
         }
-        self.execStrict(&#x27;mouseUp&#x27;, {}, {
+        self.exec(&#x27;mouseUp&#x27;, {}, {
             button: key || 0
         }, done);
     },
@@ -1345,7 +1321,7 @@ const Browser = PromiseClass.create({
             key = key.toUpperCase();
             key = MouseButtons[key] || 0;
         }
-        self.execStrict(&#x27;click&#x27;, {}, {
+        self.exec(&#x27;click&#x27;, {}, {
             button: key || 0
         }, done);
     },
@@ -1357,7 +1333,17 @@ const Browser = PromiseClass.create({
      * @param  {Function} done callback function
      */
     dblClick(done){
-        this.execStrict(&#x27;doubleClick&#x27;, done);
+        this.exec(&#x27;doubleClick&#x27;, done);
+    },
+
+    /**
+     * send double Click
+     * @method doubleClick
+     * @public
+     * @param  {Function} done callback function
+     */
+    doubleClick(done){
+        this.exec(&#x27;doubleClick&#x27;, done);
     },
 
     /**
@@ -1440,44 +1426,44 @@ const Browser = PromiseClass.create({
         let removed = options.removed;
         let displayed = removed ? false : options.displayed;
         let startTime = new Date().getTime();
-        let elements;
-        let _timer = setInterval(waitElement, 500);
+        let _timer = null;
         waitElement();
+        function endWait(error, result){
+            clearInterval(_timer);
+            done(error, result);
+        }
         function waitElement(){
-            self.find(selector, function(error, elements){
-                if(error){
-                    done(error);
-                }
-                else if(removed === true &amp;&amp; elements.length === 0){
-                    // removed
-                    clearInterval(_timer);
-                    done(null, elements);
-                }
-                else if(removed === false &amp;&amp; elements.length &gt; 0){
-                    if(displayed){
-                        // displayed
-                        elements.displayed(function(error, ret){
-                            if(ret){
-                                clearInterval(_timer);
-                                done(null, elements);
-                            }
-                        });
+            self.find(selector, function*(error, elements){
+                if(elements){
+                    if(removed === true &amp;&amp; elements.length === 0){
+                        // removed
+                        return endWait(null, elements);
                     }
-                    else{
-                        // wait dom
-                        clearInterval(_timer);
-                        done(null, elements);
+                    else if(removed === false &amp;&amp; elements.length &gt; 0){
+                        if(displayed){
+                            // displayed
+                            var ret = yield elements.displayed();
+                            if(ret){
+                                return endWait(null, elements);
+                            }
+                        }
+                        else{
+                            // wait dom
+                            return endWait(null, elements);
+                        }
                     }
                 }
                 // timeout
                 if(new Date().getTime() - startTime &gt; timeout){
                     self.log(&#x27;ERROR&#x27;, &#x27;Wait elelment &#x27;+(removed?&#x27;removed&#x27;:&#x27;displayed&#x27;)+&#x27; timeout: &#x27; + timeout + &#x27;ms&#x27;);
-                    clearInterval(_timer);
                     if(displayed){
                         elements = new Elements(self, &#x27;elements&#x27;, []);
                         elements.init();
                     }
-                    done(null, elements);
+                    endWait(null, elements);
+                }
+                else{
+                    _timer = setTimeout(waitElement, 500);
                 }
             });
         }
@@ -1563,7 +1549,7 @@ const Browser = PromiseClass.create({
             let zip = new Zip();
             zip.file(path.basename(localPath), filedata);
             let base64zip = zip.generate({base64:true, compression:&#x27;DEFLATE&#x27;});
-            self.execStrict(&#x27;uploadFile&#x27;, {}, {
+            self.exec(&#x27;uploadFile&#x27;, {}, {
                 file: base64zip
             }, function(error, ret){
                 done(error, ret &amp;&amp; ret.value);
@@ -1575,6 +1561,213 @@ const Browser = PromiseClass.create({
     },
 
     /**
+     * touch down
+     * @method touchDown
+     * @public
+     * @param  {Number} x
+     * @param  {Number} y
+     * @param  {Function} done callback function
+     */
+    touchDown(x, y, done){
+        let self = this;
+        if(typeof x === &#x27;function&#x27;){
+            x = undefined;
+            y = undefined;
+        }
+        else if(typeof y === &#x27;function&#x27;){
+            y = undefined;
+        }
+        done = getDone(arguments);
+        if(x !== undefined &amp;&amp; x.x !== undefined){
+            y = x.y;
+            x = x.x;
+        }
+        self.exec(&#x27;touchDown&#x27;, {}, {
+            x: x,
+            y: y
+        }, done);
+    },
+
+    /**
+     * touch move
+     * @method touchMove
+     * @public
+     * @param  {Number} x
+     * @param  {Number} y
+     * @param  {Function} done callback function
+     */
+    touchMove(x, y, done){
+        let self = this;
+        if(typeof x === &#x27;function&#x27;){
+            x = undefined;
+            y = undefined;
+        }
+        else if(typeof y === &#x27;function&#x27;){
+            y = undefined;
+        }
+        done = getDone(arguments);
+        if(x !== undefined &amp;&amp; x.x !== undefined){
+            y = x.y;
+            x = x.x;
+        }
+        self.exec(&#x27;touchMove&#x27;, {}, {
+            x: x,
+            y: y
+        }, done);
+    },
+
+    /**
+     * touch up
+     * @method touchUp
+     * @public
+     * @param  {Number} x
+     * @param  {Number} y
+     * @param  {Function} done callback function
+     */
+    touchUp(x, y, done){
+        let self = this;
+        if(typeof x === &#x27;function&#x27;){
+            x = undefined;
+            y = undefined;
+        }
+        else if(typeof y === &#x27;function&#x27;){
+            y = undefined;
+        }
+        done = getDone(arguments);
+        if(x !== undefined &amp;&amp; x.x !== undefined){
+            y = x.y;
+            x = x.x;
+        }
+        self.exec(&#x27;touchUp&#x27;, {}, {
+            x: x,
+            y: y
+        }, done);
+    },
+
+    /**
+     * touch scroll
+     * @method touchScroll
+     * @public
+     * @param  {Number} x
+     * @param  {Number} y
+     * @param  {Function} done callback function
+     */
+    touchScroll(x, y, done){
+        let self = this;
+        if(typeof x === &#x27;function&#x27;){
+            x = undefined;
+            y = undefined;
+        }
+        else if(typeof y === &#x27;function&#x27;){
+            y = undefined;
+        }
+        done = getDone(arguments);
+        if(x !== undefined &amp;&amp; x.x !== undefined){
+            y = x.y;
+            x = x.x;
+        }
+        self.exec(&#x27;touchScroll&#x27;, {}, {
+            xoffset: x,
+            yoffset: y,
+        }, done);
+    },
+
+    /**
+     * touch flick
+     * @method touchFlick
+     * @public
+     * @param  {Number} xspeed
+     * @param  {Number} yspeed
+     * @param  {Function} done callback function
+     */
+    touchFlick(xspeed , yspeed, done){
+        let self = this;
+        if(typeof xspeed === &#x27;function&#x27;){
+            xspeed = undefined;
+            yspeed = undefined;
+        }
+        else if(typeof yspeed === &#x27;function&#x27;){
+            yspeed = undefined;
+        }
+        done = getDone(arguments);
+        if(xspeed !== undefined &amp;&amp; xspeed.xspeed !== undefined){
+            yspeed = xspeed.yspeed;
+            xspeed = xspeed.xspeed;
+        }
+        self.exec(&#x27;touchFlick&#x27;, {}, {
+            xspeed: xspeed,
+            yspeed: yspeed,
+        }, done);
+    },
+
+    /**
+     * get or set orientation
+     * @method orientation
+     * @public
+     * @param  {String} [orientation] orientation
+     * @param  {Function} done callback function
+     * @return {Object|this} return {x:1,y:1} or this
+     */
+    orientation(orientation, done){
+        let self = this;
+        if(typeof orientation === &#x27;function&#x27;){
+            orientation = undefined;
+        }
+        done = getDone(arguments);
+        if(orientation){
+            self.exec(&#x27;setOrientation&#x27;, {}, {
+                orientation: orientation
+            }, function(error, ret){
+                done(error, ret &amp;&amp; ret.value);
+            });
+        }
+        else{
+            self.exec(&#x27;getOrientation&#x27;, function(error, ret){
+                done(error, ret &amp;&amp; ret.value);
+            });
+        }
+    },
+
+    /**
+     * get or set geolocation
+     * @method geolocation
+     * @public
+     * @param  {Number|Object} [latitude] latitude
+     * @param  {Number} [longitude] longitude
+     * @param  {Number} [altitude] altitude
+     * @param  {Function} done callback function
+     * @return {Object} return {latitude:1, longitude:1, altitude:1}
+     */
+    geolocation(latitude, longitude, altitude, done){
+        let self = this;
+        if(typeof latitude === &#x27;function&#x27;){
+            latitude = undefined;
+        }
+        done = getDone(arguments);
+        if(latitude !== undefined &amp;&amp; latitude.latitude !== undefined){
+            longitude = latitude.longitude;
+            altitude = latitude.altitude;
+            latitude = latitude.latitude;
+        }
+        if(latitude !== undefined){
+            self.exec(&#x27;setLocation&#x27;, {}, {
+                location: {
+                    latitude: latitude,
+                    longitude: longitude,
+                    altitude: altitude
+                }
+            }, function(error, ret){
+                done(error, ret &amp;&amp; ret.value);
+            });
+        }
+        else{
+            self.exec(&#x27;getLocation&#x27;, function(error, ret){
+                done(error, ret &amp;&amp; ret.value);
+            });
+        }
+    },
+
+    /**
      * close session
      * @method close
      * @public
@@ -1582,13 +1775,15 @@ const Browser = PromiseClass.create({
      */
     close(done){
         let self = this;
-        Promise.resolve(self.exec(&#x27;delSession&#x27;)).then(function(){
+        self.exec(&#x27;delSession&#x27;, function(error){
             let hostsProxy = self._hostsProxy;
             if(hostsProxy){
-                hostsProxy.close(done);
+                hostsProxy.close(function(){
+                    done(error);
+                });
             }
             else{
-                done();
+                done(error);
             }
         });
     }
