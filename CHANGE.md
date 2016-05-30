@@ -1,6 +1,10 @@
 jWebDriver change log
 ====================
 
+## ver 1.0.10 (2016-5-30)
+
+1. add support to touch api
+
 ## ver 1.0.8 (2016-5-11)
 
 1. fix element.val when used with select tag
