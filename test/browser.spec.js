@@ -281,9 +281,12 @@ function runBrowserTest(browserName){
             expect(yield activeElement.attr('id')).to.be('kw');
             var testmouse = yield browser.find('#testmouse');
             expect(testmouse.length).to.be(1);
-            var abcaaa = yield browser.find('#abcaaa');
-            expect(abcaaa.length).to.be(0);
-
+            try{
+                yield browser.find('#abcaaa');
+            }
+            catch(e){
+                expect(e).to.be('Find elements failed');
+            }
 		});
 
 		it('should sendkeys to element', function*(){
@@ -327,22 +330,30 @@ function runBrowserTest(browserName){
 		it('should wait element', function*(){
 
             // wait displayed
-            var wait = yield browser.find('#wait1');
-            expect(wait.length).to.be(0);
+            try{
+                yield browser.find('#wait1');
+            }
+            catch(e){
+                expect(e).to.be('Find elements failed');
+            }
             yield browser.eval(function(){
                 setTimeout(function(){
                     document.body.innerHTML='<input type="text" id="wait1">';
                 }, 100);
             });
-            wait = yield browser.wait('#wait1');
+            var wait = yield browser.wait('#wait1');
             expect(wait.length).to.be(1);
             yield browser.eval(function(){
                 setTimeout(function(){
                     document.body.innerHTML='<input type="text" id="wait2" style="display:none">';
                 }, 100);
             });
-            wait = yield browser.wait('#wait2', 300);
-            expect(wait.length).to.be(0);
+            try{
+                yield browser.wait('#wait2', 300);
+            }
+            catch(e){
+                expect(e).to.contain('Wait elelment displayed timeout');
+            }
             // wait dom
             yield browser.eval(function(){
                 setTimeout(function(){
@@ -359,11 +370,14 @@ function runBrowserTest(browserName){
                     document.body.innerHTML='all removed';
                 }, 100);
             });
-            wait = yield browser.wait('#wait3', {
-                removed: true
-            });
-            expect(wait.length).to.be(0);
-
+            try{
+                yield browser.wait('#wait3', {
+                    removed: true
+                });
+            }
+            catch(e){
+                expect(e).to.contain('Wait elelment removed timeout');
+            }
 		});
 
         it('should dragdrop element', function*(){
@@ -434,8 +448,12 @@ function runBrowserTest(browserName){
             expect(arrWindowHandles.length).to.be(2);
             yield browser.switchWindow(1);
             //no element
-            testwindow = yield browser.find('#testwindow');
-            expect(testwindow.length).to.be(0);
+            try{
+                yield browser.find('#testwindow');
+            }
+            catch(e){
+                expect(e).to.be('Find elements failed');
+            }
             yield browser.closeWindow();
             arrWindowHandles = yield browser.windowHandles();
             expect(arrWindowHandles.length).to.be(1);
@@ -464,16 +482,24 @@ function runBrowserTest(browserName){
             expect(testwindow.length).to.be(1);
             // switch to frame
             yield browser.switchFrame('#testiframe');
-            testwindow = yield browser.find('#testwindow');
-            expect(testwindow.length).to.be(0);
+            try{
+                yield browser.find('#testwindow');
+            }
+            catch(e){
+                expect(e).to.be('Find elements failed');
+            }
             // switch to main page
             yield browser.switchFrame(null);
             testwindow = yield browser.find('#testwindow');
             expect(testwindow.length).to.be(1);
             // switch to frame
             yield browser.switchFrame('#testiframe');
-            testwindow = yield browser.find('#testwindow');
-            expect(testwindow.length).to.be(0);
+            try{
+                yield browser.find('#testwindow');
+            }
+            catch(e){
+                expect(e).to.be('Find elements failed');
+            }
             if(browser.browserName !== 'phantomjs'){
                 // switch to parent
                 yield browser.switchFrameParent();

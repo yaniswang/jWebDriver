@@ -1,6 +1,11 @@
 jWebDriver change log
 ====================
 
+## ver 1.0.12 (2016-6-6)
+
+1. find api: throw error when find no elements
+2. wait api: throw error when wait timeout
+
 ## ver 1.0.10 (2016-5-30)
 
 1. add support to touch api
