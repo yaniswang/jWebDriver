@@ -50,14 +50,14 @@ Quick start
         var JWebDriver = require('jwebdriver');
 
         var driver = new JWebDriver();
-        driver.session('chrome', function*(error, chrome){
-            yield chrome.url('https://www.baidu.com/');
-            var elemement = yield chrome.find('#kw');
+        driver.session('chrome', function*(error, browser){
+            yield browser.url('https://www.baidu.com/');
+            var elemement = yield browser.find('#kw');
             yield elemement.val('mp3').submit();
 
-            console.log(yield chrome.title());
+            console.log(yield browser.title());
 
-            yield chrome.close();
+            yield browser.close();
         }).then(function(){
             console.log('all done');
         }).catch(function(error){
@@ -100,8 +100,8 @@ Quick start
         var JWebDriver = require('jwebdriver');
 
         var driver = new JWebDriver();
-        driver.session('chrome', function(error, chrome) {
-            chrome.url('https://www.baidu.com/')
+        driver.session('chrome', function(error, browser) {
+            browser.url('https://www.baidu.com/')
                   .find('#kw')
                   .then(function(kw) {
                       return kw.val('mp3')

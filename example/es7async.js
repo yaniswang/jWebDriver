@@ -5,15 +5,15 @@ var openGoogle = async function(){
 
     var driver = new JWebDriver();
 
-    var chrome = await driver.session('chrome');
+    var browser = await driver.session('chrome');
 
-    await chrome.url('https://www.google.com/');
-    var elemement = await chrome.find('input[name=q]');
+    await browser.url('https://www.google.com/');
+    var elemement = await browser.find('input[name=q]');
     await elemement.val('mp3').submit();
 
-    console.log(await chrome.title());
+    console.log(await browser.title());
 
-    await chrome.close();
+    await browser.close();
 
 };
 openGoogle().then(function(){

@@ -5,15 +5,15 @@ co(function*(){
 
     var driver = new JWebDriver();
 
-    var chrome = yield driver.session('chrome');
+    var browser = yield driver.session('chrome');
 
-    yield chrome.url('https://www.baidu.com/');
-    var elemement = yield chrome.find('#kw');
+    yield browser.url('https://www.baidu.com/');
+    var elemement = yield browser.find('#kw');
     yield elemement.val('前端').submit();
 
-    console.log(yield chrome.title());
+    console.log(yield browser.title());
 
-    yield chrome.close();
+    yield browser.close();
 
 }).then(function(){
     console.log('All done!');
