@@ -37,14 +37,14 @@
 </li>
 <li>API Doc: <a href="http://jwebdriver.com/api/">http://jwebdriver.com/api/</a>
 </li>
-<li>Coverage: <a href="http://jwebdriver.com/coverage/">http://jwebdriver.com/coverage/</a> (80.46%)</li>
+<li>Coverage: <a href="http://jwebdriver.com/coverage/">http://jwebdriver.com/coverage/</a> (80.88%)</li>
 </ol>
 
 <h1>
 <a id="features" class="anchor" href="#features" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Features</h1>
 
 <ol>
-<li>Support all webdriver protocols: <a href="https://code.google.com/p/selenium/wiki/JsonWireProtocol">https://code.google.com/p/selenium/wiki/JsonWireProtocol</a>
+<li>Support all webdriver protocols: <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol">https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol</a>
 </li>
 <li>Easy to use</li>
 <li>Support promise chain &amp; generator &amp; es7 await</li>
@@ -71,7 +71,7 @@
 <p>Run selenium server</p>
 
 <blockquote>
-<p>java -jar selenium-server-standalone-2.26.0.jar</p>
+<p>java -jar selenium-server-standalone-x.x.x.jar</p>
 </blockquote>
 </li>
 <li>
@@ -91,14 +91,14 @@
 <pre><code>var JWebDriver = require('jwebdriver');
 
 var driver = new JWebDriver();
-driver.session('chrome', function*(error, chrome){
-    yield chrome.url('https://www.baidu.com/');
-    var elemement = yield chrome.find('#kw');
+driver.session('chrome', function*(error, browser){
+    yield browser.url('https://www.baidu.com/');
+    var elemement = yield browser.find('#kw');
     yield elemement.val('mp3').submit();
 
-    console.log(yield chrome.title());
+    console.log(yield browser.title());
 
-    yield chrome.close();
+    yield browser.close();
 }).then(function(){
     console.log('all done');
 }).catch(function(error){
@@ -147,8 +147,8 @@ describe('jWebDriver test', function(){
 <pre><code>var JWebDriver = require('jwebdriver');
 
 var driver = new JWebDriver();
-driver.session('chrome', function(error, chrome) {
-    chrome.url('https://www.baidu.com/')
+driver.session('chrome', function(error, browser) {
+    browser.url('https://www.baidu.com/')
           .find('#kw')
           .then(function(kw) {
               return kw.val('mp3')
@@ -449,6 +449,7 @@ co(function*(){
     });
 
     var elements = yield browser.find('#id'); // find element
+    var elements = yield browser.findVisible('span'); // find visible element
     var elements = yield browser.find('active');// get active element
     var elements = yield browser.find('#id');// get element by css selector
     var elements = yield browser.find('//html/body');// get element by xpath
