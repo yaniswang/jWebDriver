@@ -17,7 +17,7 @@
                 <h1><img src="https://raw.github.com/yaniswang/jWebDriver/master/logo_s.png" title="jwebdriver"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.10</em>
+            <em>API Docs for: 1.1.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -155,12 +155,19 @@ const Elements = PromiseClass.create({
                 }
                 else{
                     let arrElements = ret.value;
-                    let elementIds = arrElements.map(function(element){
-                        return element.ELEMENT;
-                    });
-                    self.elementIds = elementIds;
-                    self.length = elementIds.length;
-                    done();
+                    if(arrElements.length &gt; 0){
+                        let elementIds = arrElements.map(function(element){
+                            return element.ELEMENT;
+                        });
+                        self.elementIds = elementIds;
+                        self.length = elementIds.length;
+                        done();
+                    }
+                    else{
+                        let message = &#x27;Find elements failed&#x27;;
+                        self.log(&#x27;ERROR&#x27;, message);
+                        done(message);
+                    }
                 }
             });
         }
@@ -262,15 +269,23 @@ const Elements = PromiseClass.create({
     },
 
     /**
-     * get webdriver ELEMENT object (first element)
+     * get webdriver ELEMENT object
      * @method toJSON
+     * @param  {Boolean} first
      * @public
-     * @return {Object} {ELEMENT: 1}
+     * @return {Object|Array} [{ELEMENT: 1}] | {ELEMENT: 1}
      */
-    toJSON(){
-        let self = this;
-        if(self.length &gt; 0){
-            return {ELEMENT: self.elementIds[0]};
+    toJSON(first){
+        var elementIds = this.elementIds;
+        if(first &amp;&amp; elementIds.length &gt; 0){
+            return {ELEMENT: elementIds[0]};
+        }
+        else{
+            var arrJson = [];
+            elementIds.forEach(function(id){
+                arrJson.push({ELEMENT: id});
+            });
+            return arrJson;
         }
     },
 

@@ -17,7 +17,7 @@
                 <h1><img src="https://raw.github.com/yaniswang/jWebDriver/master/logo_s.png" title="jwebdriver"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.10</em>
+            <em>API Docs for: 1.1.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -389,7 +389,7 @@ const JWebDriver = PromiseClass.create({
             platform = undefined;
         }
         done = getDone(arguments);
-        var browser = new Browser(this, browserName, version, platform);
+        let browser = new Browser(this, browserName, version, platform);
         browser.init(function(error){
             done(error, browser);
         }).catch(done);

@@ -17,7 +17,7 @@
                 <h1><img src="https://raw.github.com/yaniswang/jWebDriver/master/logo_s.png" title="jwebdriver"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.0.10</em>
+            <em>API Docs for: 1.1.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -487,8 +487,8 @@ const Browser = PromiseClass.create({
             script = script.replace(/\n/g, &#x27;&#x27;);
             args = args.map(function(arg){
                 if(arg instanceof Elements){
-                    arg.toJSON(function(error, obj){
-                        arg = obj;
+                    arg.toJSON(function(error, json){
+                        arg = json;
                     });
                 }
                 return arg;
@@ -519,7 +519,7 @@ const Browser = PromiseClass.create({
             useCache = undefined;
         }
         done = getDone(arguments);
-        var windowHandle = self._windowHandle;
+        let windowHandle = self._windowHandle;
         if(useCache &amp;&amp; windowHandle){
             done(null, windowHandle);
         }
@@ -635,7 +635,7 @@ const Browser = PromiseClass.create({
             }
         }).then(function(frame){
             if(frame instanceof Elements){
-                return frame.toJSON();
+                return frame.toJSON(true);
             }
             else{
                 return frame;
@@ -754,7 +754,7 @@ const Browser = PromiseClass.create({
      * @param  {Function} done callback function
      */
     maximize(done){
-        var self = this;
+        let self = this;
         Promise.resolve(self.windowHandle(true)).then(function(windowHandle){
             self.exec(&#x27;maximizeWindow&#x27;, {
                 windowHandle : windowHandle
@@ -1391,10 +1391,69 @@ const Browser = PromiseClass.create({
             value = undefined;
         }
         done = getDone(arguments);
-        var elements = new Elements(this, using, value);
+        let elements = new Elements(this, using, value);
         elements.init(function(error){
             done(error, elements);
         }).catch(done);
+    },
+
+    /**
+     * find visible element
+     * @method findVisible
+     * @public
+     * @param  {String} [using] find mode: class name|css selector|id|name|link text|partial link text|tag name|xpath
+     * @param  {String} value find pattern
+     * @param  {Function} done callback function
+     * @return {Elments}
+     */
+    findVisible(using, value, done){
+        let self = this;
+        if(typeof value === &#x27;function&#x27;){
+            value = undefined;
+        }
+        done = getDone(arguments);
+        self.find(using, value, function*(error, elements){
+            if(elements.length &gt; 0){
+                let json = yield elements.toJSON();
+                // filter visible element
+                let newJson = yield self.eval(&#x27;function(arg1){\
+                    function curCSS(elem, name){\
+                        var curStyle = elem.currentStyle;\
+                        var style = elem.style;\
+                        return (curStyle &amp;&amp; curStyle[name]) || (style &amp;&amp; style[name]);\
+                    }\
+                    function isHidden(elem){\
+                        return ( elem.offsetWidth === 0 &amp;&amp; elem.offsetHeight === 0 ) || (curCSS( elem, &quot;display&quot; ) === &quot;none&quot;);\
+                    }\
+                    var elements = arg1.elements;\
+                    var newElements = [], element;\
+                    for(var i in elements){\
+                        element = elements[i];\
+                        if(!isHidden(element)){\
+                            newElements.push(element);\
+                        }\
+                    }\
+                    return newElements;\
+                }&#x27;, {elements: json});
+                if(newJson.length === 0){
+                    let message = &#x27;Find visible elements failed&#x27;;
+                    self.log(&#x27;ERROR&#x27;, message);
+                    done(message);
+                }
+                else{
+                    let elementIds = [];
+                    newJson.forEach(function(element){
+                        elementIds.push(element.ELEMENT);
+                    });
+                    elements.elementIds = elementIds;
+                    elements.length = elementIds.length;
+                    done(null, elements);
+                }
+            }
+            else{
+                done(error);
+            }
+        });
     },
 
     /**
@@ -1433,7 +1492,7 @@ const Browser = PromiseClass.create({
             done(error, result);
         }
         function waitElement(){
-            self.find(selector, function*(error, elements){
+            self[displayed?&#x27;findVisible&#x27;:&#x27;find&#x27;](selector, function(error, elements){
                 if(elements){
                     if(removed === true &amp;&amp; elements.length === 0){
                         // removed
@@ -1442,10 +1501,7 @@ const Browser = PromiseClass.create({
                     else if(removed === false &amp;&amp; elements.length &gt; 0){
                         if(displayed){
                             // displayed
-                            var ret = yield elements.displayed();
-                            if(ret){
-                                return endWait(null, elements);
-                            }
+                            return endWait(null, elements);
                         }
                         else{
                             // wait dom
@@ -1455,12 +1511,9 @@ const Browser = PromiseClass.create({
                 }
                 // timeout
                 if(new Date().getTime() - startTime &gt; timeout){
-                    self.log(&#x27;ERROR&#x27;, &#x27;Wait elelment &#x27;+(removed?&#x27;removed&#x27;:&#x27;displayed&#x27;)+&#x27; timeout: &#x27; + timeout + &#x27;ms&#x27;);
-                    if(displayed){
-                        elements = new Elements(self, &#x27;elements&#x27;, []);
-                        elements.init();
-                    }
-                    endWait(null, elements);
+                    let message = &#x27;Wait elelment &#x27;+(removed?&#x27;removed&#x27;:&#x27;displayed&#x27;)+&#x27; timeout: &#x27; + timeout + &#x27;ms&#x27;;
+                    self.log(&#x27;ERROR&#x27;, message);
+                    endWait(message);
                 }
                 else{
                     _timer = setTimeout(waitElement, 500);
@@ -1799,11 +1852,11 @@ function getDone(args){
 
 // get local ip
 function getLocalIP() {
-    var ifaces = os.networkInterfaces();
-    for (var dev in ifaces) {
-        var iface = ifaces[dev];
-        for (var i = 0; i &lt; iface.length; i++) {
-            var alias = iface[i];
+    let ifaces = os.networkInterfaces();
+    for (let dev in ifaces) {
+        let iface = ifaces[dev];
+        for (let i = 0; i &lt; iface.length; i++) {
+            let alias = iface[i];
             if (alias.family === &#x27;IPv4&#x27; &amp;&amp; alias.address !== &#x27;127.0.0.1&#x27; &amp;&amp; !alias.internal){
                 return alias.address;
             }
