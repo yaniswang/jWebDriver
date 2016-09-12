@@ -250,6 +250,7 @@ co(function*(){
     });
 
     var elements = yield browser.find('#id'); // find element
+    var elements = yield browser.findVisible('span'); // find visible element
     var elements = yield browser.find('active');// get active element
     var elements = yield browser.find('#id');// get element by css selector
     var elements = yield browser.find('//html/body');// get element by xpath

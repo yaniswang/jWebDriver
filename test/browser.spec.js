@@ -204,8 +204,8 @@ function runBrowserTest(browserName){
                 expect(ret).to.be(321);
 
                 var element = yield browser.find('#kw');
-                ret = yield browser.eval(function(element){
-                    return element.tagName;
+                ret = yield browser.eval(function(elements){
+                    return elements[0].tagName;
                 }, element);
                 expect(ret).to.be('INPUT');
 
@@ -289,6 +289,30 @@ function runBrowserTest(browserName){
             }
 		});
 
+        it('should find visible element', function*(){
+
+            var visibleTest = yield browser.findVisible('#visibleTest1');
+            expect(visibleTest.length).to.be(1);
+            expect(yield visibleTest.attr('id')).to.be('visibleTest1');
+
+            visibleTest = yield browser.findVisible('.visibletest');
+            expect(visibleTest.length).to.be(1);
+
+            try{
+                visibleTest = yield browser.findVisible('#visibleTest2');
+            }
+            catch(e){
+                expect(e).to.be('Find visible elements failed');
+            }
+
+            try{
+                visibleTest = yield browser.findVisible('#visibleTest3');
+            }
+            catch(e){
+                expect(e).to.be('Find visible elements failed');
+            }
+        });
+
 		it('should sendkeys to element', function*(){
 
             yield browser.eval(function(){
@@ -340,9 +364,11 @@ function runBrowserTest(browserName){
                 setTimeout(function(){
                     document.body.innerHTML='<input type="text" id="wait1">';
                 }, 100);
+                return;
             });
             var wait = yield browser.wait('#wait1');
             expect(wait.length).to.be(1);
+
             yield browser.eval(function(){
                 setTimeout(function(){
                     document.body.innerHTML='<input type="text" id="wait2" style="display:none">';
@@ -354,6 +380,7 @@ function runBrowserTest(browserName){
             catch(e){
                 expect(e).to.contain('Wait elelment displayed timeout');
             }
+
             // wait dom
             yield browser.eval(function(){
                 setTimeout(function(){
@@ -364,6 +391,7 @@ function runBrowserTest(browserName){
                 displayed: false
             });
             expect(wait.length).to.be(1);
+
             // wait removed
             yield browser.eval(function(){
                 setTimeout(function(){

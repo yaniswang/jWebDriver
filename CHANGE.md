@@ -1,6 +1,11 @@
 jWebDriver change log
 ====================
 
+## ver 1.1.0 (2016-9-12)
+
+1. add: browser.findVisible, find visible elements
+2. wait api: support multi elements
+
 ## ver 1.0.12 (2016-6-6)
 
 1. find api: throw error when find no elements

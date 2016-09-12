@@ -13,12 +13,12 @@ A webdriver client for Node.js
 
 1. Official Site: [http://jwebdriver.com/](http://jwebdriver.com/)
 3. API Doc: [http://jwebdriver.com/api/](http://jwebdriver.com/api/)
-2. Coverage: [http://jwebdriver.com/coverage/](http://jwebdriver.com/coverage/) (80.46%)
+2. Coverage: [http://jwebdriver.com/coverage/](http://jwebdriver.com/coverage/) (80.88%)
 
 Features
 ================
 
-1. Support all webdriver protocols: [https://code.google.com/p/selenium/wiki/JsonWireProtocol](https://code.google.com/p/selenium/wiki/JsonWireProtocol)
+1. Support all webdriver protocols: [https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol](https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol)
 2. Easy to use
 3. Support promise chain & generator & es7 await
 4. jQuery style test code, easy use for front engineer
@@ -37,7 +37,7 @@ Quick start
 
 2. Run selenium server
 
-	> java -jar selenium-server-standalone-2.26.0.jar
+	> java -jar selenium-server-standalone-x.x.x.jar
 
 3. Insall jWebDriver
 
@@ -398,6 +398,7 @@ You can search all api here, include all mode of api:
         });
 
         var elements = yield browser.find('#id'); // find element
+        var elements = yield browser.findVisible('span'); // find visible element
         var elements = yield browser.find('active');// get active element
         var elements = yield browser.find('#id');// get element by css selector
         var elements = yield browser.find('//html/body');// get element by xpath
@@ -514,6 +515,7 @@ You can search all api here, include all mode of api:
     }).catch(function(error){
         console.log(error);
     });
+
 
 License
 ================
