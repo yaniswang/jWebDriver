@@ -1,17 +1,18 @@
 {
   "name": "jwebdriver",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "description": "A webdriver client for node.js",
   "homepage": "http://jwebdriver.com/",
   "main": "./index",
   "dependencies": {
     "node-zip": "1.1.1",
-    "promiseclass": "0.9.5",
+    "promiseclass": "1.0.0",
     "request": "2.65.0",
     "xtend": "2.0.3"
   },
   "devDependencies": {
-    "expect.js": "0.3.1",
+    "chai": "3.5.0",
+    "co": "4.6.0",
     "express": "4.13.3",
     "grunt": "0.4.1",
     "grunt-cli": "0.1.6",
@@ -24,8 +25,7 @@
     "istanbul-coveralls": "1.0.3",
     "mocha": "2.3.3",
     "mocha-generators": "1.2.0",
-    "phantomjs": "1.9.18",
-    "co": "4.6.0"
+    "phantomjs": "1.9.18"
   },
   "scripts": {
     "test": "mocha"

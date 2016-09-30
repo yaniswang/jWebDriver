@@ -92,9 +92,9 @@ co(function*(){
 
     // ========================== position & size & maximize & screenshot ==========================
 
-    var offset = yield browser.offset(); // return {x: 1, y: 1}
-    yield browser.offset(10, 10); // set offset
-    yield browser.offset({
+    var position = yield browser.position(); // return {x: 1, y: 1}
+    yield browser.position(10, 10); // set position
+    yield browser.position({
     	x: 10,
     	y: 10
     });
@@ -107,12 +107,13 @@ co(function*(){
     yield browser.maximize();
     var png_base64  = yield browser.getScreenshot();// get the screen shot, base64 type
 
-    // ========================== url & title & html ==========================
+    // ========================== url & title & source ==========================
 
     yield browser.url('http://www.alibaba.com/'); // goto url
     var url = yield browser.url(); // get url
     var title = yield browser.title(); // get title
-    var html = yield browser.html(); // get html code
+    var source = yield browser.source(); // get source code
+    var html = yield browser.html(); // get html code, nick name of source
 
     // ========================== navigator ==========================
 

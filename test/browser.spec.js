@@ -2,9 +2,11 @@ var path = require('path');
 var os = require('os');
 var express = require('express');
 var JWebDriver = require('../');
-var expect  = require("expect.js");
 var co  = require("co");
 require('mocha-generators').install();
+var chai = require("chai");
+chai.should();
+chai.use(JWebDriver.chaiSupportChainPromise);
 
 var isWin32 = process.platform === 'win32';
 var phantomjs = process.env['phantomjs'] || !isWin32;
@@ -43,12 +45,13 @@ function runBrowserTest(browserName){
                     logLevel: 0,
                     speed: 0
                 });
-                return driver.session(browserName).sessions().then(function(arrSessions){
-                    var arrPromise = arrSessions.map(function(session){
-                        return session.close();
-                    });
-                    return Promise.all(arrPromise);
-                }).session({
+// .session(browserName).sessions().then(function(arrSessions){
+//                     var arrPromise = arrSessions.map(function(session){
+//                         return session.close();
+//                     });
+//                     return Promise.all(arrPromise);
+//                 })
+                return driver.session({
                     browserName: browserName,
                     hosts: '127.0.0.1 www.alibaba.com'
                 }, function(error, ret){
@@ -63,23 +66,18 @@ function runBrowserTest(browserName){
             var startTime = Date.now();
             yield browser.sleep(200);
             var time = Date.now() - startTime;
-            expect(time).to.be.within(190, 210);
+            time.should.be.within(150, 250);
 
 		});
 
 		it('should goto and read url', function*(){
 
-            yield browser.url(testPath + 'test1.html');
-            expect(yield browser.url()).to.be(testPath + 'test1.html');
-            yield browser.url(testPath + 'test2.html');
-            expect(yield browser.url()).to.be(testPath + 'test2.html');
-            yield browser.back();
-            expect(yield browser.url()).to.be(testPath + 'test1.html');
-            yield browser.forward();
-            expect(yield browser.url()).to.be(testPath + 'test2.html');
+            yield browser.url(testPath + 'test1.html').url().should.equal(testPath + 'test1.html');
+            yield browser.url(testPath + 'test2.html').url().should.equal(testPath + 'test2.html');
+            yield browser.back().url().should.equal(testPath + 'test1.html');
+            yield browser.forward().url().should.equal(testPath + 'test2.html');
             // test https
-            yield browser.url('https://www.baidu.com/');
-            expect(yield browser.url()).to.contain('baidu.com');
+            yield browser.url('https://www.baidu.com/').url().should.contain('baidu.com');
 
 		});
 
@@ -87,8 +85,7 @@ function runBrowserTest(browserName){
             it('hosts mode should work', function*(){
 
                 var tmpTestPath = testPath.replace('127.0.0.1', 'www.alibaba.com');
-                yield browser.url(tmpTestPath + 'test1.html');
-                expect(yield browser.title()).to.be('testtitle');
+                yield browser.url(tmpTestPath + 'test1.html').title().should.equal('testtitle');
 
             });
         }
@@ -97,66 +94,50 @@ function runBrowserTest(browserName){
 
             yield browser.url(testPath + 'test1.html');
             var element = yield browser.find('#kw');
-            yield element.val('refresh');
-            expect(yield element.attr('value')).to.be('refresh');
+            yield element.val('refresh').attr('value').should.equal('refresh');
             yield browser.refresh();
             element = yield browser.find('#kw');
-            expect(yield element.attr('value')).to.be('');
+            yield element.attr('value').should.equal('');
 
 		});
 
 		it('should get title', function*(){
 
-            yield browser.url(testPath + 'test1.html');
-            var title = yield browser.title();
-            expect(title).to.be('testtitle');
+            yield browser.url(testPath + 'test1.html').title().should.equal('testtitle');
 
 		});
 
 		it('should get html', function*(){
 
-            var html = yield browser.html();
-            expect(html).to.match(/<\/head>\s*<body>/i);
+            yield browser.html().should.match(/<\/head>\s*<body>/i);
 
 		});
 
 		it('should write and get cookie', function*(){
 
-            var arrCookies = yield browser.cookies(true);
-            expect(arrCookies.length).to.be(0);
+            yield browser.cookies(true).should.have.length(0);
             yield browser.cookie('test1', '111');
             yield browser.cookie('test2','222', {
                 expiry: '7 day'
             });
-            arrCookies = yield browser.cookies(true);
-            expect(arrCookies.length).to.be(2);
-            yield browser.cookie('test3', '321');
-            expect(yield browser.cookie('test3')).to.be('321');
-            yield browser.removeCookie('test3');
-            expect(yield browser.cookie('test3')).to.be(undefined);
+            yield browser.cookies(true).should.have.length(2);
+            yield browser.cookie('test3', '321').cookie('test3').should.equal('321');
+            yield browser.removeCookie('test3').cookie('test3').should.equal(undefined);
             yield browser.clearCookies();
-            arrCookies = yield browser.cookies(true);
-            expect(arrCookies.length).to.be(0);
+            yield browser.cookies(true).should.have.length(0);
 
 		});
 
         it('should write and get localStorage', function*(){
 
             if(yield browser.support('storage')){
-                var arrKeys = yield browser.localStorageKeys();
-                expect(arrKeys.length).to.be(0);
+                yield browser.localStorageKeys().should.have.length(0);
                 yield browser.localStorage('test1', '111');
                 yield browser.localStorage('test2', '222');
-                arrKeys = yield browser.localStorageKeys();
-                expect(arrKeys.length).to.be(2);
-                var value = yield browser.localStorage('test1');
-                expect(value).to.be('111');
-                yield browser.removeLocalStorage('test1');
-                arrKeys = yield browser.localStorageKeys();
-                expect(arrKeys.length).to.be(1);
-                yield browser.clearLocalStorages();
-                arrKeys = yield browser.localStorageKeys();
-                expect(arrKeys.length).to.be(0);
+                yield browser.localStorageKeys().should.have.length(2);
+                yield browser.localStorage('test1').should.equal('111');
+                yield browser.removeLocalStorage('test1').localStorageKeys().should.have.length(1);
+                yield browser.clearLocalStorages().localStorageKeys().should.length(0);
             }
 
         });
@@ -164,20 +145,13 @@ function runBrowserTest(browserName){
         it('should write and get sessionStorage', function*(){
 
             if(yield browser.support('storage')){
-                var arrKeys = yield browser.sessionStorageKeys();
-                expect(arrKeys.length).to.be(0);
+                yield browser.sessionStorageKeys().should.have.length(0);
                 yield browser.sessionStorage('test1', '111');
                 yield browser.sessionStorage('test2', '222');
-                arrKeys = yield browser.sessionStorageKeys();
-                expect(arrKeys.length).to.be(2);
-                var value = yield browser.sessionStorage('test1');
-                expect(value).to.be('111');
-                yield browser.removeSessionStorage('test1');
-                arrKeys = yield browser.sessionStorageKeys();
-                expect(arrKeys.length).to.be(1);
-                yield browser.clearSessionStorages();
-                arrKeys = yield browser.sessionStorageKeys();
-                expect(arrKeys.length).to.be(0);
+                yield browser.sessionStorageKeys().should.have.length(2);
+                yield browser.sessionStorage('test1').should.equal('111');
+                yield browser.removeSessionStorage('test1').sessionStorageKeys().should.have.length(1);
+                yield browser.clearSessionStorages().sessionStorageKeys().should.have.length(0);
             }
 
         });
@@ -185,67 +159,58 @@ function runBrowserTest(browserName){
 		it('should eval javascript', function(done){
 
             co(function*(){
-                var ret = yield browser.eval('return document.title;');
-                expect(ret).to.be('testtitle');
+                yield browser.eval('return document.title;').should.equal('testtitle');
 
-                ret = yield browser.eval(function(){
+                yield browser.eval(function(){
                     return document.title;
-                });
-                expect(ret).to.be('testtitle');
+                }).should.equal('testtitle');
 
-                ret = yield browser.eval(function(arg1, arg2){
+                yield browser.eval(function(arg1, arg2){
                     return arg2;
-                }, 123, 321);
-                expect(ret).to.be(321);
+                }, 123, 321).should.equal(321);
 
-                ret = yield browser.eval(function(arg1, arg2){
+                yield browser.eval(function(arg1, arg2){
                     return arg2;
-                }, [123, 321]);
-                expect(ret).to.be(321);
+                }, [123, 321]).should.equal(321);
 
                 var element = yield browser.find('#kw');
-                ret = yield browser.eval(function(elements){
+                yield browser.eval(function(elements){
                     return elements[0].tagName;
-                }, element);
-                expect(ret).to.be('INPUT');
+                }, element).should.equal('INPUT');
 
-                browser.config({
+                yield browser.config({
                     asyncScriptTimeout: 50
                 });
 
-                ret = yield browser.eval(function(done){
+                yield browser.eval(function(done){
                     setTimeout(function(){
                         done(document.title);
                     }, 10);
-                });
-                expect(ret).to.be('testtitle');
+                }).should.equal('testtitle');
 
-                ret = yield browser.eval(function(args1, arg2, done){
+                yield browser.eval(function(args1, arg2, done){
                     setTimeout(function(){
                         done(arg2);
                     }, 10);
-                }, 123, 321);
-                expect(ret).to.be(321);
+                }, 123, 321).should.equal(321);
 
                 yield browser.config({
                     asyncScriptTimeout: 10
                 });
 
-                ret = yield browser.eval(function(done){
+                yield browser.eval(function(done){
                     setTimeout(function(){
                         done();
                     }, 50);
                 }).catch(function(error){
-                    expect(error).to.be('eval timeout');
-                });
-                expect(ret).to.be(undefined);
+                    error.should.equal('eval timeout');
+                }).should.equal(undefined);
 
-                ret = yield browser.eval(function(done){
+                yield browser.eval(function(done){
                     false && done();
                 }).catch(function(error){
-                    expect(error).to.be('eval timeout');
-                });
-                expect(ret).to.be(undefined);
+                    error.should.equal('eval timeout');
+                }).should.equal(undefined);
             }).then(done).catch(function(error){
                 if(error === 'eval timeout'){
                     done();
@@ -264,10 +229,9 @@ function runBrowserTest(browserName){
             if(fs.existsSync(tempPath)){
                 fs.unlinkSync(tempPath);
             }
-            var base64Png = yield browser.getScreenshot();
-            expect(base64Png).to.be.an('string');
+            var base64Png = yield browser.getScreenshot().should.to.be.an('string');
             fs.writeFileSync(tempPath, base64Png, 'base64');
-            expect(fs.existsSync(tempPath)).to.be(true);
+            fs.existsSync(tempPath).should.to.true;
             if(fs.existsSync(tempPath)){
                 fs.unlinkSync(tempPath);
             }
@@ -276,40 +240,37 @@ function runBrowserTest(browserName){
 
 		it('should find element', function*(){
 
-            var activeElement = yield browser.find('active');
-            expect(activeElement.length).to.be(1);
-            expect(yield activeElement.attr('id')).to.be('kw');
-            var testmouse = yield browser.find('#testmouse');
-            expect(testmouse.length).to.be(1);
+            var activeElement = yield browser.find('active').should.have.length(1);
+            yield activeElement.attr('id').should.equal('kw');
+            yield browser.find('#testmouse').should.have.length(1);
             try{
                 yield browser.find('#abcaaa');
             }
             catch(e){
-                expect(e).to.be('Find elements failed');
+                e.should.equal('Find elements failed');
             }
+
 		});
 
         it('should find visible element', function*(){
 
-            var visibleTest = yield browser.findVisible('#visibleTest1');
-            expect(visibleTest.length).to.be(1);
-            expect(yield visibleTest.attr('id')).to.be('visibleTest1');
+            var visibleTest = yield browser.findVisible('#visibleTest1').should.have.length(1);
+            yield visibleTest.attr('id').should.equal('visibleTest1');
 
-            visibleTest = yield browser.findVisible('.visibletest');
-            expect(visibleTest.length).to.be(1);
+            yield browser.findVisible('.visibletest').should.have.length(1);
 
             try{
-                visibleTest = yield browser.findVisible('#visibleTest2');
+                yield browser.findVisible('#visibleTest2');
             }
             catch(e){
-                expect(e).to.be('Find visible elements failed');
+                e.should.equal('Find visible elements failed');
             }
 
             try{
-                visibleTest = yield browser.findVisible('#visibleTest3');
+                yield browser.findVisible('#visibleTest3');
             }
             catch(e){
-                expect(e).to.be('Find visible elements failed');
+                e.should.equal('Find visible elements failed');
             }
         });
 
@@ -318,13 +279,14 @@ function runBrowserTest(browserName){
             yield browser.eval(function(){
                 document.getElementById("kw").focus();
             }).sendKeys('ab{shift}c{shift}');
-            var element = yield browser.find('#kw');
-            expect(yield element.attr('value')).to.be('abC');
+            yield browser.find('#kw').then(function(element){
+                return element.attr('value').should.equal('abC').clear();
+            });
             // keyDown & keyUp
-            yield element.clear();
             yield browser.keyDown('SHIFT').sendKeys('abc').keyUp('SHIFT');
-            element = yield browser.find('#kw');
-            expect(yield element.attr('value')).to.be('ABC');
+            yield browser.find('#kw').then(function(element){
+                return element.attr('value').should.equal('ABC');
+            });
 
 		});
 
@@ -333,21 +295,20 @@ function runBrowserTest(browserName){
             yield browser.url(testPath + 'test1.html');
             var kw = yield browser.find('#kw');
             //mouseMove: element
-            yield kw.val('test');
-            expect(yield kw.attr('value')).to.be('test');
+            yield kw.val('test').attr('value').should.equal('test');
             yield browser.mouseMove(kw).click().sleep(200);
-            expect(yield kw.attr('value')).to.be('1');
+            yield kw.attr('value').should.equal('1');
             //dbclick
             yield browser.dblClick().sleep(200);
-            expect(yield kw.attr('value')).to.be('2');
+            yield kw.attr('value').should.equal('2');
             var testmouse = yield browser.find('#testmouse');
             yield browser.mouseMove(testmouse).sleep(100);
             //mousedown
             yield browser.mouseDown().sleep(200);
-            expect(yield testmouse.attr('value')).to.be('3');
+            yield testmouse.attr('value').should.equal('3');
             //mouseup
             yield browser.mouseUp().sleep(200);
-            expect(yield testmouse.attr('value')).to.be('4');
+            yield testmouse.attr('value').should.equal('4');
 
 		});
 
@@ -358,7 +319,7 @@ function runBrowserTest(browserName){
                 yield browser.find('#wait1');
             }
             catch(e){
-                expect(e).to.be('Find elements failed');
+                e.should.equal('Find elements failed');
             }
             yield browser.eval(function(){
                 setTimeout(function(){
@@ -366,8 +327,7 @@ function runBrowserTest(browserName){
                 }, 100);
                 return;
             });
-            var wait = yield browser.wait('#wait1');
-            expect(wait.length).to.be(1);
+            yield browser.wait('#wait1').should.have.length(1);
 
             yield browser.eval(function(){
                 setTimeout(function(){
@@ -378,7 +338,7 @@ function runBrowserTest(browserName){
                 yield browser.wait('#wait2', 300);
             }
             catch(e){
-                expect(e).to.contain('Wait elelment displayed timeout');
+                e.should.contain('Wait elelment displayed timeout');
             }
 
             // wait dom
@@ -387,10 +347,9 @@ function runBrowserTest(browserName){
                     document.body.innerHTML='<input type="text" id="wait3" style="display:none">';
                 }, 100);
             });
-            wait = yield browser.wait('#wait3', {
+            yield browser.wait('#wait3', {
                 displayed: false
-            });
-            expect(wait.length).to.be(1);
+            }).should.have.length(1);
 
             // wait removed
             yield browser.eval(function(){
@@ -404,7 +363,7 @@ function runBrowserTest(browserName){
                 });
             }
             catch(e){
-                expect(e).to.contain('Wait elelment removed timeout');
+                e.should.contain('Wait elelment removed timeout');
             }
 		});
 
@@ -413,16 +372,16 @@ function runBrowserTest(browserName){
             yield browser.url(testPath+'dragdrop.html');
             var draggable = yield browser.find('#draggable');
             var offset = yield draggable.offset();
-            expect(offset.x).to.below(10);
-            expect(offset.y).to.below(10);
+            offset.x.should.below(10);
+            offset.y.should.below(10);
             yield browser.dragDrop(draggable, {
                 selector: 'body',
                 x: 501,
                 y: 502
             });
             offset = yield draggable.offset();
-            expect(offset.x).to.above(400);
-            expect(offset.y).to.above(400);
+            offset.x.should.above(400);
+            offset.y.should.above(400);
 
         });
 
@@ -431,13 +390,13 @@ function runBrowserTest(browserName){
             yield browser.size(1024, 768);
             var draggable = yield browser.find('#draggable');
             var offset = yield draggable.offset(true);
-            expect(offset.y).to.above(380);
+            offset.y.should.above(300);
             yield browser.scrollTo(draggable);
             offset = yield draggable.offset(true);
-            expect(offset.y).to.below(200);
+            offset.y.should.below(200);
             yield browser.scrollTo(0, 0);
             offset = yield draggable.offset(true);
-            expect(offset.y).to.above(400);
+            offset.y.should.above(400);
 
         });
 
@@ -447,20 +406,20 @@ function runBrowserTest(browserName){
                 yield browser.url(testPath + 'test1.html');
                 var alert = yield browser.find('#alert');
                 yield alert.click().sleep(500);
-                expect(yield browser.getAlert()).to.be('111');
+                yield browser.getAlert().should.equal('111');
                 yield browser.acceptAlert();
                 // confirm
                 var confirm = yield browser.find('#confirm');
                 yield confirm.click().sleep(500);
-                expect(yield browser.getAlert()).to.be('222');
+                yield browser.getAlert().should.equal('222');
                 yield browser.dismissAlert();
-                expect(yield confirm.attr('value')).to.be('false');
+                yield confirm.attr('value').should.equal('false');
                 // prompt
                 var prompt = yield browser.find('#prompt');
                 yield prompt.click().sleep(500);
-                expect(yield browser.getAlert()).to.be('333');
+                yield browser.getAlert().should.equal('333');
                 yield browser.setAlert('444').acceptAlert();
-                expect(yield prompt.attr('value')).to.be('444');
+                yield prompt.attr('value').should.equal('444');
             }
 
         });
@@ -468,71 +427,59 @@ function runBrowserTest(browserName){
         it('should switchTo window', function*(){
 
             yield browser.url(testPath + 'test1.html');
-            var testwindow = yield browser.find('#testwindow');
-            expect(testwindow.length).to.be(1);
+            var testwindow = yield browser.find('#testwindow').should.have.length(1);
             yield testwindow.click().sleep(200);
             var curWindowHandle = yield browser.windowHandle();
-            var arrWindowHandles = yield browser.windowHandles();
-            expect(arrWindowHandles.length).to.be(2);
+            yield browser.windowHandles().should.have.length(2);
             yield browser.switchWindow(1);
             //no element
             try{
                 yield browser.find('#testwindow');
             }
             catch(e){
-                expect(e).to.be('Find elements failed');
+                e.should.equal('Find elements failed');
             }
-            yield browser.closeWindow();
-            arrWindowHandles = yield browser.windowHandles();
-            expect(arrWindowHandles.length).to.be(1);
+            yield browser.closeWindow().windowHandles().should.have.length(1);
             yield browser.switchWindow(0);
-            testwindow = yield browser.find('#testwindow');
-            expect(testwindow.length).to.be(1);
-            var newCurWindowHandle = yield browser.windowHandle();
-            expect(newCurWindowHandle).to.be(curWindowHandle);
+            yield browser.find('#testwindow').should.have.length(1);
+            yield browser.windowHandle().should.equal(curWindowHandle);
             // new window
             var newWindowHandle = yield browser.newWindow(testPath + 'test2.html');
             yield browser.switchWindow(newWindowHandle);
-            var test2input = yield browser.find('#test2input');
-            expect(test2input.length).to.be(1);
+            yield browser.find('#test2input').should.have.length(1);
             yield browser.closeWindow().switchWindow(curWindowHandle);
-            testwindow = yield browser.find('#testwindow');
-            expect(testwindow.length).to.be(1);
+            yield browser.find('#testwindow').should.have.length(1);
 
         });
 
         it('should switchTo frame', function*(){
 
             yield browser.url(testPath + 'test1.html');
-            var frames = yield browser.frames();
-            expect(frames.length).to.be(1);
-            var testwindow = yield browser.find('#testwindow');
-            expect(testwindow.length).to.be(1);
+            yield browser.frames().should.have.length(1);
+            yield browser.find('#testwindow').should.have.length(1);
             // switch to frame
             yield browser.switchFrame('#testiframe');
             try{
                 yield browser.find('#testwindow');
             }
             catch(e){
-                expect(e).to.be('Find elements failed');
+                e.should.equal('Find elements failed');
             }
             // switch to main page
             yield browser.switchFrame(null);
-            testwindow = yield browser.find('#testwindow');
-            expect(testwindow.length).to.be(1);
+            yield browser.find('#testwindow').should.have.length(1);
             // switch to frame
             yield browser.switchFrame('#testiframe');
             try{
                 yield browser.find('#testwindow');
             }
             catch(e){
-                expect(e).to.be('Find elements failed');
+                e.should.equal('Find elements failed');
             }
             if(browser.browserName !== 'phantomjs'){
                 // switch to parent
                 yield browser.switchFrameParent();
-                testwindow = yield browser.find('#testwindow');
-                expect(testwindow.length).to.be(1);
+                yield browser.find('#testwindow').should.have.length(1);
             }
 
         });
@@ -540,27 +487,19 @@ function runBrowserTest(browserName){
         it('should set and get size of window', function*(){
 
             yield browser.size(501,502);
-            var newSize = yield browser.size();
-            expect(newSize.width).to.be(501);
-            expect(newSize.height).to.be(502);
+            yield browser.size().should.deep.equal({width:501,height:502});
             yield browser.size({'width': 603,'height': 604});
-            newSize = yield browser.size();
-            expect(newSize.width).to.be(603);
-            expect(newSize.height).to.be(604);
+            yield browser.size().should.deep.equal({width:603,height:604});
 
         });
 
-        it('should set and get offset of window', function*(){
+        it('should set and get position of window', function*(){
 
             if(browser.browserName !== 'phantomjs'){
-                yield browser.offset(101,102);
-                var newOffset = yield browser.offset();
-                expect(newOffset.x).to.be(101);
-                expect(newOffset.y).to.be(102);
-                yield browser.offset({'x': 203,'y': 204});
-                newOffset = yield browser.offset();
-                expect(newOffset.x).to.be(203);
-                expect(newOffset.y).to.be(204);
+                yield browser.position(101,102);
+                yield browser.position().should.deep.equal({x:101,y:102});
+                yield browser.position({'x': 203,'y': 204});
+                yield browser.position().should.deep.equal({x:203,y:204});
             }
 
         });
@@ -568,13 +507,11 @@ function runBrowserTest(browserName){
         it('should maximize window', function*(){
 
             yield browser.size(501,502);
-            var newSize = yield browser.size();
-            expect(newSize.width).to.be(501);
-            expect(newSize.height).to.be(502);
+            yield browser.size().should.deep.equal({width:501,height:502});
             yield browser.maximize();
-            newSize = yield browser.size();
-            expect(newSize.width).to.be.above(501);
-            expect(newSize.height).to.be.above(502);
+            var newSize = yield browser.size();
+            newSize.width.should.above(501);
+            newSize.height.should.above(502);
 
         });
 

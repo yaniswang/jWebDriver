@@ -1,6 +1,11 @@
 jWebDriver change log
 ====================
 
+## ver 2.0.0 (2016-9-30)
+
+1. add: Support mix promise with Driver class
+2. add: Support promise mode for chai
+
 ## ver 1.1.0 (2016-9-12)
 
 1. add: browser.findVisible, find visible elements

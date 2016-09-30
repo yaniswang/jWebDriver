@@ -13,7 +13,7 @@ A webdriver client for Node.js
 
 1. Official Site: [http://jwebdriver.com/](http://jwebdriver.com/)
 3. API Doc: [http://jwebdriver.com/api/](http://jwebdriver.com/api/)
-2. Coverage: [http://jwebdriver.com/coverage/](http://jwebdriver.com/coverage/) (80.88%)
+2. Coverage: [http://jwebdriver.com/coverage/](http://jwebdriver.com/coverage/) (80.32%)
 
 Features
 ================
@@ -23,51 +23,87 @@ Features
 3. Support promise chain & generator & es7 await
 4. jQuery style test code, easy use for front engineer
 5. All test cover api
-6. Support hosts mode, different hosts for different job
-7. Support for remote file upload
+6. Support hosts mode, different hosts with different job
+7. Support with remote file upload
 
 Quick start
 ================
 
 1.  Download Selenium server & browser driver.
 
-    > Selenium server & IEDriverServer & SafariDriver: [http://selenium-release.storage.googleapis.com/index.html](http://selenium-release.storage.googleapis.com/index.html)
+    > Download Selenium Server & IEDriverServer: [http://selenium-release.storage.googleapis.com/index.html](http://selenium-release.storage.googleapis.com/index.html)
 
-    > ChromeDriver: [http://chromedriver.storage.googleapis.com/index.html](http://chromedriver.storage.googleapis.com/index.html)
+    > Download ChromeDriver: [http://chromedriver.storage.googleapis.com/index.html](http://chromedriver.storage.googleapis.com/index.html)
 
-2. Run selenium server
+    > Add the driver path to environment variable: `PATH`
 
-	> java -jar selenium-server-standalone-x.x.x.jar
+    > Run selenium server: `java -jar selenium-server-standalone-x.xx.x.jar`
 
-3. Insall jWebDriver
+2. Insall jWebDriver
 
     > npm install jwebdriver
 
-4. Run test code
+3. Run test code
 
     > node baidu.js
 
         var JWebDriver = require('jwebdriver');
 
         var driver = new JWebDriver();
-        driver.session('chrome', function*(error, browser){
-            yield browser.url('https://www.baidu.com/');
-            var elemement = yield browser.find('#kw');
-            yield elemement.val('mp3').submit();
 
-            console.log(yield browser.title());
+        driver.session("chrome")
+            .url('https://www.baidu.com/')
+            .find('#kw')
+            .val('mp3')
+            .submit()
+            .title()
+            .then(function(title){
+                console.log(title);
+            })
+            .close();
 
-            yield browser.close();
-        }).then(function(){
-            console.log('all done');
-        }).catch(function(error){
-            console.log(error);
-        });
 
-    > node mocha.js
+
+    > mocha mocha-promise.js
 
         var JWebDriver = require('jwebdriver');
-        var expect  = require("expect.js");
+        var chai = require("chai");
+        chai.should();
+        chai.use(JWebDriver.chaiSupportChainPromise);
+
+        describe('jWebDriver test', function(){
+
+            this.timeout(30000);
+
+            var browser;
+            before(function(){
+                var driver = new JWebDriver();
+                return (browser = driver.session('chrome'));
+            });
+
+            it('should search baidu', function(){
+                return browser.url('https://www.baidu.com/')
+                    .find('#kw')
+                    .should.have.length(1)
+                    .val('mp3').submit()
+                    .url()
+                    .should.contain('wd=mp3');
+            });
+
+            after(function(){
+                return browser.close();
+            });
+
+        });
+
+
+    > node mocha-generators.js
+
+        var JWebDriver = require('../');
+        var chai = require("chai");
+        chai.should();
+        chai.use(JWebDriver.chaiSupportChainPromise);
+
         require('mocha-generators').install();
 
         describe('jWebDriver test', function(){
@@ -78,15 +114,11 @@ Quick start
                 browser = yield driver.session('chrome');
             });
 
-            it('should open url', function*(){
+            it('should search baidu', function*(){
                 yield browser.url('https://www.baidu.com/');
-                var kw = yield browser.find('#kw');
-                expect(kw.length).to.be(1);
-
+                var kw = yield browser.find('#kw').should.have.length(1);
                 yield kw.val('mp3').submit();
-
-                var url = yield browser.url();
-                expect(url).to.contain('wd=mp3');
+                yield browser.url().should.contain('wd=mp3');
             });
 
             after(function*(){
@@ -95,24 +127,6 @@ Quick start
 
         });
 
-    > node promise.js
-
-        var JWebDriver = require('jwebdriver');
-
-        var driver = new JWebDriver();
-        driver.session('chrome', function(error, browser) {
-            browser.url('https://www.baidu.com/')
-                  .find('#kw')
-                  .then(function(kw) {
-                      return kw.val('mp3')
-                               .submit();
-                  })
-                  .title()
-                  .then(function(title) {
-                      console.log(title);
-                  })
-                  .close();
-        });
 
 
 More examples
@@ -120,12 +134,13 @@ More examples
 
 1. [Baidu test](https://github.com/yaniswang/jWebDriver/blob/master/example/baidu.js)
 2. [Gooogle test](https://github.com/yaniswang/jWebDriver/blob/master/example/google.js)
-3. [Mocha test](https://github.com/yaniswang/jWebDriver/blob/master/example/mocha.js)
-4. [Promise test](https://github.com/yaniswang/jWebDriver/blob/master/example/promise.js)
-5. [Upload test](https://github.com/yaniswang/jWebDriver/blob/master/example/upload.js)
-6. [Drag Drop test](https://github.com/yaniswang/jWebDriver/blob/master/example/dragdrop.js)
-7. [Co test](https://github.com/yaniswang/jWebDriver/blob/master/example/co.js)
-8. [ES7 async](https://github.com/yaniswang/jWebDriver/blob/master/example/es7async.js)
+3. [Mocha Promise](https://github.com/yaniswang/jWebDriver/blob/master/example/mocha-promise.js)
+3. [Mocha Generators](https://github.com/yaniswang/jWebDriver/blob/master/example/mocha-generators.js)
+4. [Upload test](https://github.com/yaniswang/jWebDriver/blob/master/example/upload.js)
+5. [Drag Drop test](https://github.com/yaniswang/jWebDriver/blob/master/example/dragdrop.js)
+6. [Co test](https://github.com/yaniswang/jWebDriver/blob/master/example/co.js)
+7. [ES7 async](https://github.com/yaniswang/jWebDriver/blob/master/example/es7async.js)
+7. [Plugin](https://github.com/yaniswang/jWebDriver/blob/master/example/plugin.js)
 
 API Book
 ================
@@ -133,6 +148,7 @@ API Book
 jWebDriver have 3 Class: Driver, Broswer, Elemenets
 
 All api can used with chain promise and support generator & es7 async:
+------------------------------------------
 
     browser.find('#kw').then(function(elements){
         return elements.val('test')
@@ -143,8 +159,24 @@ All api can used with chain promise and support generator & es7 async:
         console.log(title);
     });
 
+And you can use mix promise with Driver class, all method will copy to Driver from Broswer and Elemenets:
+------------------------------------------
+
+    var driver = new JWebDriver();
+
+    driver.session("chrome")
+        .url('https://www.baidu.com/')
+        .find('#kw')
+        .val('mp3')
+        .submit()
+        .title()
+        .then(function(title){
+            console.log(title);
+        })
+        .close();
 
 You can search all api here, include all mode of api:
+------------------------------------------
 
     var co = require('co');
 
@@ -240,9 +272,9 @@ You can search all api here, include all mode of api:
 
         // ========================== position & size & maximize & screenshot ==========================
 
-        var offset = yield browser.offset(); // return {x: 1, y: 1}
-        yield browser.offset(10, 10); // set offset
-        yield browser.offset({
+        var position = yield browser.position(); // return {x: 1, y: 1}
+        yield browser.position(10, 10); // set position
+        yield browser.position({
             x: 10,
             y: 10
         });
@@ -255,12 +287,13 @@ You can search all api here, include all mode of api:
         yield browser.maximize();
         var png_base64  = yield browser.getScreenshot();// get the screen shot, base64 type
 
-        // ========================== url & title & html ==========================
+        // ========================== url & title & source ==========================
 
         yield browser.url('http://www.alibaba.com/'); // goto url
         var url = yield browser.url(); // get url
         var title = yield browser.title(); // get title
-        var html = yield browser.html(); // get html code
+        var source = yield browser.source(); // get source code
+        var html = yield browser.html(); // get html code, nick name of source
 
         // ========================== navigator ==========================
 
@@ -516,6 +549,26 @@ You can search all api here, include all mode of api:
         console.log(error);
     });
 
+How develop plugin
+------------------------------------------
+
+    var JWebDriver = require('jwebdriver');
+
+    var driver = new JWebDriver();
+
+    JWebDriver.addMethod('searchMp3', function(){
+        return this.find('#kw').val('mp3').submit();
+    });
+
+    driver.session("chrome")
+        .url('https://www.baidu.com/')
+        .searchMp3()
+        .title()
+        .then(function(title){
+            console.log(title);
+        })
+        .close();
+
 
 License
 ================
@@ -524,7 +577,7 @@ jWebDriver is released under the MIT license:
 
 > The MIT License
 >
-> Copyright (c) 2014-2015 Yanis Wang \<yanis.wang@gmail.com\>
+> Copyright (c) 2014-2016 Yanis Wang \<yanis.wang@gmail.com\>
 >
 > Permission is hereby granted, free of charge, to any person obtaining a copy
 > of this software and associated documentation files (the "Software"), to deal
@@ -550,7 +603,7 @@ Thanks
 * Selenium: [http://code.google.com/p/selenium/](http://code.google.com/p/selenium/)
 * xtend: [https://npmjs.org/package/xtend](https://npmjs.org/package/xtend)
 * mocha: [https://npmjs.org/package/mocha](https://npmjs.org/package/mocha)
-* expect.js: [https://github.com/LearnBoost/expect.js](https://github.com/LearnBoost/expect.js)
+* chai: [https://github.com/chaijs/chai](https://github.com/chaijs/chai)
 * istanbul: [https://github.com/gotwarlost/istanbul](https://github.com/gotwarlost/istanbul)
 * Grunt: [http://gruntjs.com/](http://gruntjs.com/)
 * JSHint: [https://github.com/jshint/jshint](https://github.com/jshint/jshint)

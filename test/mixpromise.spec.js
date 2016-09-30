@@ -1,0 +1,94 @@
+var express = require('express');
+var JWebDriver = require('../');
+var chai = require("chai");
+chai.should();
+chai.use(JWebDriver.chaiSupportChainPromise);
+
+var isWin32 = process.platform === 'win32';
+var phantomjs = process.env['phantomjs'] || !isWin32;
+
+var driverPort = 4444;
+if(phantomjs){
+    driverPort = 4445;
+    runBrowserTest('phantomjs');
+}
+else{
+    runBrowserTest('chrome');
+    // runBrowserTest('firefox');
+    // runBrowserTest('ie');
+}
+
+function runBrowserTest(browserName){
+
+    describe('MixPromise - ' + browserName+' : ', function(){
+
+        var browser, server;
+        var testPath = 'http://127.0.0.1';
+
+        before(function(){
+
+            return new Promise(function(resolve){
+                //init http server
+                var app = express();
+                app.use(express.static(__dirname + '/public'));
+                server = app.listen(5555, function(){
+                    testPath += ':' + server.address().port+'/elements/';
+                    resolve();
+                });
+            }).then(function(){
+                var driver = new JWebDriver({
+                    port: driverPort,
+                    logLevel: 0,
+                    speed: 0
+                });
+                browser = driver.sessions().then(function(arrSessions){
+                    var arrPromise = arrSessions.map(function(session){
+                        return session.close();
+                    });
+                    return Promise.all(arrPromise);
+                }).session({
+                    browserName: browserName
+                });
+                return browser;
+            });
+
+        });
+
+        it('should goto url', function(){
+
+            return browser.url(testPath + 'test1.html')
+            .url()
+            .should.include('test1.html')
+            .title()
+            .should.equal('testtitle');
+
+        });
+
+        it('should eval javascript', function(){
+
+            return browser.url(testPath + 'test1.html')
+            .eval('return location.href')
+            .should.include('test1.html');
+
+        });
+
+        it('should find element', function(){
+
+            return browser.url(testPath + 'test1.html')
+            .find('#kw')
+            .should.have.length(1)
+            .sendKeys('find123')
+            .val()
+            .should.equal('find123');
+
+        });
+
+        after(function(){
+            var closeServer = new Promise(function(resolve){
+                server.close(resolve);
+            });
+            return Promise.all([closeServer, browser.close()]);
+        });
+    });
+
+}

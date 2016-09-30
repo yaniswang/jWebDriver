@@ -1,5 +1,8 @@
 var JWebDriver = require('../');
-var expect  = require("expect.js");
+var chai = require("chai");
+chai.should();
+chai.use(JWebDriver.chaiSupportChainPromise);
+
 require('mocha-generators').install();
 
 describe('jWebDriver test', function(){
@@ -12,13 +15,9 @@ describe('jWebDriver test', function(){
 
     it('should search baidu', function*(){
         yield browser.url('https://www.baidu.com/');
-        var kw = yield browser.find('#kw');
-        expect(kw.length).to.be(1);
-
+        var kw = yield browser.find('#kw').should.have.length(1);
         yield kw.val('mp3').submit();
-
-        var url = yield browser.url();
-        expect(url).to.contain('wd=mp3');
+        yield browser.url().should.contain('wd=mp3');
     });
 
     after(function*(){
