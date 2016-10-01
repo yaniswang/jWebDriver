@@ -45,13 +45,12 @@ function runBrowserTest(browserName){
                     logLevel: 0,
                     speed: 0
                 });
-// .session(browserName).sessions().then(function(arrSessions){
-//                     var arrPromise = arrSessions.map(function(session){
-//                         return session.close();
-//                     });
-//                     return Promise.all(arrPromise);
-//                 })
-                return driver.session({
+                return driver.session(browserName).sessions().then(function(arrSessions){
+                    var arrPromise = arrSessions.map(function(session){
+                        return session.close();
+                    });
+                    return Promise.all(arrPromise);
+                }).session({
                     browserName: browserName,
                     hosts: '127.0.0.1 www.alibaba.com'
                 }, function(error, ret){

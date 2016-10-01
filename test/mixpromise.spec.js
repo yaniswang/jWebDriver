@@ -66,20 +66,31 @@ function runBrowserTest(browserName){
 
         it('should eval javascript', function(){
 
-            return browser.url(testPath + 'test1.html')
-            .eval('return location.href')
+            return browser.eval('return location.href')
             .should.include('test1.html');
 
         });
 
         it('should find element', function(){
 
-            return browser.url(testPath + 'test1.html')
-            .find('#kw')
+            return browser.find('#kw')
             .should.have.length(1)
             .sendKeys('find123')
             .val()
             .should.equal('find123');
+
+        });
+
+        it('should filter element', function(){
+
+            return browser.find('input')
+            .get(0).val('123')
+            .find('#kw')
+            .val().should.equal('123')
+            .find('input')
+            .last().val('234')
+            .find('#last')
+            .val().should.equal('234');
 
         });
 

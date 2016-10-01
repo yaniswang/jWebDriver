@@ -258,10 +258,11 @@ co(function*(){
     var elements = yield elements.find('.class'); // find all child element
     var isEqual = yield elements.equal('#bbb a'); // test if two elements refer to the same DOM element.
 
-    var len = elements.length;
-    for(var i=0;i<len;i++){
-        element = elements.get(i);
-    }
+    elements.get(0).click(); // get element by index
+    elements.first().click(); // get first element
+    elements.last().click(); // get last element
+    elements.slice(1,2).click(); // get element from start to end
+
 
     var tagName = yield element.tagName(); // get tagname (first element)
     var value = element.val(); // equal to element.attr('value');

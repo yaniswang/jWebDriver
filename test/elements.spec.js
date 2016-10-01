@@ -57,6 +57,46 @@ function runBrowserTest(browserName){
 
         });
 
+        it('should filter element', function*(){
+
+            yield browser.url(testPath + 'test1.html');
+            yield browser.find('input').then(function(element){
+                return element.get(0).val('123');
+            });
+            yield browser.find('#kw').then(function(element){
+                return element.val().should.equal('123');
+            });
+
+            yield browser.find('input').then(function(element){
+                return element.first().val('234');
+            });
+            yield browser.find('#kw').then(function(element){
+                return element.val().should.equal('234');
+            });
+
+            yield browser.find('input').then(function(element){
+                return element.last().val('345');
+            });
+            yield browser.find('#last').then(function(element){
+                return element.val().should.equal('345');
+            });
+
+            yield browser.find('input').then(function(element){
+                return element.slice(0,1).val('456');
+            });
+            yield browser.find('#kw').then(function(element){
+                return element.val().should.equal('456');
+            });
+
+            yield browser.find('input').then(function(element){
+                return element.slice(6,7).val('456');
+            });
+            yield browser.find('#last').then(function(element){
+                return element.val().should.equal('456');
+            });
+
+        });
+
         it('should find sub element', function*(){
 
             yield browser.url(testPath + 'test1.html');
@@ -208,8 +248,8 @@ function runBrowserTest(browserName){
 
         it('should test equals from 2 elements', function*(){
 
-            var file = yield browser.find('#file');
-            yield file.equal('input[type=file]').should.be.true;
+            var file = yield browser.find('input[type=text]');
+            yield file.equal('.equaltest').should.be.true;
 
         });
 

@@ -13,18 +13,19 @@ A webdriver client for Node.js
 
 1. Official Site: [http://jwebdriver.com/](http://jwebdriver.com/)
 3. API Doc: [http://jwebdriver.com/api/](http://jwebdriver.com/api/)
-2. Coverage: [http://jwebdriver.com/coverage/](http://jwebdriver.com/coverage/) (80.32%)
+2. Coverage: [http://jwebdriver.com/coverage/](http://jwebdriver.com/coverage/) (81.29%)
 
 Features
 ================
 
 1. Support all webdriver protocols: [https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol](https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol)
-2. Easy to use
+2. Easy to use, support mix promise
 3. Support promise chain & generator & es7 await
 4. jQuery style test code, easy use for front engineer
 5. All test cover api
-6. Support hosts mode, different hosts with different job
+6. Support hosts mode, different hosts for different test job
 7. Support with remote file upload
+8. Support chai work with promise mode
 
 Quick start
 ================
@@ -438,10 +439,11 @@ You can search all api here, include all mode of api:
         var elements = yield elements.find('.class'); // find all child element
         var isEqual = yield elements.equal('#bbb a'); // test if two elements refer to the same DOM element.
 
-        var len = elements.length;
-        for(var i=0;i<len;i++){
-            element = elements.get(i);
-        }
+        elements.get(0).click(); // get element by index
+        elements.first().click(); // get first element
+        elements.last().click(); // get last element
+        elements.slice(1,2).click(); // get element from start to end
+
 
         var tagName = yield element.tagName(); // get tagname (first element)
         var value = element.val(); // equal to element.attr('value');
@@ -549,7 +551,7 @@ You can search all api here, include all mode of api:
         console.log(error);
     });
 
-How develop plugin
+How to develop plugin
 ------------------------------------------
 
     var JWebDriver = require('jwebdriver');
