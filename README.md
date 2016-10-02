@@ -146,7 +146,7 @@ More examples
 API Book
 ================
 
-jWebDriver have 3 Class: Driver, Broswer, Elemenets
+jWebDriver have 3 Class: Driver, Broswer, Elements
 
 All api can used with chain promise and support generator & es7 async:
 ------------------------------------------
@@ -160,7 +160,7 @@ All api can used with chain promise and support generator & es7 async:
         console.log(title);
     });
 
-And you can use mix promise with Driver class, all method will copy to Driver from Broswer and Elemenets:
+And you can use mix promise with Driver class, all method will copy to Driver from Broswer and Elements:
 ------------------------------------------
 
     var driver = new JWebDriver();
