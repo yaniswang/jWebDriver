@@ -7,6 +7,7 @@ jWebDriver change log
 2. add: Support promise mode for chai
 3. add: new Elements api(get, first, last, slice)
 4. add: Support macaca api(contexts, context, touchSwipe)
+5. add: add mouseMove to Elements class
 
 ## ver 1.1.0 (2016-9-12)
 

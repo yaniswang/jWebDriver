@@ -94,6 +94,29 @@ function runBrowserTest(browserName){
 
         });
 
+        it('should click the element', function(){
+
+            return browser.url(testPath + 'test1.html')
+            .find('#kw')
+            .click().sleep(300)
+            .attr('value').should.equal('onclick');
+
+        });
+
+        it('should click mouse by key', function(){
+
+            return browser.url(testPath + 'test1.html')
+            .find('#reset')
+            .mouseMove()
+            .find('#kw')
+            .click(0).sleep(300)
+            .attr('value').should.equal('')
+            .mouseMove()
+            .click(0).sleep(300)
+            .attr('value').should.equal('onclick');
+
+        });
+
         after(function(){
             var closeServer = new Promise(function(resolve){
                 server.close(resolve);
