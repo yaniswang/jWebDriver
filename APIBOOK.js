@@ -106,6 +106,7 @@ co(function*(){
     });
     yield browser.maximize();
     var png_base64  = yield browser.getScreenshot();// get the screen shot, base64 type
+    var png_base64  = yield browser.getScreenshot('d:/test.png');// get the screen shot, and save to file
 
     // ========================== url & title & source ==========================
 
@@ -249,12 +250,14 @@ co(function*(){
     	displayed: true, // wait for element displayed, default: true
     	removed: false // wait for element removed, default: false
     });
+    var elements = yield browser.wait('name', 'aaa', 5000); // support type: class name|css selector|id|name|link text|partial link text|tag name|xpath
 
     var elements = yield browser.find('#id'); // find element
     var elements = yield browser.findVisible('span'); // find visible element
     var elements = yield browser.find('active');// get active element
     var elements = yield browser.find('#id');// get element by css selector
     var elements = yield browser.find('//html/body');// get element by xpath
+    var elements = yield browser.find('name', 'aaa'); // support type: class name|css selector|id|name|link text|partial link text|tag name|xpath
     var elements = yield elements.find('.class'); // find all child element
     var isEqual = yield elements.equal('#bbb a'); // test if two elements refer to the same DOM element.
 
@@ -267,7 +270,8 @@ co(function*(){
     var tagName = yield element.tagName(); // get tagname (first element)
     var value = element.val(); // equal to element.attr('value');
     yield element.val('mp3'); // equal to: element.clear().sendKeys('mp3');
-    var value = yield element.attr('id'); // get attr value (first element)
+    var value = yield element.attr('id'); // get attribute value (first element)
+    var value = yield element.prop('id'); // get property value (first element)
     var value = yield element.css('border'); // get css value (first element)
     yield element.clear(); // clear input & textarea value
     var text = yield element.text(); // get displayed text (first element)

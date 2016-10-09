@@ -35,7 +35,7 @@ function runBrowserTest(browserName){
                 //init http server
                 var app = express();
                 app.use(express.static(__dirname + '/public'));
-                server = app.listen(5555, function(){
+                server = app.listen(0, function(){
                     testPath += ':' + server.address().port+'/browsers/';
                     resolve();
                 });
@@ -71,12 +71,17 @@ function runBrowserTest(browserName){
 
 		it('should goto and read url', function*(){
 
-            yield browser.url(testPath + 'test1.html').url().should.equal(testPath + 'test1.html');
-            yield browser.url(testPath + 'test2.html').url().should.equal(testPath + 'test2.html');
+            yield browser.url(testPath + 'test1.html');
+            yield browser.url().should.equal(testPath + 'test1.html');
+            yield browser.title().should.equal('testtitle');
+            yield browser.url(testPath + 'test2.html');
+            yield browser.url().should.equal(testPath + 'test2.html');
+            yield browser.title().should.equal('testtitle');
             yield browser.back().url().should.equal(testPath + 'test1.html');
             yield browser.forward().url().should.equal(testPath + 'test2.html');
             // test https
-            yield browser.url('https://www.baidu.com/').url().should.contain('baidu.com');
+            yield browser.url('https://www.baidu.com/');
+            yield browser.title().should.contain('百度');
 
 		});
 
@@ -313,6 +318,7 @@ function runBrowserTest(browserName){
 
 		it('should wait element', function*(){
 
+            yield browser.url(testPath + 'test1.html');
             // wait displayed
             try{
                 yield browser.find('#wait1');

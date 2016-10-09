@@ -31,7 +31,7 @@ function runBrowserTest(browserName){
                 //init http server
                 var app = express();
                 app.use(express.static(__dirname + '/public'));
-                server = app.listen(5555, function(){
+                server = app.listen(0, function(){
                     testPath += ':' + server.address().port+'/elements/';
                     resolve();
                 });
