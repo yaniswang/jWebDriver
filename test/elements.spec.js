@@ -214,6 +214,10 @@ function runBrowserTest(browserName){
                 type: 'text',
                 value: 'test3'
             }).attr('value').should.equal('v3');
+            yield selecttest.select({
+                type: 'index',
+                value: '1'
+            }).attr('value').should.equal('v2');
 
         });
 
