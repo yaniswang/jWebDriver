@@ -1,6 +1,6 @@
 {
   "name": "jwebdriver",
-  "version": "2.0.0-b3",
+  "version": "2.0.0-b4",
   "description": "A webdriver client for node.js",
   "homepage": "http://jwebdriver.com/",
   "main": "./index",
