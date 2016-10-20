@@ -13,19 +13,20 @@ A webdriver client for Node.js
 
 1. Official Site: [http://jwebdriver.com/](http://jwebdriver.com/)
 3. API Doc: [http://jwebdriver.com/api/](http://jwebdriver.com/api/)
-2. Coverage: [http://jwebdriver.com/coverage/](http://jwebdriver.com/coverage/) (81.29%)
+2. Coverage: [http://jwebdriver.com/coverage/](http://jwebdriver.com/coverage/) (81.61%)
 
 Features
 ================
 
 1. Support all webdriver protocols: [https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol](https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol)
-2. Easy to use, support mix promise
-3. Support promise chain & generator & es7 await
-4. jQuery style test code, easy use for front engineer
-5. All test cover api
-6. Support hosts mode, different hosts for different test job
-7. Support with remote file upload
-8. Support chai work with promise mode
+2. Support mobile native & webview by macaca: ([https://macacajs.com/](https://macacajs.com/))
+3. Easy to use, support mix promise
+4. Support promise chain & generator & es7 await
+5. jQuery style test code, easy use for front engineer
+6. All test cover api
+7. Support hosts mode, different hosts for different test job
+8. Support with remote file upload
+9. Support chai work with promise mode
 
 Quick start
 ================
@@ -100,7 +101,7 @@ Quick start
 
     > node mocha-generators.js
 
-        var JWebDriver = require('../');
+        var JWebDriver = require('jwebdriver');
         var chai = require("chai");
         chai.should();
         chai.use(JWebDriver.chaiSupportChainPromise);
@@ -128,7 +129,63 @@ Quick start
 
         });
 
+    > node macaca.js (for mobile native & webview)
 
+        var path = require('path');
+        var JWebDriver = require('../');
+
+        var driver = new JWebDriver();
+
+        var appPath = 'macaca.apk';
+
+        driver.session({
+                'platformName': 'Android',
+                'app': path.resolve(appPath)
+            })
+            .wait('//*[@resource-id="com.github.android_app_bootstrap:id/mobileNoEditText"]')
+            .sendKeys('111')
+            .wait('//*[@resource-id="com.github.android_app_bootstrap:id/codeEditText"]')
+            .sendKeys('222')
+            .wait('//*[@resource-id="com.github.android_app_bootstrap:id/login_button"]')
+            .click()
+            .wait('//*[@resource-id="com.github.android_app_bootstrap:id/list_button"]')
+            .prop('size')
+            .then(function(size){
+                console.log(size)
+            })
+            .prop('origin')
+            .then(function(origin){
+                console.log(origin)
+            })
+            .click()
+            .touchSwipe(245, 780, 258, 611, 20)
+            .wait('//*[@resource-id="com.github.android_app_bootstrap:id/listview"]/android.widget.TextView[4]')
+            .click()
+            .touchSwipe(174, 407, 169, 802, 20)
+            .wait('//*[@resource-id="com.github.android_app_bootstrap:id/listview"]/android.widget.TextView')
+            .click()
+            .wait('//*[@resource-id="com.github.android_app_bootstrap:id/toast_button"]')
+            .click()
+            .back()
+            .back()
+            .wait('name', 'Baidu')
+            .click()
+            .webview()
+            .wait('#index-kw')
+            .sendKeys('mp3')
+            .wait('#index-bn')
+            .touchClick()
+            .url()
+            .then(function(url){
+                console.log(url);
+            })
+            .title()
+            .then(function(title){
+                console.log(title);
+            })
+            .native()
+            .find('name', 'PERSONAL')
+            .click();
 
 More examples
 ================
@@ -136,12 +193,13 @@ More examples
 1. [Baidu test](https://github.com/yaniswang/jWebDriver/blob/master/example/baidu.js)
 2. [Gooogle test](https://github.com/yaniswang/jWebDriver/blob/master/example/google.js)
 3. [Mocha Promise](https://github.com/yaniswang/jWebDriver/blob/master/example/mocha-promise.js)
-3. [Mocha Generators](https://github.com/yaniswang/jWebDriver/blob/master/example/mocha-generators.js)
-4. [Upload test](https://github.com/yaniswang/jWebDriver/blob/master/example/upload.js)
-5. [Drag Drop test](https://github.com/yaniswang/jWebDriver/blob/master/example/dragdrop.js)
-6. [Co test](https://github.com/yaniswang/jWebDriver/blob/master/example/co.js)
-7. [ES7 async](https://github.com/yaniswang/jWebDriver/blob/master/example/es7async.js)
-7. [Plugin](https://github.com/yaniswang/jWebDriver/blob/master/example/plugin.js)
+4. [Mocha Generators](https://github.com/yaniswang/jWebDriver/blob/master/example/mocha-generators.js)
+5. [Mobile test (Native&webview)](https://github.com/yaniswang/jWebDriver/blob/master/example/macaca.js)
+6. [Upload test](https://github.com/yaniswang/jWebDriver/blob/master/example/upload.js)
+7. [Drag Drop test](https://github.com/yaniswang/jWebDriver/blob/master/example/dragdrop.js)
+8. [Co test](https://github.com/yaniswang/jWebDriver/blob/master/example/co.js)
+9. [ES7 async](https://github.com/yaniswang/jWebDriver/blob/master/example/es7async.js)
+10. [Plugin](https://github.com/yaniswang/jWebDriver/blob/master/example/plugin.js)
 
 API Book
 ================
@@ -549,11 +607,23 @@ You can search all api here, include all mode of api:
             altitude: 1
         });
 
+        // ========================== macaca api ==========================
+
+        var arrContexts = yield browser.contexts(); // get all contexts
+        var contextId = yield browser.context(); // get context id
+        yield browser.context('NATIVE_APP'); // set context id
+        yield browser.native(); // set context to native
+        yield browser.webview(); // set context to webview
+
+        yield browser.touchSwipe(500, 100, 500, 600); // swipe from (500, 100) to (500, 600)
+        yield browser.touchSwipe(500, 100, 500, 600, 200); // swipe from (500, 100) to (500, 600) with 200ms duration
+
     }).then(function(){
         console.log('All done!')
     }).catch(function(error){
         console.log(error);
     });
+
 
 How to develop plugin
 ------------------------------------------

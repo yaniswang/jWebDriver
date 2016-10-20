@@ -368,6 +368,17 @@ co(function*(){
         altitude: 1
     });
 
+    // ========================== macaca api ==========================
+
+    var arrContexts = yield browser.contexts(); // get all contexts
+    var contextId = yield browser.context(); // get context id
+    yield browser.context('NATIVE_APP'); // set context id
+    yield browser.native(); // set context to native
+    yield browser.webview(); // set context to webview
+
+    yield browser.touchSwipe(500, 100, 500, 600); // swipe from (500, 100) to (500, 600)
+    yield browser.touchSwipe(500, 100, 500, 600, 200); // swipe from (500, 100) to (500, 600) with 200ms duration
+
 }).then(function(){
     console.log('All done!')
 }).catch(function(error){
