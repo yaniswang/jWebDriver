@@ -1,7 +1,7 @@
 jWebDriver change log
 ====================
 
-## ver 2.0.0 (2016-10-19)
+## ver 2.0.0 (2016-10-26)
 
 1. add: Support mix promise with Driver class
 2. add: Support promise mode for chai
