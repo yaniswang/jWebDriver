@@ -17,7 +17,7 @@
                 <h1><img src="https://raw.github.com/yaniswang/jWebDriver/master/logo_s.png" title="jwebdriver"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.1.0</em>
+            <em>API Docs for: 2.0.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -121,8 +121,10 @@ const Elements = PromiseClass.create({
         let using = self.using;
         let value = self.value;
         if(value === undefined){
-            // detect xpath or css selector
             value = using;
+            using = undefined;
+        }
+        if(using === undefined){
             // get current active element
             if(value === &#x27;active&#x27;){
                 return browser.exec(&#x27;getActiveElement&#x27;, function(error, ret){
@@ -136,9 +138,11 @@ const Elements = PromiseClass.create({
                     }
                 });
             }
-            using = /^\.?\//.test(value)?&#x27;xpath&#x27;:&#x27;css selector&#x27;;
-            self.using = using;
-            self.value = value;
+            else{
+                using = /^\.?\//.test(value)?&#x27;xpath&#x27;:&#x27;css selector&#x27;;
+                self.using = using;
+                self.value = value;
+            }
         }
         if(using === &#x27;elements&#x27;){
             self.elementIds = value;
@@ -253,22 +257,6 @@ const Elements = PromiseClass.create({
     },
 
     /**
-     * get element by index
-     * @method get
-     * @public
-     * @param  {Number} index
-     * @return {Elments}
-     */
-    get(index){
-        let self = this;
-        if(index &gt;= 0 &amp;&amp; index &lt; self.length){
-            let elements = new Elements(self._browser, &#x27;elements&#x27;, [self.elementIds[index]]);
-            elements.init();
-            return elements;
-        }
-    },
-
-    /**
      * get webdriver ELEMENT object
      * @method toJSON
      * @param  {Boolean} first
@@ -287,6 +275,54 @@ const Elements = PromiseClass.create({
             });
             return arrJson;
         }
+    },
+
+    /**
+     * get element from start to end
+     * @method slice
+     * @public
+     * @param  {Number} start
+     * @param  {Number} end
+     */
+    slice(start, end, done){
+        let self = this;
+        if(start &gt;= 0 &amp;&amp; start &lt; self.length &amp;&amp; end &gt; start &amp;&amp; end &lt;= self.length){
+            self.elementIds = self.elementIds.slice(start, end);
+            self.length = self.elementIds.length;
+            done();
+        }
+        else{
+            done(&#x27;Elements slice range error.&#x27;);
+        }
+    },
+
+    /**
+     * get element by index
+     * @method get
+     * @public
+     * @param  {Number} index
+     */
+    get(index, done){
+        this.slice(index, index+1, done);
+    },
+
+    /**
+     * get first element
+     * @method first
+     * @public
+     */
+    first(done){
+        this.get(0, done);
+    },
+
+    /**
+     * get last element
+     * @method last
+     * @public
+     */
+    last(done){
+        var self = this;
+        self.get(self.length-1, done);
     },
 
     /**
@@ -311,9 +347,22 @@ const Elements = PromiseClass.create({
      * @return {String}
      */
     attr(name, done){
-        this.exec(&#x27;getElementAttr&#x27;, {
+        this.exec(&#x27;getElementAttribute&#x27;, {
             name: name
         }, function(error, ret){
+            done(error, ret &amp;&amp; ret.value);
+        });
+    },
+
+    /**
+     * get property value (first element)
+     * @method prop
+     * @public
+     * @param  {Function} done callback function
+     * @return {Object} return proerty value
+     */
+    prop(name, done){
+        this.exec(&#x27;getElementProperty&#x27;, {name: name}, function(error, ret){
             done(error, ret &amp;&amp; ret.value);
         });
     },
@@ -462,6 +511,7 @@ const Elements = PromiseClass.create({
         switch(type){
             case &#x27;index&#x27;:
                 filter = &#x27;&#x27;;
+                value = value &amp;&amp; parseInt(value, 10);
                 break;
             case &#x27;value&#x27;:
                 filter = &#x27;[normalize-space(@value)=&#x27;+quote+String(value).trim()+quote+&#x27;]&#x27;;
@@ -476,14 +526,7 @@ const Elements = PromiseClass.create({
             }
             else{
                 if( elements.length &gt; 0){
-                    elements.get( type === &#x27;index&#x27; ? value : 0, function(error, option){
-                        if(option){
-                            option.click(done);
-                        }
-                        else{
-                            done(&#x27;Index overflow&#x27;);
-                        }
-                    });
+                    elements.get( type === &#x27;index&#x27; ? value : 0).click(done);
                 }
                 else{
                     done(&#x27;&lt;option&gt; no found: &#x27;+value+&#x27; (&#x27;+type+&#x27;)&#x27;);
@@ -535,13 +578,59 @@ const Elements = PromiseClass.create({
     },
 
     /**
+     * send mousemove (first element)
+     * @method mouseMove
+     * @public
+     * @param  {Number|Object} [x]
+     * @param  {Number} [y]
+     * @param  {Function} done callback function
+     */
+    mouseMove(x, y, done){
+        let self = this;
+        if(typeof x === &#x27;function&#x27;){
+            x = undefined;
+            y = undefined;
+        }
+        else if(typeof y === &#x27;function&#x27;){
+            y = undefined;
+        }
+        done = getDone(arguments);
+        let data = {};
+        if(self.length &gt; 0){
+            data.element = self.elementIds[0];
+        }
+        else{
+            return done(&#x27;Elements empty: &#x27;+ self.value+&#x27; (&#x27;+self.using+&#x27;)&#x27;);
+        }
+        if(x !== undefined &amp;&amp; x.x !== undefined){
+            y = x.y;
+            x = x.x;
+        }
+        if(x !== undefined &amp;&amp; y !== undefined){
+            data.xoffset = x;
+            data.yoffset = y;
+        }
+        self.exec(&#x27;mouseMove&#x27;, {}, data, done);
+    },
+
+    /**
      * click to element
      * @method click
      * @public
+     * @param  {String} [key]
      * @param  {Function} done callback function
      */
-    click(done){
-        this.exec(&#x27;setElementClick&#x27;, done);
+    click(key, done){
+        if(typeof key === &#x27;function&#x27;){
+            key = undefined;
+        }
+        done = getDone(arguments);
+        if(key !== undefined){
+            this._browser.click(key, done);
+        }
+        else{
+            this.exec(&#x27;setElementClick&#x27;, done);
+        }
     },
 
     /**
@@ -553,6 +642,19 @@ const Elements = PromiseClass.create({
     dblClick(done){
         let self = this;
         self._browser.mouseMove(self).dblClick().then(function(){
+            done();
+        }).catch(done);
+    },
+
+    /**
+     * double click to element
+     * @method doubleClick
+     * @public
+     * @param  {Function} done callback function
+     */
+    doubleClick(done){
+        let self = this;
+        self._browser.mouseMove(self).doubleClick().then(function(){
             done();
         }).catch(done);
     },
@@ -773,23 +875,24 @@ const Elements = PromiseClass.create({
      * @param  {Function} done callback function
      * @return {Boolean}
      */
-    equal(elements, done){
+    equal(otherElements, done){
         let self = this;
         new Promise(function(resolve){
-            if(typeof elements === &#x27;string&#x27;){
-                resolve(self._browser.find(elements));
+            if(typeof otherElements === &#x27;string&#x27;){
+                resolve(self._browser.find(otherElements));
             }
             else{
-                resolve(elements);
+                resolve(otherElements);
             }
-        }).then(function(elements){
-            if(self.length === elements.length){
-                let elementIds = elements.elementIds;
+        }).then(function(otherElements){
+            if(self.length === otherElements.length){
+                let otherElementIds = otherElements.elementIds;
                 let i = 0;
                 function testNext(){
                     if(i &lt; self.length){
-                        self.get(i).exec(&#x27;getElementEquals&#x27;, {
-                            other: elementIds[i]
+                        let elements = new Elements(self._browser, &#x27;elements&#x27;, [otherElementIds[i]]);
+                        elements.init().exec(&#x27;getElementEquals&#x27;, {
+                            other: otherElementIds[i]
                         }, function(error, ret){
                             if(error){
                                 done(error);

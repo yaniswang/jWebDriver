@@ -17,7 +17,7 @@
                 <h1><img src="https://raw.github.com/yaniswang/jWebDriver/master/logo_s.png" title="jwebdriver"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.1.0</em>
+            <em>API Docs for: 2.0.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -98,6 +98,7 @@ const PromiseClass = require(&#x27;promiseclass&#x27;);
 const mapCommands = require(&#x27;./commands.js&#x27;);
 const Browser = require(&#x27;./browser&#x27;);
 const Elements = require(&#x27;./elements&#x27;);
+const mixPromise = require(&#x27;./mixpromise&#x27;);
 
 // color list
 const colors = {
@@ -381,6 +382,7 @@ const JWebDriver = PromiseClass.create({
      * @return {Browser} Browser object
      */
     session(browserName, version, platform, done){
+        var self = this;
         if(typeof version === &#x27;function&#x27;){
             version = undefined;
             platform = undefined;
@@ -389,8 +391,9 @@ const JWebDriver = PromiseClass.create({
             platform = undefined;
         }
         done = getDone(arguments);
-        let browser = new Browser(this, browserName, version, platform);
+        let browser = new Browser(self, browserName, version, platform);
         browser.init(function(error){
+            self.lastBrowser = browser;
             done(error, browser);
         }).catch(done);
     }
@@ -403,9 +406,13 @@ function getDone(args){
     return typeof done === &#x27;function&#x27; ? done : null;
 }
 
-// expose Browser &amp; Elements
+// expose Browser &amp; Elements &amp; chaiSupportChainPromise
 JWebDriver.Browser = Browser;
 JWebDriver.Elements = Elements;
+JWebDriver.chaiSupportChainPromise = PromiseClass.chaiSupportChainPromise;
+
+// mix Browser Elements to JWebDriver
+mixPromise(JWebDriver, Browser, Elements);
 
 module.exports = JWebDriver;
 

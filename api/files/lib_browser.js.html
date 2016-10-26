@@ -17,7 +17,7 @@
                 <h1><img src="https://raw.github.com/yaniswang/jWebDriver/master/logo_s.png" title="jwebdriver"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.1.0</em>
+            <em>API Docs for: 2.0.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -100,7 +100,7 @@ const HostsProxy = require(&#x27;./hostsproxy&#x27;);
 const Elements = require(&#x27;./elements&#x27;);
 
 // default options for browser
-const defaultOptions = {
+const defaultBrowserOptions = {
     &#x27;browserName&#x27;: &#x27;chrome&#x27;,
     &#x27;version&#x27;: &#x27;ANY&#x27;,
     &#x27;platform&#x27;: &#x27;ANY&#x27;
@@ -109,7 +109,8 @@ const defaultOptions = {
 // nick name for browser
 const mapBrowserNickName = {
     &#x27;ie&#x27;: &#x27;internet explorer&#x27;,
-    &#x27;ff&#x27;: &#x27;firefox&#x27;
+    &#x27;ff&#x27;: &#x27;firefox&#x27;,
+    &#x27;edge&#x27;: &#x27;MicrosoftEdge&#x27;
 };
 
 // https://code.google.com/p/selenium/wiki/JsonWireProtocol#/session/:sessionId/click
@@ -264,7 +265,9 @@ const Browser = PromiseClass.create({
         if(browserName &amp;&amp; (browserName = mapBrowserNickName[browserName])){
             sessionInfo.browserName = browserName;
         }
-        sessionInfo = extend({}, defaultOptions, sessionInfo);
+        if(sessionInfo.browserName){
+            sessionInfo = extend({}, defaultBrowserOptions, sessionInfo);
+        }
         new Promise(function(resolve){
             let hosts = sessionInfo.hosts;
             if(hosts){
@@ -303,9 +306,12 @@ const Browser = PromiseClass.create({
                     self.sessionId = ret.sessionId;
                     let capabilities = ret.value;
                     self.capabilities = capabilities;
-                    self.browserName = capabilities[&#x27;browserName&#x27;] || self.browserName;
-                    self.version = capabilities[&#x27;version&#x27;] || self.version;
-                    self.platform = capabilities[&#x27;platform&#x27;] || self.platform;
+                    self.browserMode = capabilities[&#x27;browserName&#x27;] ? true : false;
+                    if(self.browserMode){
+                        self.browserName = capabilities[&#x27;browserName&#x27;] || self.browserName;
+                        self.version = capabilities[&#x27;version&#x27;] || self.version;
+                        self.platform = capabilities[&#x27;platform&#x27;] || self.platform;
+                    }
                     done();
                 }
             }).catch(done);
@@ -523,13 +529,17 @@ const Browser = PromiseClass.create({
         if(useCache &amp;&amp; windowHandle){
             done(null, windowHandle);
         }
-        else{
+        else if(self.browserMode){
             self.exec(&#x27;getCurrentWindowHandle&#x27;, function(error, ret){
                 if(ret){
                     self._windowHandle = ret.value;
                 }
                 done(error, ret &amp;&amp; ret.value);
             });
+        }
+        else{
+            self._windowHandle = &#x27;current&#x27;;
+            done(null, self._windowHandle);
         }
     },
 
@@ -668,15 +678,15 @@ const Browser = PromiseClass.create({
     },
 
     /**
-     * get or set offset of window
-     * @method offset
+     * get or set position of window
+     * @method position
      * @public
      * @param  {Number|Object} [x] x position
      * @param  {Number|Object} [x] x position
      * @param  {Function} done callback function
      * @return {Object|this} return {x:1,y:1} or this
      */
-    offset(x, y, done){
+    position(x, y, done){
         let self = this;
         if(typeof x === &#x27;function&#x27;){
             x = undefined;
@@ -688,7 +698,7 @@ const Browser = PromiseClass.create({
         done = getDone(arguments);
         Promise.resolve(self.windowHandle(true)).then(function(windowHandle){
             if(x === undefined){
-                return self.exec(&#x27;getWindowOffset&#x27;, {
+                return self.exec(&#x27;getWindowPosition&#x27;, {
                     windowHandle: windowHandle
                 }, function(error, ret){
                     done(error, ret &amp;&amp; ret.value);
@@ -698,7 +708,7 @@ const Browser = PromiseClass.create({
                 y = x.y;
                 x = x.x;
             }
-            self.exec(&#x27;setWindowOffset&#x27;, {
+            self.exec(&#x27;setWindowPosition&#x27;, {
                 windowHandle: windowHandle
             }, {
                 x: x,
@@ -767,11 +777,20 @@ const Browser = PromiseClass.create({
      * get screenshot
      * @method getScreenshot
      * @public
+     * @param  {String} [filename] save screenshot to file
      * @param  {Function} done callback function
      * @return {String} return screenshot by base64 format
      */
-    getScreenshot(done){
+    getScreenshot(filename, done){
+        if(typeof filename === &#x27;function&#x27;){
+            filename = undefined;
+        }
+        done = getDone(arguments);
         this.exec(&#x27;getScreenshot&#x27;, function(error, ret){
+            var png64 = ret &amp;&amp; ret.value;
+            if(png64 &amp;&amp; filename){
+                fs.writeFileSync(filename, png64, &#x27;base64&#x27;);
+            }
             done(error, ret &amp;&amp; ret.value);
         });
     },
@@ -790,14 +809,27 @@ const Browser = PromiseClass.create({
     },
 
     /**
-     * get html
+     * get source
+     * @method source
+     * @public
+     * @param  {Function} done callback function
+     * @return {String} return source
+     */
+    source(done){
+        this.exec(&#x27;getSource&#x27;, function(error, ret){
+            done(error, ret &amp;&amp; ret.value);
+        });
+    },
+
+    /**
+     * nick name of source
      * @method html
      * @public
      * @param  {Function} done callback function
      * @return {String} return document html
      */
     html(done){
-        this.exec(&#x27;getHtml&#x27;, function(error, ret){
+        this.exec(&#x27;getSource&#x27;, function(error, ret){
             done(error, ret &amp;&amp; ret.value);
         });
     },
@@ -1460,14 +1492,30 @@ const Browser = PromiseClass.create({
      * wait for element displayed or removed
      * @method wait
      * @public
-     * @param  {String} selector css selector or xpath
+     * @param  {String} [using] find mode: class name|css selector|id|name|link text|partial link text|tag name|xpath
+     * @param  {String} value find pattern
      * @param  {String} [options]
      * @param  {Function} done callback function
      * @return {Elments}
      */
-    wait(selector, options, done){
+    wait(using, value, options, done){
         let self = this;
         if(typeof options === &#x27;function&#x27;){
+            if(typeof value === &#x27;string&#x27;){
+                // using, value, done
+                options = undefined;
+            }
+            else{
+                // value, options, done
+                options = value;
+                value = using;
+                using = undefined;
+            }
+        }
+        else if(typeof value === &#x27;function&#x27;){
+            // value, done
+            value = using;
+            using = undefined;
             options = undefined;
         }
         done = getDone(arguments);
@@ -1492,7 +1540,7 @@ const Browser = PromiseClass.create({
             done(error, result);
         }
         function waitElement(){
-            self[displayed?&#x27;findVisible&#x27;:&#x27;find&#x27;](selector, function(error, elements){
+            self[(self.browserMode &amp;&amp; displayed)?&#x27;findVisible&#x27;:&#x27;find&#x27;](using, value, function(error, elements){
                 if(elements){
                     if(removed === true &amp;&amp; elements.length === 0){
                         // removed
@@ -1839,6 +1887,87 @@ const Browser = PromiseClass.create({
                 done(error);
             }
         });
+    },
+
+    /**
+     * get contexts
+     * @method contexts
+     * @param  {Function} done callback function
+     */
+    contexts(done){
+        this.exec(&#x27;getContexts&#x27;, function(error, ret){
+            done(error, ret &amp;&amp; ret.value);
+        });
+    },
+
+    /**
+     * get or set context
+     * @method context
+     * @public
+     * @param  {String} [contextId] context id
+     * @param  {Function} done callback function
+     */
+    context(contextId, done){
+        var self = this;
+        if(typeof contextId === &#x27;function&#x27;){
+            contextId = undefined;
+        }
+        done = getDone(arguments);
+        if(contextId){
+            self.browserMode = contextId !== &#x27;NATIVE_APP&#x27;;
+        }
+        self.exec(contextId ? &#x27;setContext&#x27; : &#x27;getContext&#x27;, {}, {
+            name: contextId
+        }, function(error, ret){
+            done(error, ret &amp;&amp; ret.value);
+        });
+    },
+
+    /**
+     * set context to native
+     * @method native
+     * @param  {Function} done callback function
+     */
+    native(){
+        return this.contexts(function(error, arrContexts){
+            return this.context(arrContexts[0]);
+        });
+    },
+
+    /**
+     * set context to webview
+     * @method webview
+     * @param  {Function} done callback function
+     */
+    webview(){
+        return this.contexts(function(error, arrContexts){
+            return this.context(arrContexts[arrContexts.length - 1]);
+        });
+    },
+
+    /**
+     * touch swipe
+     * @method touchSwipe
+     * @public
+     * @param  {Number} startX
+     * @param  {Number} startY
+     * @param  {Number} endX
+     * @param  {Number} endY
+     * @param  {Number} [duration]
+     * @param  {Function} done callback function
+     */
+    touchSwipe(startX, startY, endX, endY, duration, done){
+        if(typeof duration === &#x27;function&#x27;){
+            duration = 20;
+        }
+        done = getDone(arguments);
+        this.exec(&#x27;touchSwipe&#x27;, {}, {
+            startX: startX,
+            startY: startY,
+            endX: endX,
+            endY: endY,
+            duration: duration
+        }, done);
     }
 
 });

@@ -17,7 +17,7 @@
                 <h1><img src="https://raw.github.com/yaniswang/jWebDriver/master/logo_s.png" title="jwebdriver"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.1.0</em>
+            <em>API Docs for: 2.0.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -140,6 +140,10 @@
 
                             </li>
                             <li class="index-item method public">
+                                <a href="#method_doubleClick">doubleClick</a>
+
+                            </li>
+                            <li class="index-item method public">
                                 <a href="#method_dragDropTo">dragDropTo</a>
 
                             </li>
@@ -160,6 +164,10 @@
 
                             </li>
                             <li class="index-item method public">
+                                <a href="#method_first">first</a>
+
+                            </li>
+                            <li class="index-item method public">
                                 <a href="#method_get">get</a>
 
                             </li>
@@ -168,11 +176,23 @@
 
                             </li>
                             <li class="index-item method public">
+                                <a href="#method_last">last</a>
+
+                            </li>
+                            <li class="index-item method public">
                                 <a href="#method_log">log</a>
 
                             </li>
                             <li class="index-item method public">
+                                <a href="#method_mouseMove">mouseMove</a>
+
+                            </li>
+                            <li class="index-item method public">
                                 <a href="#method_offset">offset</a>
+
+                            </li>
+                            <li class="index-item method public">
+                                <a href="#method_prop">prop</a>
 
                             </li>
                             <li class="index-item method public">
@@ -193,6 +213,10 @@
                             </li>
                             <li class="index-item method public">
                                 <a href="#method_sleep">sleep</a>
+
+                            </li>
+                            <li class="index-item method public">
+                                <a href="#method_slice">slice</a>
 
                             </li>
                             <li class="index-item method public">
@@ -281,7 +305,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_elements.js.html#l221"><code>lib\elements.js:221</code></a>
+        <a href="../files/lib_elements.js.html#l257"><code>lib\elements.js:257</code></a>
         </p>
 
 
@@ -357,7 +381,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_elements.js.html#l266"><code>lib\elements.js:266</code></a>
+        <a href="../files/lib_elements.js.html#l315"><code>lib\elements.js:315</code></a>
         </p>
 
 
@@ -403,6 +427,9 @@
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
                 <li class="arg">
+                        <code class="optional">[key]</code>
+                </li>
+                <li class="arg">
                         <code>done</code>
                 </li>
             </ul><span class="paren">)</span>
@@ -419,7 +446,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_elements.js.html#l453"><code>lib\elements.js:453</code></a>
+        <a href="../files/lib_elements.js.html#l532"><code>lib\elements.js:532</code></a>
         </p>
 
 
@@ -435,6 +462,17 @@
             <h4>Parameters:</h4>
 
             <ul class="params-list">
+                <li class="param">
+                        <code class="param-name optional">[key]</code>
+                        <span class="type">String</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
                 <li class="param">
                         <code class="param-name">done</code>
                         <span class="type">Function</span>
@@ -564,7 +602,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_elements.js.html#l237"><code>lib\elements.js:237</code></a>
+        <a href="../files/lib_elements.js.html#l286"><code>lib\elements.js:286</code></a>
         </p>
 
 
@@ -637,7 +675,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_elements.js.html#l463"><code>lib\elements.js:463</code></a>
+        <a href="../files/lib_elements.js.html#l552"><code>lib\elements.js:552</code></a>
         </p>
 
 
@@ -695,7 +733,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_elements.js.html#l316"><code>lib\elements.js:316</code></a>
+        <a href="../files/lib_elements.js.html#l365"><code>lib\elements.js:365</code></a>
         </p>
 
 
@@ -735,6 +773,61 @@
 
 
 </div>
+<div id="method_doubleClick" class="method item public">
+    <h3 class="name"><code>doubleClick</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>done</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+        <span class="flag public">public</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_elements.js.html#l565"><code>lib\elements.js:565</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>double click to element</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">done</code>
+                        <span class="type">Function</span>
+
+
+                    <div class="param-description">
+                        <p>callback function</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
 <div id="method_dragDropTo" class="method item public">
     <h3 class="name"><code>dragDropTo</code></h3>
 
@@ -766,7 +859,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_elements.js.html#l476"><code>lib\elements.js:476</code></a>
+        <a href="../files/lib_elements.js.html#l578"><code>lib\elements.js:578</code></a>
         </p>
 
 
@@ -856,7 +949,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_elements.js.html#l329"><code>lib\elements.js:329</code></a>
+        <a href="../files/lib_elements.js.html#l378"><code>lib\elements.js:378</code></a>
         </p>
 
 
@@ -924,7 +1017,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_elements.js.html#l684"><code>lib\elements.js:684</code></a>
+        <a href="../files/lib_elements.js.html#l786"><code>lib\elements.js:786</code></a>
         </p>
 
 
@@ -1008,7 +1101,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_elements.js.html#l103"><code>lib\elements.js:103</code></a>
+        <a href="../files/lib_elements.js.html#l107"><code>lib\elements.js:107</code></a>
         </p>
 
 
@@ -1116,7 +1209,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_elements.js.html#l645"><code>lib\elements.js:645</code></a>
+        <a href="../files/lib_elements.js.html#l747"><code>lib\elements.js:747</code></a>
         </p>
 
 
@@ -1179,20 +1272,11 @@
 
 
 </div>
-<div id="method_get" class="method item public">
-    <h3 class="name"><code>get</code></h3>
+<div id="method_first" class="method item public">
+    <h3 class="name"><code>first</code></h3>
 
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-                <li class="arg">
-                        <code>index</code>
-                </li>
-            </ul><span class="paren">)</span>
-        </div>
+        <span class="paren">()</span>
 
-        <span class="returns-inline">
-            <span class="type">Elments</span>
-        </span>
 
 
         <span class="flag public">public</span>
@@ -1204,7 +1288,45 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_elements.js.html#l171"><code>lib\elements.js:171</code></a>
+        <a href="../files/lib_elements.js.html#l225"><code>lib\elements.js:225</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>get first element</p>
+
+    </div>
+
+
+
+
+</div>
+<div id="method_get" class="method item public">
+    <h3 class="name"><code>get</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>index</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+        <span class="flag public">public</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_elements.js.html#l215"><code>lib\elements.js:215</code></a>
         </p>
 
 
@@ -1233,13 +1355,6 @@
             </ul>
         </div>
 
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                        <span class="type">Elments</span>:
-            </div>
-        </div>
 
 
 </div>
@@ -1298,6 +1413,38 @@
 
 
 </div>
+<div id="method_last" class="method item public">
+    <h3 class="name"><code>last</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+        <span class="flag public">public</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_elements.js.html#l234"><code>lib\elements.js:234</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>get last element</p>
+
+    </div>
+
+
+
+
+</div>
 <div id="method_log" class="method item public">
     <h3 class="name"><code>log</code></h3>
 
@@ -1323,7 +1470,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_elements.js.html#l92"><code>lib\elements.js:92</code></a>
+        <a href="../files/lib_elements.js.html#l96"><code>lib\elements.js:96</code></a>
         </p>
 
 
@@ -1367,6 +1514,89 @@
 
 
 </div>
+<div id="method_mouseMove" class="method item public">
+    <h3 class="name"><code>mouseMove</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code class="optional">[x]</code>
+                </li>
+                <li class="arg">
+                        <code class="optional">[y]</code>
+                </li>
+                <li class="arg">
+                        <code>done</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+        <span class="flag public">public</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_elements.js.html#l496"><code>lib\elements.js:496</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>send mousemove (first element)</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name optional">[x]</code>
+                        <span class="type">Number | Object</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name optional">[y]</code>
+                        <span class="type">Number</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">done</code>
+                        <span class="type">Function</span>
+
+
+                    <div class="param-description">
+                        <p>callback function</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
 <div id="method_offset" class="method item public">
     <h3 class="name"><code>offset</code></h3>
 
@@ -1395,7 +1625,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_elements.js.html#l277"><code>lib\elements.js:277</code></a>
+        <a href="../files/lib_elements.js.html#l326"><code>lib\elements.js:326</code></a>
         </p>
 
 
@@ -1448,6 +1678,73 @@
 
 
 </div>
+<div id="method_prop" class="method item public">
+    <h3 class="name"><code>prop</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>done</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+        <span class="flag public">public</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_elements.js.html#l273"><code>lib\elements.js:273</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>get property value (first element)</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">done</code>
+                        <span class="type">Function</span>
+
+
+                    <div class="param-description">
+                        <p>callback function</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>return proerty value</p>
+
+            </div>
+        </div>
+
+
+</div>
 <div id="method_select" class="method item public">
     <h3 class="name"><code>select</code></h3>
 
@@ -1476,7 +1773,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_elements.js.html#l355"><code>lib\elements.js:355</code></a>
+        <a href="../files/lib_elements.js.html#l404"><code>lib\elements.js:404</code></a>
         </p>
 
 
@@ -1552,7 +1849,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_elements.js.html#l342"><code>lib\elements.js:342</code></a>
+        <a href="../files/lib_elements.js.html#l391"><code>lib\elements.js:391</code></a>
         </p>
 
 
@@ -1617,7 +1914,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_elements.js.html#l411"><code>lib\elements.js:411</code></a>
+        <a href="../files/lib_elements.js.html#l454"><code>lib\elements.js:454</code></a>
         </p>
 
 
@@ -1685,7 +1982,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_elements.js.html#l303"><code>lib\elements.js:303</code></a>
+        <a href="../files/lib_elements.js.html#l352"><code>lib\elements.js:352</code></a>
         </p>
 
 
@@ -1752,7 +2049,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_elements.js.html#l160"><code>lib\elements.js:160</code></a>
+        <a href="../files/lib_elements.js.html#l164"><code>lib\elements.js:164</code></a>
         </p>
 
 
@@ -1796,6 +2093,73 @@
 
 
 </div>
+<div id="method_slice" class="method item public">
+    <h3 class="name"><code>slice</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>start</code>
+                </li>
+                <li class="arg">
+                        <code>end</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+        <span class="flag public">public</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/lib_elements.js.html#l196"><code>lib\elements.js:196</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>get element from start to end</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">start</code>
+                        <span class="type">Number</span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">end</code>
+                        <span class="type">Number</span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
 <div id="method_submit" class="method item public">
     <h3 class="name"><code>submit</code></h3>
 
@@ -1818,7 +2182,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_elements.js.html#l506"><code>lib\elements.js:506</code></a>
+        <a href="../files/lib_elements.js.html#l608"><code>lib\elements.js:608</code></a>
         </p>
 
 
@@ -1876,7 +2240,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_elements.js.html#l208"><code>lib\elements.js:208</code></a>
+        <a href="../files/lib_elements.js.html#l244"><code>lib\elements.js:244</code></a>
         </p>
 
 
@@ -1941,7 +2305,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_elements.js.html#l253"><code>lib\elements.js:253</code></a>
+        <a href="../files/lib_elements.js.html#l302"><code>lib\elements.js:302</code></a>
         </p>
 
 
@@ -2006,7 +2370,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_elements.js.html#l187"><code>lib\elements.js:187</code></a>
+        <a href="../files/lib_elements.js.html#l175"><code>lib\elements.js:175</code></a>
         </p>
 
 
@@ -2069,7 +2433,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_elements.js.html#l532"><code>lib\elements.js:532</code></a>
+        <a href="../files/lib_elements.js.html#l634"><code>lib\elements.js:634</code></a>
         </p>
 
 
@@ -2124,7 +2488,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_elements.js.html#l545"><code>lib\elements.js:545</code></a>
+        <a href="../files/lib_elements.js.html#l647"><code>lib\elements.js:647</code></a>
         </p>
 
 
@@ -2179,7 +2543,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_elements.js.html#l558"><code>lib\elements.js:558</code></a>
+        <a href="../files/lib_elements.js.html#l660"><code>lib\elements.js:660</code></a>
         </p>
 
 
@@ -2243,7 +2607,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_elements.js.html#l610"><code>lib\elements.js:610</code></a>
+        <a href="../files/lib_elements.js.html#l712"><code>lib\elements.js:712</code></a>
         </p>
 
 
@@ -2328,7 +2692,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_elements.js.html#l568"><code>lib\elements.js:568</code></a>
+        <a href="../files/lib_elements.js.html#l670"><code>lib\elements.js:670</code></a>
         </p>
 
 
@@ -2389,7 +2753,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_elements.js.html#l581"><code>lib\elements.js:581</code></a>
+        <a href="../files/lib_elements.js.html#l683"><code>lib\elements.js:683</code></a>
         </p>
 
 
@@ -2467,7 +2831,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_elements.js.html#l516"><code>lib\elements.js:516</code></a>
+        <a href="../files/lib_elements.js.html#l618"><code>lib\elements.js:618</code></a>
         </p>
 
 
@@ -2535,7 +2899,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/lib_elements.js.html#l430"><code>lib\elements.js:430</code></a>
+        <a href="../files/lib_elements.js.html#l473"><code>lib\elements.js:473</code></a>
         </p>
 
 

@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for jWebDriver\lib\mixpromise.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../prettify.css">
+    <link rel="stylesheet" href="../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">jWebDriver\lib\mixpromise.js</span></h1>
+    <h2>
+        Statements: <span class="metric">100% <small>(45 / 45)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">85% <small>(17 / 20)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(12 / 12)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">100% <small>(45 / 45)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../index.html">All files</a> &#187; <a href="index.html">jWebDriver/lib/</a> &#187; mixpromise.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">38</span>
+<span class="cline-any cline-yes">38</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">31</span>
+<span class="cline-any cline-yes">31</span>
+<span class="cline-any cline-yes">31</span>
+<span class="cline-any cline-yes">31</span>
+<span class="cline-any cline-yes">31</span>
+<span class="cline-any cline-yes">31</span>
+<span class="cline-any cline-yes">31</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">22</span>
+<span class="cline-any cline-yes">22</span>
+<span class="cline-any cline-yes">22</span>
+<span class="cline-any cline-yes">22</span>
+<span class="cline-any cline-yes">22</span>
+<span class="cline-any cline-yes">22</span>
+<span class="cline-any cline-yes">22</span>
+<span class="cline-any cline-yes">22</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">75</span>
+<span class="cline-any cline-yes">75</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">56</span>
+<span class="cline-any cline-yes">17</span>
+<span class="cline-any cline-yes">17</span>
+<span class="cline-any cline-yes">17</span>
+<span class="cline-any cline-yes">17</span>
+<span class="cline-any cline-yes">17</span>
+<span class="cline-any cline-yes">17</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/*jshint unused:false*/
+'use strict';
+function mixPromise(JWebDriver, Browser, Elements){
+    var JWebDriverPrototype = JWebDriver.prototype;
+    // copy Elements method
+    let arrBlackList = ['constructor', 'init', 'log', 'exec', 'sleep', 'toJSON', 'find', 'equal'];
+    let objBlackList = {};
+    arrBlackList.forEach(function(name){
+        objBlackList[name] = true;
+    });
+    let objMethodMap = {};
+    let protoNames = Object.getOwnPropertyNames(Elements.prototype);
+    // console.log('============= Elements ==============');
+    protoNames.slice(1).forEach(function(name){
+        let newName = name !== 'constructor' &amp;&amp; objMethodMap[name] || name;
+        if(!JWebDriverPrototype[newName] &amp;&amp; !objBlackList[newName]){
+            // console.log(name);
+            JWebDriver.addMethod(newName, function(done){
+                var args = Array.prototype.slice.call(arguments, 0);
+                var callback = args.pop();
+                var lastElements = this.lastElements;
+                <span class="missing-if-branch" title="else path not taken" >E</span>if(lastElements){
+                    lastElements[name].apply(lastElements, args).then(function(ret){
+                        callback(null, ret);
+                    }, callback);
+                }
+            });
+        }
+    });
+&nbsp;
+    // copy Browser method
+    ['find', 'findVisible', 'wait'].forEach(function(name){
+        JWebDriver.addMethod(name, function(done){
+            var self = this;
+            var args = Array.prototype.slice.call(arguments, 0);
+            var callback = args.pop();
+            var lastBrowser = self.lastBrowser;
+            <span class="missing-if-branch" title="else path not taken" >E</span>if(lastBrowser){
+                lastBrowser[name].apply(lastBrowser, args).then(function(ret){
+                    self.lastElements = ret;
+                    callback(null, ret);
+                }, callback);
+            }
+        });
+    });
+    arrBlackList = ['constructor', 'MouseButtons', 'Keys', 'init', 'log', 'exec', 'isStickyKey'];
+    objBlackList = {};
+    arrBlackList.forEach(function(name){
+        objBlackList[name] = true;
+    });
+    objMethodMap = {
+        'size': 'windowSize',
+        'position': 'windowPosition'
+    };
+    // console.log('============= Browser ==============');
+    protoNames = Object.getOwnPropertyNames(Browser.prototype);
+    protoNames.forEach(function(name){
+        let newName = name !== 'constructor' &amp;&amp; objMethodMap[name] || name;
+        if(!JWebDriverPrototype[newName] &amp;&amp; !objBlackList[newName]){
+            // console.log(name);
+            JWebDriver.addMethod(newName, function(done){
+                var args = Array.prototype.slice.call(arguments, 0);
+                var callback = args.pop();
+                var lastBrowser = this.lastBrowser;
+                <span class="missing-if-branch" title="else path not taken" >E</span>if(lastBrowser){
+                    lastBrowser[name].apply(lastBrowser, args).then(function(ret){
+                        callback(null, ret);
+                    }, callback);
+                }
+            });
+        }
+    });
+}
+&nbsp;
+module.exports = mixPromise;
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Oct 26 2016 10:55:06 GMT+0800 (中国标准时间)</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>
