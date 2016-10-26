@@ -37,7 +37,7 @@
 </li>
 <li>API Doc: <a href="http://jwebdriver.com/api/">http://jwebdriver.com/api/</a>
 </li>
-<li>Coverage: <a href="http://jwebdriver.com/coverage/">http://jwebdriver.com/coverage/</a> (80.88%)</li>
+<li>Coverage: <a href="http://jwebdriver.com/coverage/">http://jwebdriver.com/coverage/</a> (81.61%)</li>
 </ol>
 
 <h1>
@@ -46,12 +46,14 @@
 <ol>
 <li>Support all webdriver protocols: <a href="https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol">https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol</a>
 </li>
-<li>Easy to use</li>
+<li>Support mobile native &amp; webview by macaca: (<a href="https://macacajs.com/">https://macacajs.com/</a>)</li>
+<li>Easy to use, support mix promise</li>
 <li>Support promise chain &amp; generator &amp; es7 await</li>
 <li>jQuery style test code, easy use for front engineer</li>
 <li>All test cover api</li>
-<li>Support hosts mode, different hosts for different job</li>
-<li>Support for remote file upload</li>
+<li>Support hosts mode, different hosts for different test job</li>
+<li>Support with remote file upload</li>
+<li>Support chai work with promise mode</li>
 </ol>
 
 <h1>
@@ -62,16 +64,13 @@
 <p>Download Selenium server &amp; browser driver.</p>
 
 <blockquote>
-<p>Selenium server &amp; IEDriverServer &amp; SafariDriver: <a href="http://selenium-release.storage.googleapis.com/index.html">http://selenium-release.storage.googleapis.com/index.html</a></p>
+<p>Download Selenium Server &amp; IEDriverServer: <a href="http://selenium-release.storage.googleapis.com/index.html">http://selenium-release.storage.googleapis.com/index.html</a></p>
 
-<p>ChromeDriver: <a href="http://chromedriver.storage.googleapis.com/index.html">http://chromedriver.storage.googleapis.com/index.html</a></p>
-</blockquote>
-</li>
-<li>
-<p>Run selenium server</p>
+<p>Download ChromeDriver: <a href="http://chromedriver.storage.googleapis.com/index.html">http://chromedriver.storage.googleapis.com/index.html</a></p>
 
-<blockquote>
-<p>java -jar selenium-server-standalone-x.x.x.jar</p>
+<p>Add the driver path to environment variable: <code>PATH</code></p>
+
+<p>Run selenium server: <code>java -jar selenium-server-standalone-x.xx.x.jar</code></p>
 </blockquote>
 </li>
 <li>
@@ -91,27 +90,63 @@
 <pre><code>var JWebDriver = require('jwebdriver');
 
 var driver = new JWebDriver();
-driver.session('chrome', function*(error, browser){
-    yield browser.url('https://www.baidu.com/');
-    var elemement = yield browser.find('#kw');
-    yield elemement.val('mp3').submit();
 
-    console.log(yield browser.title());
+driver.session("chrome")
+    .url('https://www.baidu.com/')
+    .find('#kw')
+    .val('mp3')
+    .submit()
+    .title()
+    .then(function(title){
+        console.log(title);
+    })
+    .close();
+</code></pre>
 
-    yield browser.close();
-}).then(function(){
-    console.log('all done');
-}).catch(function(error){
-    console.log(error);
+<blockquote>
+<p>mocha mocha-promise.js</p>
+</blockquote>
+
+<pre><code>var JWebDriver = require('jwebdriver');
+var chai = require("chai");
+chai.should();
+chai.use(JWebDriver.chaiSupportChainPromise);
+
+describe('jWebDriver test', function(){
+
+    this.timeout(30000);
+
+    var browser;
+    before(function(){
+        var driver = new JWebDriver();
+        return (browser = driver.session('chrome'));
+    });
+
+    it('should search baidu', function(){
+        return browser.url('https://www.baidu.com/')
+            .find('#kw')
+            .should.have.length(1)
+            .val('mp3').submit()
+            .url()
+            .should.contain('wd=mp3');
+    });
+
+    after(function(){
+        return browser.close();
+    });
+
 });
 </code></pre>
 
 <blockquote>
-<p>node mocha.js</p>
+<p>node mocha-generators.js</p>
 </blockquote>
 
 <pre><code>var JWebDriver = require('jwebdriver');
-var expect  = require("expect.js");
+var chai = require("chai");
+chai.should();
+chai.use(JWebDriver.chaiSupportChainPromise);
+
 require('mocha-generators').install();
 
 describe('jWebDriver test', function(){
@@ -122,15 +157,11 @@ describe('jWebDriver test', function(){
         browser = yield driver.session('chrome');
     });
 
-    it('should open url', function*(){
+    it('should search baidu', function*(){
         yield browser.url('https://www.baidu.com/');
-        var kw = yield browser.find('#kw');
-        expect(kw.length).to.be(1);
-
+        var kw = yield browser.find('#kw').should.have.length(1);
         yield kw.val('mp3').submit();
-
-        var url = yield browser.url();
-        expect(url).to.contain('wd=mp3');
+        yield browser.url().should.contain('wd=mp3');
     });
 
     after(function*(){
@@ -141,25 +172,64 @@ describe('jWebDriver test', function(){
 </code></pre>
 
 <blockquote>
-<p>node promise.js</p>
+<p>node macaca.js (for mobile native &amp; webview)</p>
 </blockquote>
 
-<pre><code>var JWebDriver = require('jwebdriver');
+<pre><code>var path = require('path');
+var JWebDriver = require('../');
 
 var driver = new JWebDriver();
-driver.session('chrome', function(error, browser) {
-    browser.url('https://www.baidu.com/')
-          .find('#kw')
-          .then(function(kw) {
-              return kw.val('mp3')
-                       .submit();
-          })
-          .title()
-          .then(function(title) {
-              console.log(title);
-          })
-          .close();
-});
+
+var appPath = 'macaca.apk';
+
+driver.session({
+        'platformName': 'Android',
+        'app': path.resolve(appPath)
+    })
+    .wait('//*[@resource-id="com.github.android_app_bootstrap:id/mobileNoEditText"]')
+    .sendKeys('111')
+    .wait('//*[@resource-id="com.github.android_app_bootstrap:id/codeEditText"]')
+    .sendKeys('222')
+    .wait('//*[@resource-id="com.github.android_app_bootstrap:id/login_button"]')
+    .click()
+    .wait('//*[@resource-id="com.github.android_app_bootstrap:id/list_button"]')
+    .prop('size')
+    .then(function(size){
+        console.log(size)
+    })
+    .prop('origin')
+    .then(function(origin){
+        console.log(origin)
+    })
+    .click()
+    .touchSwipe(245, 780, 258, 611, 20)
+    .wait('//*[@resource-id="com.github.android_app_bootstrap:id/listview"]/android.widget.TextView[4]')
+    .click()
+    .touchSwipe(174, 407, 169, 802, 20)
+    .wait('//*[@resource-id="com.github.android_app_bootstrap:id/listview"]/android.widget.TextView')
+    .click()
+    .wait('//*[@resource-id="com.github.android_app_bootstrap:id/toast_button"]')
+    .click()
+    .back()
+    .back()
+    .wait('name', 'Baidu')
+    .click()
+    .webview()
+    .wait('#index-kw')
+    .sendKeys('mp3')
+    .wait('#index-bn')
+    .touchClick()
+    .url()
+    .then(function(url){
+        console.log(url);
+    })
+    .title()
+    .then(function(title){
+        console.log(title);
+    })
+    .native()
+    .find('name', 'PERSONAL')
+    .click();
 </code></pre>
 </li>
 </ol>
@@ -170,20 +240,23 @@ driver.session('chrome', function(error, browser) {
 <ol>
 <li><a href="https://github.com/yaniswang/jWebDriver/blob/master/example/baidu.js">Baidu test</a></li>
 <li><a href="https://github.com/yaniswang/jWebDriver/blob/master/example/google.js">Gooogle test</a></li>
-<li><a href="https://github.com/yaniswang/jWebDriver/blob/master/example/mocha.js">Mocha test</a></li>
-<li><a href="https://github.com/yaniswang/jWebDriver/blob/master/example/promise.js">Promise test</a></li>
+<li><a href="https://github.com/yaniswang/jWebDriver/blob/master/example/mocha-promise.js">Mocha Promise</a></li>
+<li><a href="https://github.com/yaniswang/jWebDriver/blob/master/example/mocha-generators.js">Mocha Generators</a></li>
+<li><a href="https://github.com/yaniswang/jWebDriver/blob/master/example/macaca.js">Mobile test (Native&amp;webview)</a></li>
 <li><a href="https://github.com/yaniswang/jWebDriver/blob/master/example/upload.js">Upload test</a></li>
 <li><a href="https://github.com/yaniswang/jWebDriver/blob/master/example/dragdrop.js">Drag Drop test</a></li>
 <li><a href="https://github.com/yaniswang/jWebDriver/blob/master/example/co.js">Co test</a></li>
 <li><a href="https://github.com/yaniswang/jWebDriver/blob/master/example/es7async.js">ES7 async</a></li>
+<li><a href="https://github.com/yaniswang/jWebDriver/blob/master/example/plugin.js">Plugin</a></li>
 </ol>
 
 <h1>
 <a id="api-book" class="anchor" href="#api-book" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>API Book</h1>
 
-<p>jWebDriver have 3 Class: Driver, Broswer, Elemenets</p>
+<p>jWebDriver have 3 Class: Driver, Broswer, Elements</p>
 
-<p>All api can used with chain promise and support generator &amp; es7 async:</p>
+<h2>
+<a id="all-api-can-used-with-chain-promise-and-support-generator--es7-async" class="anchor" href="#all-api-can-used-with-chain-promise-and-support-generator--es7-async" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>All api can used with chain promise and support generator &amp; es7 async:</h2>
 
 <pre><code>browser.find('#kw').then(function(elements){
     return elements.val('test')
@@ -195,7 +268,25 @@ driver.session('chrome', function(error, browser) {
 });
 </code></pre>
 
-<p>You can search all api here, include all mode of api:</p>
+<h2>
+<a id="and-you-can-use-mix-promise-with-driver-class-all-method-will-copy-to-driver-from-broswer-and-elements" class="anchor" href="#and-you-can-use-mix-promise-with-driver-class-all-method-will-copy-to-driver-from-broswer-and-elements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>And you can use mix promise with Driver class, all method will copy to Driver from Broswer and Elements:</h2>
+
+<pre><code>var driver = new JWebDriver();
+
+driver.session("chrome")
+    .url('https://www.baidu.com/')
+    .find('#kw')
+    .val('mp3')
+    .submit()
+    .title()
+    .then(function(title){
+        console.log(title);
+    })
+    .close();
+</code></pre>
+
+<h2>
+<a id="you-can-search-all-api-here-include-all-mode-of-api" class="anchor" href="#you-can-search-all-api-here-include-all-mode-of-api" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>You can search all api here, include all mode of api:</h2>
 
 <pre><code>var co = require('co');
 
@@ -291,9 +382,9 @@ co(function*(){
 
     // ========================== position &amp; size &amp; maximize &amp; screenshot ==========================
 
-    var offset = yield browser.offset(); // return {x: 1, y: 1}
-    yield browser.offset(10, 10); // set offset
-    yield browser.offset({
+    var position = yield browser.position(); // return {x: 1, y: 1}
+    yield browser.position(10, 10); // set position
+    yield browser.position({
         x: 10,
         y: 10
     });
@@ -305,13 +396,15 @@ co(function*(){
     });
     yield browser.maximize();
     var png_base64  = yield browser.getScreenshot();// get the screen shot, base64 type
+    var png_base64  = yield browser.getScreenshot('d:/test.png');// get the screen shot, and save to file
 
-    // ========================== url &amp; title &amp; html ==========================
+    // ========================== url &amp; title &amp; source ==========================
 
     yield browser.url('http://www.alibaba.com/'); // goto url
     var url = yield browser.url(); // get url
     var title = yield browser.title(); // get title
-    var html = yield browser.html(); // get html code
+    var source = yield browser.source(); // get source code
+    var html = yield browser.html(); // get html code, nick name of source
 
     // ========================== navigator ==========================
 
@@ -447,24 +540,28 @@ co(function*(){
         displayed: true, // wait for element displayed, default: true
         removed: false // wait for element removed, default: false
     });
+    var elements = yield browser.wait('name', 'aaa', 5000); // support type: class name|css selector|id|name|link text|partial link text|tag name|xpath
 
     var elements = yield browser.find('#id'); // find element
     var elements = yield browser.findVisible('span'); // find visible element
     var elements = yield browser.find('active');// get active element
     var elements = yield browser.find('#id');// get element by css selector
     var elements = yield browser.find('//html/body');// get element by xpath
+    var elements = yield browser.find('name', 'aaa'); // support type: class name|css selector|id|name|link text|partial link text|tag name|xpath
     var elements = yield elements.find('.class'); // find all child element
     var isEqual = yield elements.equal('#bbb a'); // test if two elements refer to the same DOM element.
 
-    var len = elements.length;
-    for(var i=0;i&lt;len;i++){
-        element = elements.get(i);
-    }
+    elements.get(0).click(); // get element by index
+    elements.first().click(); // get first element
+    elements.last().click(); // get last element
+    elements.slice(1,2).click(); // get element from start to end
+
 
     var tagName = yield element.tagName(); // get tagname (first element)
     var value = element.val(); // equal to element.attr('value');
     yield element.val('mp3'); // equal to: element.clear().sendKeys('mp3');
-    var value = yield element.attr('id'); // get attr value (first element)
+    var value = yield element.attr('id'); // get attribute value (first element)
+    var value = yield element.prop('id'); // get property value (first element)
     var value = yield element.css('border'); // get css value (first element)
     yield element.clear(); // clear input &amp; textarea value
     var text = yield element.text(); // get displayed text (first element)
@@ -561,11 +658,43 @@ co(function*(){
         altitude: 1
     });
 
+    // ========================== macaca api ==========================
+
+    var arrContexts = yield browser.contexts(); // get all contexts
+    var contextId = yield browser.context(); // get context id
+    yield browser.context('NATIVE_APP'); // set context id
+    yield browser.native(); // set context to native
+    yield browser.webview(); // set context to webview
+
+    yield browser.touchSwipe(500, 100, 500, 600); // swipe from (500, 100) to (500, 600)
+    yield browser.touchSwipe(500, 100, 500, 600, 200); // swipe from (500, 100) to (500, 600) with 200ms duration
+
 }).then(function(){
     console.log('All done!')
 }).catch(function(error){
     console.log(error);
 });
+</code></pre>
+
+<h2>
+<a id="how-to-develop-plugin" class="anchor" href="#how-to-develop-plugin" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How to develop plugin</h2>
+
+<pre><code>var JWebDriver = require('jwebdriver');
+
+var driver = new JWebDriver();
+
+JWebDriver.addMethod('searchMp3', function(){
+    return this.find('#kw').val('mp3').submit();
+});
+
+driver.session("chrome")
+    .url('https://www.baidu.com/')
+    .searchMp3()
+    .title()
+    .then(function(title){
+        console.log(title);
+    })
+    .close();
 </code></pre>
 
 <h1>
@@ -576,7 +705,7 @@ co(function*(){
 <blockquote>
 <p>The MIT License</p>
 
-<p>Copyright (c) 2014-2015 Yanis Wang &lt;<a href="mailto:yanis.wang@gmail.com">yanis.wang@gmail.com</a>&gt;</p>
+<p>Copyright (c) 2014-2016 Yanis Wang &lt;<a href="mailto:yanis.wang@gmail.com">yanis.wang@gmail.com</a>&gt;</p>
 
 <p>Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -607,7 +736,7 @@ THE SOFTWARE.</p>
 </li>
 <li>mocha: <a href="https://npmjs.org/package/mocha">https://npmjs.org/package/mocha</a>
 </li>
-<li>expect.js: <a href="https://github.com/LearnBoost/expect.js">https://github.com/LearnBoost/expect.js</a>
+<li>chai: <a href="https://github.com/chaijs/chai">https://github.com/chaijs/chai</a>
 </li>
 <li>istanbul: <a href="https://github.com/gotwarlost/istanbul">https://github.com/gotwarlost/istanbul</a>
 </li>
