@@ -1,6 +1,10 @@
 jWebDriver change log
 ====================
 
+## ver 2.0.1 (2016-12-1)
+
+1. Fix: skip VirtualBox and Loopback when get local ip
+
 ## ver 2.0.0 (2016-10-26)
 
 1. add: Support mix promise with Driver class
