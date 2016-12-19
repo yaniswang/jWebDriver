@@ -1,6 +1,10 @@
 jWebDriver change log
 ====================
 
+## ver 2.0.3 (2016-12-19)
+
+1. Other: show more message for wait api
+
 ## ver 2.0.2 (2016-12-2)
 
 1. Fix: fix findVisible issue
