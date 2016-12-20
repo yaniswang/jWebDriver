@@ -1,6 +1,11 @@
 jWebDriver change log
 ====================
 
+## ver 2.0.4 (2016-12-20)
+
+1. Fix: fix chai issue when catch error by promise
+2. Other: show more message for find api
+
 ## ver 2.0.3 (2016-12-19)
 
 1. Other: show more message for wait api

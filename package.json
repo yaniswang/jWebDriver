@@ -1,12 +1,12 @@
 {
   "name": "jwebdriver",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "A webdriver client for node.js",
   "homepage": "http://jwebdriver.com/",
   "main": "./index",
   "dependencies": {
     "node-zip": "1.1.1",
-    "promiseclass": "1.0.1",
+    "promiseclass": "1.0.2",
     "request": "2.65.0",
     "xtend": "2.0.3"
   },

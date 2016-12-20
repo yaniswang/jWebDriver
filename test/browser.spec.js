@@ -251,7 +251,7 @@ function runBrowserTest(browserName){
                 yield browser.find('#abcaaa');
             }
             catch(e){
-                e.should.equal('Find elements failed');
+                e.should.equal('Find elements failed: css selector, #abcaaa');
             }
 
 		});
@@ -324,7 +324,7 @@ function runBrowserTest(browserName){
                 yield browser.find('#wait1');
             }
             catch(e){
-                e.should.equal('Find elements failed');
+                e.should.equal('Find elements failed: css selector, #wait1');
             }
             yield browser.eval(function(){
                 setTimeout(function(){
@@ -442,7 +442,7 @@ function runBrowserTest(browserName){
                 yield browser.find('#testwindow');
             }
             catch(e){
-                e.should.equal('Find elements failed');
+                e.should.equal('Find elements failed: css selector, #testwindow');
             }
             yield browser.closeWindow().windowHandles().should.have.length(1);
             yield browser.switchWindow(0);
@@ -468,7 +468,7 @@ function runBrowserTest(browserName){
                 yield browser.find('#testwindow');
             }
             catch(e){
-                e.should.equal('Find elements failed');
+                e.should.equal('Find elements failed: css selector, #testwindow');
             }
             // switch to main page
             yield browser.switchFrame(null);
@@ -479,7 +479,7 @@ function runBrowserTest(browserName){
                 yield browser.find('#testwindow');
             }
             catch(e){
-                e.should.equal('Find elements failed');
+                e.should.equal('Find elements failed: css selector, #testwindow');
             }
             if(browser.browserName !== 'phantomjs'){
                 // switch to parent
