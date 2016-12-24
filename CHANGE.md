@@ -1,6 +1,10 @@
 jWebDriver change log
 ====================
 
+## ver 2.0.5 (2016-12-24)
+
+1. Fix: driver api sendKeys change to sendElementKeys
+
 ## ver 2.0.4 (2016-12-20)
 
 1. Fix: fix chai issue when catch error by promise

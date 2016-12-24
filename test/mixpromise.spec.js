@@ -75,7 +75,7 @@ function runBrowserTest(browserName){
 
             return browser.find('#kw')
             .should.have.length(1)
-            .sendKeys('find123')
+            .val('find123')
             .val()
             .should.equal('find123');
 
