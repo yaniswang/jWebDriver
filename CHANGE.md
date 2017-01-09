@@ -1,6 +1,10 @@
 jWebDriver change log
 ====================
 
+## ver 2.0.6 (2017-1-9)
+
+1. Fix: support node v7.x
+
 ## ver 2.0.5 (2016-12-24)
 
 1. Fix: driver api sendKeys change to sendElementKeys
