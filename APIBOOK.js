@@ -133,6 +133,8 @@ co(function*(){
         x: 10,
         y: 10
     });
+    var elements = yield browser.find('#divtest');
+    elements.scrollTo(0, 100); // scroll all elements to x, y
 
     // ========================== cookie ==========================
 
@@ -233,8 +235,8 @@ co(function*(){
         }, 2000);
     }, 1, 2);
     // pass element to eval
-    var tagName = yield browser.eval(function(element){
-        return element.tagName;
+    var tagName = yield browser.eval(function(elements){
+        return elements[0].tagName;
     }, yield browser.find('#id'));
 
     // ========================== element ==========================

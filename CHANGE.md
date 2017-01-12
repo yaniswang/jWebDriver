@@ -1,6 +1,10 @@
 jWebDriver change log
 ====================
 
+## ver 2.0.7 (2017-1-12)
+
+1. Add: support scroll in element
+
 ## ver 2.0.6 (2017-1-9)
 
 1. Fix: support node v7.x

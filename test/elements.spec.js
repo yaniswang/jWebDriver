@@ -290,6 +290,62 @@ function runBrowserTest(browserName){
 
         });
 
+        it('should scroll in element', function*(){
+
+            yield browser.url(testPath + 'test1.html');
+            var elements = yield browser.find('.divscroll');
+            yield elements.scrollTo(99, 101);
+            var scrollInfo = yield browser.eval(function(elements){
+                var element1 = elements[0];
+                var element2 = elements[1];
+                return {
+                    left1:element1.scrollLeft,
+                    top1:element1.scrollTop,
+                    left2:element2.scrollLeft,
+                    top2:element2.scrollTop
+                };
+            }, elements);
+            scrollInfo.left1.should.equal(99);
+            scrollInfo.top1.should.equal(101);
+            scrollInfo.left2.should.equal(99);
+            scrollInfo.top2.should.equal(101);
+
+            var divscroll1 = yield browser.find('#divscroll1');
+            yield divscroll1.scrollTo(91, 111);
+            scrollInfo = yield browser.eval(function(elements){
+                var element1 = elements[0];
+                var element2 = elements[1];
+                return {
+                    left1:element1.scrollLeft,
+                    top1:element1.scrollTop,
+                    left2:element2.scrollLeft,
+                    top2:element2.scrollTop
+                };
+            }, elements);
+            scrollInfo.left1.should.equal(91);
+            scrollInfo.top1.should.equal(111);
+            scrollInfo.left2.should.equal(99);
+            scrollInfo.top2.should.equal(101);
+
+            var divscroll2 = yield browser.find('#divscroll2');
+            yield divscroll2.scrollTo(121, 91);
+            scrollInfo = yield browser.eval(function(elements){
+                var element1 = elements[0];
+                var element2 = elements[1];
+                return {
+                    left1:element1.scrollLeft,
+                    top1:element1.scrollTop,
+                    left2:element2.scrollLeft,
+                    top2:element2.scrollTop
+                };
+            }, elements);
+            scrollInfo.left1.should.equal(91);
+            scrollInfo.top1.should.equal(111);
+            scrollInfo.left2.should.equal(121);
+            scrollInfo.top2.should.equal(91);
+
+        });
+
         after(function*(){
             server.close();
             yield browser.close();
