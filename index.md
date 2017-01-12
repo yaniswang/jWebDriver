@@ -1,0 +1,691 @@
+jWebDriver
+================
+
+![jWebDriver logo](https://raw.github.com/yaniswang/jWebDriver/master/logo.png)
+
+A webdriver client for Node.js
+
+[![Build Status](https://img.shields.io/travis/yaniswang/jWebDriver.svg)](https://travis-ci.org/yaniswang/jWebDriver)
+[![NPM version](https://img.shields.io/npm/v/jwebdriver.svg?style=flat)](https://www.npmjs.com/package/jwebdriver)
+[![License](https://img.shields.io/npm/l/jwebdriver.svg?style=flat)](https://www.npmjs.com/package/jwebdriver)
+[![NPM count](https://img.shields.io/npm/dm/jwebdriver.svg?style=flat)](https://www.npmjs.com/package/jwebdriver)
+[![NPM count](https://img.shields.io/npm/dt/jwebdriver.svg?style=flat)](https://www.npmjs.com/package/jwebdriver)
+
+1. Official Site: [http://jwebdriver.com/](http://jwebdriver.com/)
+3. API Doc: [http://jwebdriver.com/api/](http://jwebdriver.com/api/)
+2. Coverage: [http://jwebdriver.com/coverage/](http://jwebdriver.com/coverage/) (81.61%)
+
+Features
+================
+
+1. Support all webdriver protocols: [https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol](https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol)
+2. Support mobile native & webview by macaca: ([https://macacajs.com/](https://macacajs.com/))
+3. Easy to use, support mix promise
+4. Support promise chain & generator & es7 await
+5. jQuery style test code, easy use for front engineer
+6. All test cover api
+7. Support hosts mode, different hosts for different test job
+8. Support with remote file upload
+9. Support chai work with promise mode
+
+Quick start
+================
+
+1.  Download Selenium server & browser driver.
+
+    > Download Selenium Server & IEDriverServer: [http://selenium-release.storage.googleapis.com/index.html](http://selenium-release.storage.googleapis.com/index.html)
+
+    > Download ChromeDriver: [http://chromedriver.storage.googleapis.com/index.html](http://chromedriver.storage.googleapis.com/index.html)
+
+    > Add the driver path to environment variable: `PATH`
+
+    > Run selenium server: `java -jar selenium-server-standalone-x.xx.x.jar`
+
+2. Insall jWebDriver
+
+    > npm install jwebdriver
+
+3. Run test code
+
+    > node baidu.js
+
+        var JWebDriver = require('jwebdriver');
+
+        var driver = new JWebDriver();
+
+        driver.session("chrome")
+            .url('https://www.baidu.com/')
+            .find('#kw')
+            .val('mp3')
+            .submit()
+            .title()
+            .then(function(title){
+                console.log(title);
+            })
+            .close();
+
+
+
+    > mocha mocha-promise.js
+
+        var JWebDriver = require('jwebdriver');
+        var chai = require("chai");
+        chai.should();
+        chai.use(JWebDriver.chaiSupportChainPromise);
+
+        describe('jWebDriver test', function(){
+
+            this.timeout(30000);
+
+            var browser;
+            before(function(){
+                var driver = new JWebDriver();
+                return (browser = driver.session('chrome'));
+            });
+
+            it('should search baidu', function(){
+                return browser.url('https://www.baidu.com/')
+                    .find('#kw')
+                    .should.have.length(1)
+                    .val('mp3').submit()
+                    .url()
+                    .should.contain('wd=mp3');
+            });
+
+            after(function(){
+                return browser.close();
+            });
+
+        });
+
+
+    > node mocha-generators.js
+
+        var JWebDriver = require('jwebdriver');
+        var chai = require("chai");
+        chai.should();
+        chai.use(JWebDriver.chaiSupportChainPromise);
+
+        require('mocha-generators').install();
+
+        describe('jWebDriver test', function(){
+
+            var browser;
+            before(function*(){
+                var driver = new JWebDriver();
+                browser = yield driver.session('chrome');
+            });
+
+            it('should search baidu', function*(){
+                yield browser.url('https://www.baidu.com/');
+                var kw = yield browser.find('#kw').should.have.length(1);
+                yield kw.val('mp3').submit();
+                yield browser.url().should.contain('wd=mp3');
+            });
+
+            after(function*(){
+                yield browser.close();
+            });
+
+        });
+
+    > node macaca.js (for mobile native & webview)
+
+        var path = require('path');
+        var JWebDriver = require('../');
+
+        var driver = new JWebDriver();
+
+        var appPath = 'macaca.apk';
+
+        driver.session({
+                'platformName': 'Android',
+                'app': path.resolve(appPath)
+            })
+            .wait('//*[@resource-id="com.github.android_app_bootstrap:id/mobileNoEditText"]')
+            .sendKeys('111')
+            .wait('//*[@resource-id="com.github.android_app_bootstrap:id/codeEditText"]')
+            .sendKeys('222')
+            .wait('//*[@resource-id="com.github.android_app_bootstrap:id/login_button"]')
+            .click()
+            .wait('//*[@resource-id="com.github.android_app_bootstrap:id/list_button"]')
+            .prop('size')
+            .then(function(size){
+                console.log(size)
+            })
+            .prop('origin')
+            .then(function(origin){
+                console.log(origin)
+            })
+            .click()
+            .touchSwipe(245, 780, 258, 611, 20)
+            .wait('//*[@resource-id="com.github.android_app_bootstrap:id/listview"]/android.widget.TextView[4]')
+            .click()
+            .touchSwipe(174, 407, 169, 802, 20)
+            .wait('//*[@resource-id="com.github.android_app_bootstrap:id/listview"]/android.widget.TextView')
+            .click()
+            .wait('//*[@resource-id="com.github.android_app_bootstrap:id/toast_button"]')
+            .click()
+            .back()
+            .back()
+            .wait('name', 'Baidu')
+            .click()
+            .webview()
+            .wait('#index-kw')
+            .sendKeys('mp3')
+            .wait('#index-bn')
+            .touchClick()
+            .url()
+            .then(function(url){
+                console.log(url);
+            })
+            .title()
+            .then(function(title){
+                console.log(title);
+            })
+            .native()
+            .find('name', 'PERSONAL')
+            .click();
+
+More examples
+================
+
+1. [Baidu test](https://github.com/yaniswang/jWebDriver/blob/master/example/baidu.js)
+2. [Gooogle test](https://github.com/yaniswang/jWebDriver/blob/master/example/google.js)
+3. [Mocha Promise](https://github.com/yaniswang/jWebDriver/blob/master/example/mocha-promise.js)
+4. [Mocha Generators](https://github.com/yaniswang/jWebDriver/blob/master/example/mocha-generators.js)
+5. [Mobile test (Native&webview)](https://github.com/yaniswang/jWebDriver/blob/master/example/macaca.js)
+6. [Upload test](https://github.com/yaniswang/jWebDriver/blob/master/example/upload.js)
+7. [Drag Drop test](https://github.com/yaniswang/jWebDriver/blob/master/example/dragdrop.js)
+8. [Co test](https://github.com/yaniswang/jWebDriver/blob/master/example/co.js)
+9. [ES7 async](https://github.com/yaniswang/jWebDriver/blob/master/example/es7async.js)
+10. [Plugin](https://github.com/yaniswang/jWebDriver/blob/master/example/plugin.js)
+
+API Book
+================
+
+jWebDriver have 3 Class: Driver, Broswer, Elements
+
+All api can used with chain promise and support generator & es7 async:
+------------------------------------------
+
+    browser.find('#kw').then(function(elements){
+        return elements.val('test')
+                       .submit();
+    })
+    .title()
+    .then(function(title){
+        console.log(title);
+    });
+
+And you can use mix promise with Driver class, all method will copy to Driver from Broswer and Elements:
+------------------------------------------
+
+    var driver = new JWebDriver();
+
+    driver.session("chrome")
+        .url('https://www.baidu.com/')
+        .find('#kw')
+        .val('mp3')
+        .submit()
+        .title()
+        .then(function(title){
+            console.log(title);
+        })
+        .close();
+
+You can search all api here, include all mode of api:
+------------------------------------------
+
+    var co = require('co');
+
+    co(function*(){
+
+        // ========================== driver api ==========================
+
+        var JWebDriver = require('jwebdriver');
+
+        var driver = new JWebDriver(); // connect to http://127.0.0.1:4444
+        var driver = new JWebDriver('127.0.0.1', '4444'); // connect to http://127.0.0.1:4444
+        var driver = new JWebDriver({
+            'host': '127.0.0.1',
+            'port': 4444,
+            'logLevel': 0, // 0: no log, 1: warning & error, 2: all log
+            'nocolor': false,
+            'speed': 100 // default: 0 ms
+        });
+        var wdInfo = yield driver.info(); // get webdriver server info
+
+        // ========================== session api ==========================
+
+        var arrSessions = yield driver.sessions(); // get all sessions
+        for(var i=0;i<arrSessions.length;i++){
+            yield arrSessions[i].close();
+        }
+        // new session
+        var browser = yield driver.session('browser', '40.0', 'windows');
+        var browser = yield driver.session({
+            'browserName':'browser',
+            'version': 'ANY',
+            'platform': 'ANY'
+        });
+        // attach session
+        var browser = yield driver.session({
+            sessionId: 'xxxxxxxxxx'
+        });
+        // set manual proxy
+        var browser = yield driver.session({
+            'browserName':'browser',
+            'proxy': {
+                'proxyType': 'manual',
+                'httpProxy': '192.168.1.1:1080',
+                'sslProxy': '192.168.1.1:1080'
+            }
+        });
+        // set pac proxy
+        var browser = yield driver.session({
+            'browserName':'browser',
+            'proxy': {
+                'proxyType': 'pac',
+                'proxyAutoconfigUrl': 'http://x.x.x.x/test.pac'
+            }
+        });
+        // set hosts
+        var browser = yield driver.session({
+            'browserName':'browser',
+            'hosts': '192.168.1.1 www.alibaba.com\r\n192.168.1.1 www.google.com'
+        });
+        // attach session
+        var browser = yield driver.session('xxxxxxxxxx'); // session id
+
+        // get session info
+        var capabilities = yield browser.info(); // get capabilities
+        var isSupported = yield browser.support('javascript'); // get capability supported: javascript, cssselector, screenshot, storage, alert, database, rotatable
+        yield browser.config({
+            pageloadTimeout: 5000, // page onload timeout
+            scriptTimeout: 1000, // sync script timeout
+            asyncScriptTimeout: 1000, // async script timeout
+            implicitTimeout: 1000 // implicit timeout
+        });
+        yield browser.close(); // close session
+        yield browser.sleep(1000); // sleep
+
+        // ========================== window ==========================
+
+        var curWindowHandle = yield browser.windowHandle(); // get current window handle
+        var arrWindowHandles = yield browser.windowHandles(); // get all windows
+        yield browser.switchWindow('handleid'); // focus to window
+        yield browser.switchWindow(0); // focus to first window
+        yield browser.switchWindow(1); // focus to second window
+        var newWindowHandle = yield browser.newWindow('http://www.alibaba.com/', 'testwindow', 'width=200,height=200'); // open new window and return windowHandle
+        yield browser.closeWindow(); // close current window
+
+        // ========================== frame ==========================
+
+        var elements = yield browser.frames(); // get all frames
+        yield browser.switchFrame(0); // focus to frame 0
+        yield browser.switchFrame(1); // focus to frame 1
+        yield browser.switchFrame('#iframe_id'); // focus to frame #iframe_id
+        yield browser.switchFrame(null); // focus to main page
+        yield browser.switchFrameParent(); // focus to parent context
+
+        // ========================== position & size & maximize & screenshot ==========================
+
+        var position = yield browser.position(); // return {x: 1, y: 1}
+        yield browser.position(10, 10); // set position
+        yield browser.position({
+            x: 10,
+            y: 10
+        });
+        var info = yield browser.size(); // return {width: 100, height: 100}
+        yield browser.size(100, 100); // set size
+        yield browser.size({
+            width: 100,
+            height: 100
+        });
+        yield browser.maximize();
+        var png_base64  = yield browser.getScreenshot();// get the screen shot, base64 type
+        var png_base64  = yield browser.getScreenshot('d:/test.png');// get the screen shot, and save to file
+
+        // ========================== url & title & source ==========================
+
+        yield browser.url('http://www.alibaba.com/'); // goto url
+        var url = yield browser.url(); // get url
+        var title = yield browser.title(); // get title
+        var source = yield browser.source(); // get source code
+        var html = yield browser.html(); // get html code, nick name of source
+
+        // ========================== navigator ==========================
+
+        yield browser.refresh(); // refresh page
+        yield browser.back(); // back to previous page
+        yield browser.forward(); // forward to next page
+
+        yield browser.scrollTo('#id'); // scroll to element (first element)
+        yield browser.scrollTo('#id', 10, 10); // scroll to element (first element)
+        yield browser.scrollTo('#id', { // scroll to element (first element)
+            x: 10,
+            y: 10
+        });
+        yield browser.scrollTo(10, 10);
+        yield browser.scrollTo({
+            x: 10,
+            y: 10
+        });
+
+        // ========================== cookie ==========================
+
+        var value = yield browser.cookie('test'); // get cookie
+        yield browser.cookie('test', '123'); // set cookie
+        yield browser.cookie('test', '123', { // https://code.google.com/p/selenium/wiki/JsonWireProtocol#Cookie_JSON_Object
+            path: '',
+            domain: '',
+            secure: '',
+            httpOnly: '',
+            expiry: ''
+        });
+        yield browser.cookie('test',123, {
+            expiry: '7 day' // second|minute|hour|day|month|year
+        });
+        yield browser.removeCookie('test'); // delete cookie
+        var mapCookies = yield browser.cookies(); // get all cookie
+        yield browser.clearCookies(); // delete all cookies
+
+        // ========================== local storage && session storage ==========================
+
+        var arrKeys = yield browser.localStorageKeys(); // get all local storage keys
+        var value = yield browser.localStorage('test'); // get local storage value
+        yield browser.localStorage('test', '1'); // set local storage value
+        yield browser.removeLocalStorage('test'); // delete local storage
+        yield browser.clearLocalStorages(); // clear all local sotrage
+
+        var arrKeys = yield browser.sessionStorageKeys(); // get all session storage keys
+        var value = yield browser.sessionStorage('test'); // get session storage value
+        yield browser.sessionStorage('test', '1'); // set session storage value
+        yield browser.removeSessionStorage('test'); // delete session storage
+        yield browser.clearSessionStorages(); // clear all session sotrage
+
+        // ========================== alert, confirm, prompt ==========================
+
+        var msg = yield browser.getAlert();// get alert text
+        if(msg !== null){
+            yield browser.setAlert('test');// set msg to prompt
+            yield browser.acceptAlert(); // accept alert
+            yield browser.dismissAlert(); // dismiss alert
+        }
+
+        // ========================== mouse ==========================
+
+        var MouseButtons = browser.MouseButtons;
+        yield browser.mouseMove(element); // move to center of element
+        yield browser.mouseMove('#id'); // move to center of element
+        yield browser.mouseMove('#id', 10, 10); // move to offset of the element
+        yield browser.mouseMove('#id', {x: 10, y: 10}); // move to offset of the element
+        yield browser.mouseDown(); // left mouse button down
+        yield browser.mouseDown(MouseButtons.RIGHT); // right mouse button down
+        yield browser.mouseDown('RIGHT'); // right mouse button down
+        yield browser.mouseUp(); // left mouse button up
+        yield browser.mouseUp(MouseButtons.RIGHT); // right mouse button up
+        yield browser.mouseUp('RIGHT'); // right mouse button up
+        yield browser.click();
+        yield browser.click(MouseButtons.RIGHT);
+        yield browser.click('RIGHT');
+        yield browser.dblClick();
+        yield browser.dragDrop('#a', '#b'); // drag a drop to b
+        yield browser.dragDrop({
+            selector: '#a',
+            x: 1,
+            y: 1
+        }, {
+            selector: '#b',
+            x: 2,
+            y: 2
+        });
+
+        // ========================== keyboard ==========================
+
+        yield browser.sendKeys('abc');
+        var Keys = browser.Keys;
+        yield browser.keyDown(Keys.CTRL);
+        yield browser.keyDown('CTRL');
+        yield browser.sendKeys('a'+Keys.LEFT);
+        yield browser.keyUp(Keys.CTRL);
+        yield browser.keyUp('CTRL');
+        yield browser.sendKeys('{CTRL}a{CTRL}');
+
+        // ========================== eval ==========================
+
+        // sync eval
+        var title = yield browser.eval(function(){
+            return document.title;
+        });
+        var value = yield browser.eval(function(arg1, arg2){
+            return arg1;
+        }, 1, 2);
+        var value = yield browser.eval(function(arg1, arg2){
+            return arg1;
+        }, [1, 2]);
+        // async eval
+        var value = yield browser.eval(function(arg1, arg2, done){
+            setTimeout(function(){
+                done(arg2);
+            }, 2000);
+        }, 1, 2);
+        // pass element to eval
+        var tagName = yield browser.eval(function(element){
+            return element.tagName;
+        }, yield browser.find('#id'));
+
+        // ========================== element ==========================
+
+        var elements = yield browser.wait('#id');// wait for element
+        if(elements.length === 1){
+            console.log('#id displayed');
+        }
+        yield elements.sleep(300); // sleep ms
+        var elements = yield browser.wait('#id', 5000);// wait for element, 5000 ms timeout
+        var elements = yield browser.wait('#id', {
+            timeout: 10000, // set timeout, default: 10000
+            displayed: true, // wait for element displayed, default: true
+            removed: false // wait for element removed, default: false
+        });
+        var elements = yield browser.wait('name', 'aaa', 5000); // support type: class name|css selector|id|name|link text|partial link text|tag name|xpath
+
+        var elements = yield browser.find('#id'); // find element
+        var elements = yield browser.findVisible('span'); // find visible element
+        var elements = yield browser.find('active');// get active element
+        var elements = yield browser.find('#id');// get element by css selector
+        var elements = yield browser.find('//html/body');// get element by xpath
+        var elements = yield browser.find('name', 'aaa'); // support type: class name|css selector|id|name|link text|partial link text|tag name|xpath
+        var elements = yield elements.find('.class'); // find all child element
+        var isEqual = yield elements.equal('#bbb a'); // test if two elements refer to the same DOM element.
+
+        elements.get(0).click(); // get element by index
+        elements.first().click(); // get first element
+        elements.last().click(); // get last element
+        elements.slice(1,2).click(); // get element from start to end
+
+
+        var tagName = yield element.tagName(); // get tagname (first element)
+        var value = element.val(); // equal to element.attr('value');
+        yield element.val('mp3'); // equal to: element.clear().sendKeys('mp3');
+        var value = yield element.attr('id'); // get attribute value (first element)
+        var value = yield element.prop('id'); // get property value (first element)
+        var value = yield element.css('border'); // get css value (first element)
+        yield element.clear(); // clear input & textarea value
+        var text = yield element.text(); // get displayed text (first element)
+
+        var offset = yield element.offset(); // get offset from left top corner of the page (first element)
+        var offset = yield element.offset(true); // get offset from left top corner of the screen (first element)
+        var size = yield element.size(); // return {width: 100, height: 100} (first element)
+        var isDisplayed = yield element.displayed(); // determine if an element is currently displayed (first element)
+        var isEnabled = yield element.enabled(); //is element enabled (first element)
+        var isSelected = yield element.selected(); // is element selected (first element)
+
+        // select option
+        yield element.select(0); // select index
+        yield element.select('book'); // select value
+        yield element.select({
+            type: 'value', // index | value | text
+            value: 'book'
+        });
+
+        yield element.sendKeys('abc'); // send keys to element
+        var Keys = browser.Keys;
+        yield element.sendKeys('a'+Keys.LEFT);
+        yield element.sendKeys('{CTRL}a{CTRL}');
+
+        yield element.click(); // click element
+        yield element.dblClick(); // dblClick element
+        yield element.dragDropTo('#id'); // dragDrop to element (first element)
+        yield element.dragDropTo('#id', 10, 10); // dragDrop to element (first element)
+        yield element.dragDropTo({
+            selector: '#id',
+            x: 10,
+            y: 10
+        }); // dragDrop to element (first element)
+
+        yield fileElement.uploadFile('c:/test.jpg');// upload file to browser machine and set temp path to <input type="file">
+        yield element.submit();// submit form
+
+        // ========================== mobile api ==========================
+        // touch down, touch move, touch up
+        yield browser.touchDown(10, 10);
+        yield browser.touchDown({
+            x: 10, // X coordinate on the screen.
+            y: 10  // Y coordinate on the screen.
+        });
+        yield browser.touchMove(10, 10);
+        yield browser.touchMove({
+            x: 10, // X coordinate on the screen.
+            y: 10  // Y coordinate on the screen.
+        });
+        yield browser.touchUp(10, 10);
+        yield browser.touchUp({
+            x: 10, // X coordinate on the screen.
+            y: 10  // Y coordinate on the screen.
+        });
+        // scroll
+        yield browser.touchScroll(10, 10); // Use this command if you don't care where the scroll starts on the screen
+        yield browser.touchScroll({
+            x: 10, // The x offset in pixels to scrollby.
+            y: 10  // The y offset in pixels to scrollby.
+        });
+        // flick
+        yield browser.touchFlick({ // Use this flick command if you don't care where the flick starts on the screen.
+            xspeed: 5, // The x speed in pixels per second.
+            yspeed: 0  // The y speed in pixels per second.
+        });
+
+        // element api
+        var element = yield browser.find('#id');
+        yield element.touchClick();
+        yield element.touchDblClick();
+        yield element.touchLongClick();
+        yield element.touchScroll(10, 10);
+        yield element.touchScroll({
+            x: 10, // The x offset in pixels to scroll by.
+            y: 10  // The y offset in pixels to scroll by.
+        });
+        yield element.touchFlick(10, 10, 5); // flick to x: 10, y: 10 with speed 5
+        yield element.touchFlick({
+            x: 10, // The x offset in pixels to flick by.
+            y: 10, // The y offset in pixels to flick by.
+            speed: 5 // The speed in pixels per seconds
+        });
+
+        var orientation = yield browser.orientation(); // return LANDSCAPE|PORTRAIT
+        yield browser.orientation('LANDSCAPE'); // set orientation: LANDSCAPE|PORTRAIT
+
+        // ========================== geo location ==========================
+
+        var loc = yield browser.geolocation(); // return {latitude: number, longitude: number, altitude: number}
+        yield browser.geolocation(1, 1, 1); // set location
+        yield browser.geolocation({
+            latitude: 1,
+            longitude: 1,
+            altitude: 1
+        });
+
+        // ========================== macaca api ==========================
+
+        var arrContexts = yield browser.contexts(); // get all contexts
+        var contextId = yield browser.context(); // get context id
+        yield browser.context('NATIVE_APP'); // set context id
+        yield browser.native(); // set context to native
+        yield browser.webview(); // set context to webview
+
+        yield browser.touchSwipe(500, 100, 500, 600); // swipe from (500, 100) to (500, 600)
+        yield browser.touchSwipe(500, 100, 500, 600, 200); // swipe from (500, 100) to (500, 600) with 200ms duration
+
+    }).then(function(){
+        console.log('All done!')
+    }).catch(function(error){
+        console.log(error);
+    });
+
+
+How to develop plugin
+------------------------------------------
+
+    var JWebDriver = require('jwebdriver');
+
+    var driver = new JWebDriver();
+
+    JWebDriver.addMethod('searchMp3', function(){
+        return this.find('#kw').val('mp3').submit();
+    });
+
+    driver.session("chrome")
+        .url('https://www.baidu.com/')
+        .searchMp3()
+        .title()
+        .then(function(title){
+            console.log(title);
+        })
+        .close();
+
+
+License
+================
+
+jWebDriver is released under the MIT license:
+
+> The MIT License
+>
+> Copyright (c) 2014-2016 Yanis Wang \<yanis.wang@gmail.com\>
+>
+> Permission is hereby granted, free of charge, to any person obtaining a copy
+> of this software and associated documentation files (the "Software"), to deal
+> in the Software without restriction, including without limitation the rights
+> to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+> copies of the Software, and to permit persons to whom the Software is
+> furnished to do so, subject to the following conditions:
+>
+> The above copyright notice and this permission notice shall be included in
+> all copies or substantial portions of the Software.
+>
+> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+> IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+> FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+> AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+> LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+> OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+> THE SOFTWARE.
+
+Thanks
+================
+
+* Selenium: [http://code.google.com/p/selenium/](http://code.google.com/p/selenium/)
+* xtend: [https://npmjs.org/package/xtend](https://npmjs.org/package/xtend)
+* mocha: [https://npmjs.org/package/mocha](https://npmjs.org/package/mocha)
+* chai: [https://github.com/chaijs/chai](https://github.com/chaijs/chai)
+* istanbul: [https://github.com/gotwarlost/istanbul](https://github.com/gotwarlost/istanbul)
+* Grunt: [http://gruntjs.com/](http://gruntjs.com/)
+* JSHint: [https://github.com/jshint/jshint](https://github.com/jshint/jshint)
+* node-zip: [https://github.com/daraosn/node-zip](https://github.com/daraosn/node-zip)
+* Express: [https://github.com/strongloop/express](https://github.com/strongloop/express)
+* request: [https://github.com/request/request](https://github.com/request/request)
+* co: [https://github.com/tj/co](https://github.com/tj/co)
+* PhantomJs: [https://github.com/Medium/phantomjs](https://github.com/Medium/phantomjs)
+* GitHub: [https://github.com/](https://github.com/)
