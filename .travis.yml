@@ -20,7 +20,7 @@ addons:
 
 before_script:
   - export CHROME_BIN=/usr/bin/google-chrome
-  - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16"
+  - Xvfb :99 -screen 0 1366x768x24 > /dev/null 2>&1 &
   - export isTravis=1
 
 script: "grunt"
