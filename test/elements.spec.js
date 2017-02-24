@@ -6,19 +6,13 @@ var chai = require("chai");
 chai.should();
 chai.use(JWebDriver.chaiSupportChainPromise);
 
-var isWin32 = process.platform === 'win32';
-var phantomjs = process.env['phantomjs'] || !isWin32;
+var chromedriver = require('chromedriver');
 
-var driverPort = 4444;
-if(phantomjs){
-    driverPort = 4445;
-    runBrowserTest('phantomjs');
-}
-else{
-    runBrowserTest('chrome');
-    // runBrowserTest('firefox');
-    // runBrowserTest('ie');
-}
+var isWin32 = process.platform === 'win32';
+
+runBrowserTest('chrome');
+// runBrowserTest('firefox');
+// runBrowserTest('ie');
 
 function runBrowserTest(browserName){
 
@@ -28,6 +22,8 @@ function runBrowserTest(browserName){
         var testPath = 'http://127.0.0.1';
 
         before(function*(){
+
+            chromedriver.start(['--url-base=/wd/hub', '--port=4444']);
 
             yield new Promise(function(resolve){
                 //init http server
@@ -39,7 +35,6 @@ function runBrowserTest(browserName){
                 });
             }).then(function(){
                 var driver = new JWebDriver({
-                    port: driverPort,
                     logLevel: 0,
                     speed: 0
                 });
@@ -165,14 +160,17 @@ function runBrowserTest(browserName){
             var pp = yield browser.find('#pp');
             var offset = yield pp.offset();
             delete offset['toString'];
-            offset.should.deep.equal({x:101,y:102});
+            offset.should.have.property('x', 101);
+            offset.should.have.property('y', 102);
 
         });
 
         it('should get size', function*(){
 
             var pp = yield browser.find('#pp');
-            yield pp.size().should.deep.equal({width:51, height:52});
+            var size = yield pp.size();
+            size.should.have.property('width', 51);
+            size.should.have.property('height', 52);
 
         });
 
@@ -271,7 +269,8 @@ function runBrowserTest(browserName){
             var draggable = yield browser.find('#draggable');
             var offset = yield draggable.offset();
             delete offset['toString'];
-            offset.should.deep.equal({x:8,y:8});
+            offset.should.have.property('x', 8);
+            offset.should.have.property('y', 8);
 
             yield draggable.dragDropTo('body', 501, 502);
             offset = yield draggable.offset();
@@ -349,6 +348,7 @@ function runBrowserTest(browserName){
         after(function*(){
             server.close();
             yield browser.close();
+            chromedriver.stop();
         });
     });
 

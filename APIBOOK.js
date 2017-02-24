@@ -274,6 +274,7 @@ co(function*(){
     yield element.val('mp3'); // equal to: element.clear().sendKeys('mp3');
     var value = yield element.attr('id'); // get attribute value (first element)
     var value = yield element.prop('id'); // get property value (first element)
+    var info = yield element.rect(); // get rect info (first element)
     var value = yield element.css('border'); // get css value (first element)
     yield element.clear(); // clear input & textarea value
     var text = yield element.text(); // get displayed text (first element)
@@ -378,8 +379,28 @@ co(function*(){
     yield browser.native(); // set context to native
     yield browser.webview(); // set context to webview
 
-    yield browser.touchSwipe(500, 100, 500, 600); // swipe from (500, 100) to (500, 600)
-    yield browser.touchSwipe(500, 100, 500, 600, 200); // swipe from (500, 100) to (500, 600) with 200ms duration
+    // tap
+    yield browser.sendActions('tap', { x: 100, y: 100});
+    yield element.sendActions('tap');
+
+    // doubleTap
+    yield browser.sendActions('doubleTap', { x: 100, y: 100});
+    yield element.sendActions('doubleTap');
+
+    // press
+    yield browser.sendActions('press', { x: 100, y: 100});
+    yield element.sendActions('press', { duration: 2 });
+
+    // pinch
+    yield element.sendActions('pinch', { scale: 2 }); // ios
+    yield element.sendActions('pinch', { direction: "in", percent: 50 }); // android
+
+    // rotate
+    yield element.sendActions('rotate', { rotation: 6, velocity: 1 });
+
+    // drag
+    yield driver.sendActions('drag', { fromX: 100, fromY: 100, toX: 200, toY: 200 });
+    yield element.sendActions('drag', { toX: 200, toY: 200 })
 
 }).then(function(){
     console.log('All done!')

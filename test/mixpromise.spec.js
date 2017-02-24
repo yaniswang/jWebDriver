@@ -4,19 +4,11 @@ var chai = require("chai");
 chai.should();
 chai.use(JWebDriver.chaiSupportChainPromise);
 
-var isWin32 = process.platform === 'win32';
-var phantomjs = process.env['phantomjs'] || !isWin32;
+var chromedriver = require('chromedriver');
 
-var driverPort = 4444;
-if(phantomjs){
-    driverPort = 4445;
-    runBrowserTest('phantomjs');
-}
-else{
-    runBrowserTest('chrome');
-    // runBrowserTest('firefox');
-    // runBrowserTest('ie');
-}
+runBrowserTest('chrome');
+// runBrowserTest('firefox');
+// runBrowserTest('ie');
 
 function runBrowserTest(browserName){
 
@@ -26,6 +18,8 @@ function runBrowserTest(browserName){
         var testPath = 'http://127.0.0.1';
 
         before(function(){
+
+            chromedriver.start(['--url-base=/wd/hub', '--port=4444']);
 
             return new Promise(function(resolve){
                 //init http server
@@ -37,7 +31,6 @@ function runBrowserTest(browserName){
                 });
             }).then(function(){
                 var driver = new JWebDriver({
-                    port: driverPort,
                     logLevel: 0,
                     speed: 0
                 });
@@ -121,6 +114,7 @@ function runBrowserTest(browserName){
             var closeServer = new Promise(function(resolve){
                 server.close(resolve);
             });
+            chromedriver.stop();
             return Promise.all([closeServer, browser.close()]);
         });
     });

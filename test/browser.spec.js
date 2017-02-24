@@ -8,19 +8,11 @@ var chai = require("chai");
 chai.should();
 chai.use(JWebDriver.chaiSupportChainPromise);
 
-var isWin32 = process.platform === 'win32';
-var phantomjs = process.env['phantomjs'] || !isWin32;
+var chromedriver = require('chromedriver');
 
-var driverPort = 4444;
-if(phantomjs){
-    driverPort = 4445;
-    runBrowserTest('phantomjs');
-}
-else{
-    runBrowserTest('chrome');
-    // runBrowserTest('firefox');
-    // runBrowserTest('ie');
-}
+runBrowserTest('chrome');
+// runBrowserTest('firefox');
+// runBrowserTest('ie');
 
 function runBrowserTest(browserName){
 
@@ -30,6 +22,8 @@ function runBrowserTest(browserName){
 		var testPath = 'http://127.0.0.1';
 
 		before(function*(){
+
+            chromedriver.start(['--url-base=/wd/hub', '--port=4444']);
 
             yield new Promise(function(resolve){
                 //init http server
@@ -41,7 +35,6 @@ function runBrowserTest(browserName){
                 });
             }).then(function(){
                 var driver = new JWebDriver({
-                    port: driverPort,
                     logLevel: 0,
                     speed: 0
                 });
@@ -85,14 +78,12 @@ function runBrowserTest(browserName){
 
 		});
 
-        if(!phantomjs){
-            it('hosts mode should work', function*(){
+        it('hosts mode should work', function*(){
 
-                var tmpTestPath = testPath.replace('127.0.0.1', 'www.alibaba.com');
-                yield browser.url(tmpTestPath + 'test1.html').title().should.equal('testtitle');
+            var tmpTestPath = testPath.replace('127.0.0.1', 'www.alibaba.com');
+            yield browser.url(tmpTestPath + 'test1.html').title().should.equal('testtitle');
 
-            });
-        }
+        });
 
 		it('should refresh page', function*(){
 
@@ -203,9 +194,7 @@ function runBrowserTest(browserName){
                 });
 
                 yield browser.eval(function(done){
-                    setTimeout(function(){
-                        done();
-                    }, 50);
+                    setTimeout(done, 50);
                 }).catch(function(error){
                     error.should.equal('eval timeout');
                 }).should.equal(undefined);
@@ -523,6 +512,7 @@ function runBrowserTest(browserName){
 		after(function*(){
 			server.close();
             yield browser.close();
+            chromedriver.stop();
 		});
 	});
 

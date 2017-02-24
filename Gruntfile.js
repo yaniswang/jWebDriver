@@ -1,8 +1,6 @@
 /*global module:false*/
 module.exports = function(grunt) {
 
-    var isWin32 = process.platform === 'win32';
-
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-watch');
@@ -45,11 +43,6 @@ module.exports = function(grunt) {
                 command: '"./node_modules/.bin/istanbul" cover "./node_modules/mocha/bin/_mocha"',
                 stdout: true,
                 stderr: true
-            },
-            coverPhantomjs: {
-                command: (isWin32?'set':'export')+' phantomjs=1 & "./node_modules/.bin/istanbul" cover "./node_modules/mocha/bin/_mocha"',
-                stdout: true,
-                stderr: true
             }
         },
         watch: {
@@ -60,45 +53,8 @@ module.exports = function(grunt) {
         }
     });
 
-
-    var path = require('path')
-    var childProcess = require('child_process')
-    var phantomjs = require('phantomjs')
-    var binPath = phantomjs.path;
-    var phantomjsProcess;
-
-    grunt.registerTask('startPhantomjs', function() {
-        var childArgs = [
-          '--webdriver=4445', '--ignore-ssl-errors=true'
-        ];
-        phantomjsProcess = childProcess.spawn(binPath, childArgs, {
-            detached: true
-        });
-        grunt.log.ok('Phantomjs start successed.');
-    });
-
-    grunt.registerTask('closePhantomjs', function() {
-        var done = this.async();
-        if(phantomjsProcess){
-            phantomjsProcess.kill();
-            phantomjsProcess.on('exit', function(){
-                grunt.log.ok('Phantomjs close successed.');
-                done();
-            });
-        }
-        else{
-            done();
-        }
-    });
-
     grunt.registerTask('dev', ['jshint', 'exec:test']);
 
-    grunt.registerTask('unix', ['jshint', 'clean', 'startPhantomjs', 'exec:coverPhantomjs', 'closePhantomjs', 'yuidoc']);
-
-    grunt.registerTask('win32', ['jshint', 'clean', 'exec:cover', 'yuidoc']);
-
-    grunt.registerTask('default', function(){
-        grunt.task.run(isWin32?'win32':'unix');
-    });
+    grunt.registerTask('default', ['jshint', 'clean', 'exec:cover', 'yuidoc']);
 
 };

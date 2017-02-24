@@ -132,39 +132,49 @@ Quick start
     > node macaca.js (for mobile native & webview)
 
         var path = require('path');
-        var JWebDriver = require('../');
+        var JWebDriver = require('jwebdriver');
 
-        var driver = new JWebDriver();
+        var driver = new JWebDriver({
+            port: 3456
+        });
 
-        var appPath = 'macaca.apk';
+        var appPath = '../test/resource/android.zip';
 
         driver.session({
-                'platformName': 'Android',
+                'platformName': 'android',
                 'app': path.resolve(appPath)
             })
             .wait('//*[@resource-id="com.github.android_app_bootstrap:id/mobileNoEditText"]')
-            .sendKeys('111')
+            .sendElementKeys('中文+Test+12345678')
             .wait('//*[@resource-id="com.github.android_app_bootstrap:id/codeEditText"]')
-            .sendKeys('222')
-            .wait('//*[@resource-id="com.github.android_app_bootstrap:id/login_button"]')
+            .sendElementKeys('22222\n')
+            .wait('name', 'Login')
             .click()
-            .wait('//*[@resource-id="com.github.android_app_bootstrap:id/list_button"]')
-            .prop('size')
-            .then(function(size){
-                console.log(size)
+            .wait('name', 'list')
+            .prop('text')
+            .then(function(text){
+                console.log(text)
             })
-            .prop('origin')
-            .then(function(origin){
-                console.log(origin)
+            .rect()
+            .then(function(rect){
+                console.log(rect)
             })
             .click()
-            .touchSwipe(245, 780, 258, 611, 20)
-            .wait('//*[@resource-id="com.github.android_app_bootstrap:id/listview"]/android.widget.TextView[4]')
-            .click()
-            .touchSwipe(174, 407, 169, 802, 20)
-            .wait('//*[@resource-id="com.github.android_app_bootstrap:id/listview"]/android.widget.TextView')
-            .click()
-            .wait('//*[@resource-id="com.github.android_app_bootstrap:id/toast_button"]')
+            .sendActions('drag', {
+                fromX: 200,
+                fromY: 400,
+                toX: 200,
+                toY: 100,
+                duration: 0.5
+            })
+            .sendActions('drag', {
+                fromX: 100,
+                fromY: 100,
+                toX: 100,
+                toY: 400,
+                duration: 0.5
+            })
+            .wait('name', 'Gesture')
             .click()
             .back()
             .back()
@@ -174,7 +184,7 @@ Quick start
             .wait('#index-kw')
             .sendKeys('mp3')
             .wait('#index-bn')
-            .touchClick()
+            .click()
             .url()
             .then(function(url){
                 console.log(url);
@@ -184,8 +194,9 @@ Quick start
                 console.log(title);
             })
             .native()
-            .find('name', 'PERSONAL')
+            .wait('name', 'PERSONAL')
             .click();
+
 
 More examples
 ================
@@ -513,6 +524,7 @@ You can search all api here, include all mode of api:
         yield element.val('mp3'); // equal to: element.clear().sendKeys('mp3');
         var value = yield element.attr('id'); // get attribute value (first element)
         var value = yield element.prop('id'); // get property value (first element)
+        var info = yield element.rect(); // get rect info (first element)
         var value = yield element.css('border'); // get css value (first element)
         yield element.clear(); // clear input & textarea value
         var text = yield element.text(); // get displayed text (first element)
@@ -617,14 +629,35 @@ You can search all api here, include all mode of api:
         yield browser.native(); // set context to native
         yield browser.webview(); // set context to webview
 
-        yield browser.touchSwipe(500, 100, 500, 600); // swipe from (500, 100) to (500, 600)
-        yield browser.touchSwipe(500, 100, 500, 600, 200); // swipe from (500, 100) to (500, 600) with 200ms duration
+        // tap
+        yield browser.sendActions('tap', { x: 100, y: 100});
+        yield element.sendActions('tap');
+
+        // doubleTap
+        yield browser.sendActions('doubleTap', { x: 100, y: 100});
+        yield element.sendActions('doubleTap');
+
+        // press
+        yield browser.sendActions('press', { x: 100, y: 100});
+        yield element.sendActions('press', { duration: 2 });
+
+        // pinch
+        yield element.sendActions('pinch', { scale: 2 }); // ios
+        yield element.sendActions('pinch', { direction: "in", percent: 50 }); // android
+
+        // rotate
+        yield element.sendActions('rotate', { rotation: 6, velocity: 1 });
+
+        // drag
+        yield driver.sendActions('drag', { fromX: 100, fromY: 100, toX: 200, toY: 200 });
+        yield element.sendActions('drag', { toX: 200, toY: 200 })
 
     }).then(function(){
         console.log('All done!')
     }).catch(function(error){
         console.log(error);
     });
+
 
 
 How to develop plugin
@@ -655,7 +688,7 @@ jWebDriver is released under the MIT license:
 
 > The MIT License
 >
-> Copyright (c) 2014-2016 Yanis Wang \<yanis.wang@gmail.com\>
+> Copyright (c) 2014-2017 Yanis Wang <yanis.wang@gmail.com>
 >
 > Permission is hereby granted, free of charge, to any person obtaining a copy
 > of this software and associated documentation files (the "Software"), to deal
