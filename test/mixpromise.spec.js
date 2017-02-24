@@ -112,10 +112,10 @@ function runBrowserTest(browserName){
 
         after(function(){
             var closeServer = new Promise(function(resolve){
+                chromedriver.stop();
                 server.close(resolve);
             });
-            chromedriver.stop();
-            return Promise.all([closeServer, browser.close()]);
+            return Promise.all([browser.close(), closeServer]);
         });
     });
 
