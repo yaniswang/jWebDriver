@@ -111,11 +111,12 @@ function runBrowserTest(browserName){
         });
 
         after(function(){
-            var closeServer = new Promise(function(resolve){
+            
+            browser.close(function(){
+                server.close();
                 chromedriver.stop();
-                server.close(resolve);
             });
-            return Promise.all([browser.close(), closeServer]);
+            
         });
     });
 
