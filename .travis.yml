@@ -21,7 +21,7 @@ addons:
 before_script:
   - export CHROME_BIN=/usr/bin/google-chrome
   - export isTravis=1
-  - export DISPLAY=':99.0'
+  - export DISPLAY=:99.0
   - Xvfb :99 -screen 0 1366x768x24 > /dev/null 2>&1 &
 
 script: "grunt"
