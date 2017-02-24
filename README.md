@@ -31,15 +31,13 @@ Features
 Quick start
 ================
 
-1.  Download Selenium server & browser driver.
+1.  Install Selenium server & browser driver.
 
-    > Download Selenium Server & IEDriverServer: [http://selenium-release.storage.googleapis.com/index.html](http://selenium-release.storage.googleapis.com/index.html)
+    > npm i selenium-standalone -g
 
-    > Download ChromeDriver: [http://chromedriver.storage.googleapis.com/index.html](http://chromedriver.storage.googleapis.com/index.html)
+    > selenium-standalone install --drivers.firefox.baseURL=http://npm.taobao.org/mirrors/geckodriver --baseURL=http://npm.taobao.org/mirrors/selenium --drivers.chrome.baseURL=http://npm.taobao.org/mirrors/chromedriver --drivers.ie.baseURL=http://npm.taobao.org/mirrors/selenium
 
-    > Add the driver path to environment variable: `PATH`
-
-    > Run selenium server: `java -jar selenium-server-standalone-x.xx.x.jar`
+    > selenium-standalone start
 
 2. Insall jWebDriver
 
@@ -63,8 +61,6 @@ Quick start
                 console.log(title);
             })
             .close();
-
-
 
     > mocha mocha-promise.js
 
@@ -98,8 +94,7 @@ Quick start
 
         });
 
-
-    > node mocha-generators.js
+    > mocha mocha-generators.js
 
         var JWebDriver = require('jwebdriver');
         var chai = require("chai");
@@ -196,7 +191,6 @@ Quick start
             .native()
             .wait('name', 'PERSONAL')
             .click();
-
 
 More examples
 ================
@@ -658,8 +652,6 @@ You can search all api here, include all mode of api:
         console.log(error);
     });
 
-
-
 How to develop plugin
 ------------------------------------------
 
@@ -679,7 +671,6 @@ How to develop plugin
             console.log(title);
         })
         .close();
-
 
 License
 ================
