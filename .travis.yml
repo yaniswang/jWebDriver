@@ -1,4 +1,5 @@
-sudo: required
+dist: trusty
+sudo: false
 
 language: node_js
 node_js:
@@ -14,10 +15,8 @@ matrix:
 
 addons:
   apt:
-    sources:
-     - google-chrome
     packages:
-     - google-chrome-stable
+      - google-chrome-stable
 
 before_script:
   - export CHROME_BIN=/usr/bin/google-chrome
