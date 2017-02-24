@@ -500,7 +500,7 @@ function runBrowserTest(browserName){
 
         it('should maximize window', function*(){
 
-            var screen = browser.eval(function(){
+            var screen = yield browser.eval(function(){
                 return screen.width + ',' + screen.height;
             });
             console.log(screen);
