@@ -31,7 +31,7 @@ function runBrowserTest(browserName){
                 app.use(express.static(__dirname + '/public'));
                 server = app.listen(0, function(){
                     testPath += ':' + server.address().port+'/browsers/';
-                    resolve();
+                    setTimeout(resolve, 1000);
                 });
             }).then(function(){
                 var driver = new JWebDriver({
