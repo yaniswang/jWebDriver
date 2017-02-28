@@ -3,7 +3,7 @@ jWebDriver
 
 ![jWebDriver logo](https://raw.github.com/yaniswang/jWebDriver/master/logo.png)
 
-A webdriver client for Node.js
+一個NodeJs平台下的WebDriver客戶端
 
 [![Build Status](https://img.shields.io/travis/yaniswang/jWebDriver.svg)](https://travis-ci.org/yaniswang/jWebDriver)
 [![NPM version](https://img.shields.io/npm/v/jwebdriver.svg?style=flat)](https://www.npmjs.com/package/jwebdriver)
@@ -11,29 +11,29 @@ A webdriver client for Node.js
 [![NPM count](https://img.shields.io/npm/dm/jwebdriver.svg?style=flat)](https://www.npmjs.com/package/jwebdriver)
 [![NPM count](https://img.shields.io/npm/dt/jwebdriver.svg?style=flat)](https://www.npmjs.com/package/jwebdriver)
 
-1. Official Site: [http://jwebdriver.com/](http://jwebdriver.com/)
-2. Language Switch: [English](https://github.com/yaniswang/jWebDriver/blob/master/README.md), [简体中文](https://github.com/yaniswang/jWebDriver/blob/master/README_zh-cn.md), [繁體中文](https://github.com/yaniswang/jWebDriver/blob/master/README_zh-tw.md)
-3. Change log: [CHANGE](https://github.com/yaniswang/jWebDriver/blob/master/CHANGE.md)
-4. API Doc: [http://jwebdriver.com/api/](http://jwebdriver.com/api/)
-5. Coverage: [http://jwebdriver.com/coverage/](http://jwebdriver.com/coverage/) (81.34%)
+1. 官方網站: [http://jwebdriver.com/](http://jwebdriver.com/)
+2. 語言切換: [English](https://github.com/yaniswang/jWebDriver/blob/master/README.md), [簡體中文](https://github.com/yaniswang/jWebDriver/blob/master/README_zh-cn.md), [繁體中文](https://github.com/yaniswang/jWebDriver/blob/master/README_zh-tw.md)
+3. 更新日誌: [CHANGE](https://github.com/yaniswang/jWebDriver/blob/master/CHANGE.md)
+4. API文檔: [http://jwebdriver.com/api/](http://jwebdriver.com/api/)
+5. 覆蓋率: [http://jwebdriver.com/coverage/](http://jwebdriver.com/coverage/) (81.34%)
 
-Features
+功能
 ================
 
-1. Support all webdriver protocols: [https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol](https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol)
-2. Support mobile native & webview by macaca: ([https://macacajs.com/](https://macacajs.com/))
-3. Easy to use, support mix promise
-4. Support promise chain & generator & es7 await
-5. jQuery style test code, easy use for front engineer
-6. All test cover api
-7. Support hosts mode, different hosts for different test job
-8. Support with remote file upload
-9. Support chai work with promise mode
+1. 支持所有WebDriver協議API: [https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol](https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol)
+2. 支持無線Native和Webview，基於macaca實現: ([https://macacajs.com/](https://macacajs.com/))
+3. 簡單易用，支持混合式Promise
+4. 支持鏈式Promise & generator & es7 await
+5. jQuery風格的測試代碼, 對前端開發人員簡單易懂
+6. 全測試覆蓋
+7. 支持hosts模式, 不同測試任務使用不同的hosts綁定
+8. 支持遠程文件上傳，以支持grid方式執行機集群
+9. 支持鏈式chai斷言
 
-Quick start
+快速開始
 ================
 
-1.  Install Selenium server & browser driver.
+1.  安裝 Selenium server 和驅動.
 
     > npm i selenium-standalone -g
 
@@ -41,11 +41,11 @@ Quick start
 
     > selenium-standalone start
 
-2. Insall jWebDriver
+2. 安裝 jWebDriver
 
     > npm install jwebdriver
 
-3. Run test code
+3. 運行測試腳本
 
     > node baidu.js
 
@@ -194,7 +194,7 @@ Quick start
             .wait('name', 'PERSONAL')
             .click();
 
-More examples
+更多示例
 ================
 
 1. [Baidu test](https://github.com/yaniswang/jWebDriver/blob/master/example/baidu.js)
@@ -208,12 +208,12 @@ More examples
 9. [ES7 async](https://github.com/yaniswang/jWebDriver/blob/master/example/es7async.js)
 10. [Plugin](https://github.com/yaniswang/jWebDriver/blob/master/example/plugin.js)
 
-API Book
+API手冊
 ================
 
-jWebDriver have 3 Class: Driver, Broswer, Elements
+jWebDriver 有3個類: Driver, Broswer, Elements
 
-All api can used with chain promise and support generator & es7 async:
+所有API均支持 鏈式Promise 和 generator，以及es7 async語法:
 ------------------------------------------
 
     browser.find('#kw').then(function(elements){
@@ -225,7 +225,7 @@ All api can used with chain promise and support generator & es7 async:
         console.log(title);
     });
 
-And you can use mix promise with Driver class, all method will copy to Driver from Broswer and Elements:
+並且，你也可以基於Driver類使用混合鏈式Promise, 所有API方法都會從Browser和Elements類複製到Driver類的實例上:
 ------------------------------------------
 
     var driver = new JWebDriver();
@@ -241,7 +241,7 @@ And you can use mix promise with Driver class, all method will copy to Driver fr
         })
         .close();
 
-You can search all api here, include all mode of api:
+你可以下面搜索所有的API，已經包括了所有API的所有使用方式:
 ------------------------------------------
 
     var co = require('co');
@@ -655,7 +655,7 @@ You can search all api here, include all mode of api:
         console.log(error);
     });
 
-How to extend method to driver?
+如何擴展自定義方法？
 ------------------------------------------
 
     var JWebDriver = require('jwebdriver');
@@ -675,10 +675,10 @@ How to extend method to driver?
         })
         .close();
 
-License
+協議
 ================
 
-jWebDriver is released under the MIT license:
+jWebDriver 基於 MIT 協議發佈:
 
 > The MIT License
 >
@@ -702,7 +702,7 @@ jWebDriver is released under the MIT license:
 > OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 > THE SOFTWARE.
 
-Thanks
+感謝
 ================
 
 * Selenium: [http://code.google.com/p/selenium/](http://code.google.com/p/selenium/)

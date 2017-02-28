@@ -309,6 +309,7 @@ co(function*(){
         y: 10
     }); // dragDrop to element (first element)
 
+    var fileElement = browser.wait('#file');
     yield fileElement.uploadFile('c:/test.jpg');// upload file to browser machine and set temp path to <input type="file">
     yield element.submit();// submit form
 

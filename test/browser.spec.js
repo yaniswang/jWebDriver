@@ -156,6 +156,70 @@ function runBrowserTest(browserName){
 
         });
 
+        it('should exec javascript', function(done){
+
+            co(function*(){
+                yield browser.exec('return document.title;').should.equal('testtitle');
+
+                yield browser.exec(function(){
+                    return document.title;
+                }).should.equal('testtitle');
+
+                yield browser.exec(function(arg1, arg2){
+                    return arg2;
+                }, 123, 321).should.equal(321);
+
+                yield browser.exec(function(arg1, arg2){
+                    return arg2;
+                }, [123, 321]).should.equal(321);
+
+                var element = yield browser.find('#kw');
+                yield browser.exec(function(elements){
+                    return elements[0].tagName;
+                }, element).should.equal('INPUT');
+
+                yield browser.config({
+                    asyncScriptTimeout: 50
+                });
+
+                yield browser.exec(function(done){
+                    setTimeout(function(){
+                        done(document.title);
+                    }, 10);
+                }).should.equal('testtitle');
+
+                yield browser.exec(function(args1, arg2, done){
+                    setTimeout(function(){
+                        done(arg2);
+                    }, 10);
+                }, 123, 321).should.equal(321);
+
+                yield browser.config({
+                    asyncScriptTimeout: 10
+                });
+
+                yield browser.exec(function(done){
+                    setTimeout(done, 50);
+                }).catch(function(error){
+                    error.should.equal('exec timeout');
+                }).should.equal(undefined);
+
+                yield browser.exec(function(done){
+                    false && done();
+                }).catch(function(error){
+                    error.should.equal('exec timeout');
+                }).should.equal(undefined);
+            }).then(done).catch(function(error){
+                if(error === 'exec timeout'){
+                    done();
+                }
+                else{
+                    done(error);
+                }
+            });
+
+        });
+
 		it('should eval javascript', function(done){
 
             co(function*(){
@@ -201,16 +265,16 @@ function runBrowserTest(browserName){
                 yield browser.eval(function(done){
                     setTimeout(done, 50);
                 }).catch(function(error){
-                    error.should.equal('eval timeout');
+                    error.should.equal('exec timeout');
                 }).should.equal(undefined);
 
                 yield browser.eval(function(done){
                     false && done();
                 }).catch(function(error){
-                    error.should.equal('eval timeout');
+                    error.should.equal('exec timeout');
                 }).should.equal(undefined);
             }).then(done).catch(function(error){
-                if(error === 'eval timeout'){
+                if(error === 'exec timeout'){
                     done();
                 }
                 else{

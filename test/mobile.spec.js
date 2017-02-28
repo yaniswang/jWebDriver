@@ -14,7 +14,6 @@ var infoBoardId = isIos ? 'info' : 'com.github.android_app_bootstrap:id/info';
 var androidDesired = {
     'platformName': 'android',
     'deviceName': 'Android Emulator',
-    'avd': 'android_5.1.1',
     'app': path.resolve(__dirname, 'resource/android.zip')
 };
 
@@ -199,7 +198,9 @@ if(!isTravis){
                 .should.have.length(1)
                 .click()
                 .wait('name', 'Logout')
-                .click();
+                .click()
+                .wait('name', 'Login')
+                .should.have.length(1);
 
         });
 

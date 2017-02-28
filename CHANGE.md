@@ -4,6 +4,7 @@ jWebDriver change log
 ## ver 2.1.0 (2017-2-24)
 
 1. Add: support macaca gestrure api
+2. Add: add exec api (equal to eval)
 
 ## ver 2.0.7 (2017-1-12)
 
