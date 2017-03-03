@@ -1,10 +1,11 @@
 jWebDriver change log
 ====================
 
-## ver 2.1.0 (2017-2-24)
+## ver 2.1.0 (2017-3-3)
 
-1. Add: support macaca gestrure api
-2. Add: add exec api (equal to eval)
+1. Del: delete swipe api, because swipe is deprecated by macaca
+2. Add: support macaca gestrure api (sendActions)
+3. Add: add exec api (equal to eval)
 
 ## ver 2.0.7 (2017-1-12)
 

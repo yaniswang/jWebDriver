@@ -16,6 +16,7 @@ jWebDriver
 3. 更新日誌: [CHANGE](https://github.com/yaniswang/jWebDriver/blob/master/CHANGE.md)
 4. API文檔: [http://jwebdriver.com/api/](http://jwebdriver.com/api/)
 5. 覆蓋率: [http://jwebdriver.com/coverage/](http://jwebdriver.com/coverage/) (81.34%)
+6. 釘釘交流群：11779932(加入驗證：jWebDriver)，下載釘釘：[https://www.dingtalk.com/](https://www.dingtalk.com/)
 
 功能
 ================
@@ -25,7 +26,7 @@ jWebDriver
 3. 簡單易用，支持混合式Promise
 4. 支持鏈式Promise & generator & es7 await
 5. jQuery風格的測試代碼, 對前端開發人員簡單易懂
-6. 全測試覆蓋
+6. 全單元測試覆蓋
 7. 支持hosts模式, 不同測試任務使用不同的hosts綁定
 8. 支持遠程文件上傳，以支持grid方式執行機集群
 9. 支持鏈式chai斷言
