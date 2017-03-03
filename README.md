@@ -15,7 +15,7 @@ A webdriver client for Node.js
 2. Language Switch: [English](https://github.com/yaniswang/jWebDriver/blob/master/README.md), [简体中文](https://github.com/yaniswang/jWebDriver/blob/master/README_zh-cn.md), [繁體中文](https://github.com/yaniswang/jWebDriver/blob/master/README_zh-tw.md)
 3. Change log: [CHANGE](https://github.com/yaniswang/jWebDriver/blob/master/CHANGE.md)
 4. API Doc: [http://jwebdriver.com/api/](http://jwebdriver.com/api/)
-5. Coverage: [http://jwebdriver.com/coverage/](http://jwebdriver.com/coverage/) (81.34%)
+5. Coverage: [http://jwebdriver.com/coverage/](http://jwebdriver.com/coverage/) (81.26%)
 
 Features
 ================

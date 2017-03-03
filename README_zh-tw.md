@@ -15,7 +15,7 @@ jWebDriver
 2. 語言切換: [English](https://github.com/yaniswang/jWebDriver/blob/master/README.md), [簡體中文](https://github.com/yaniswang/jWebDriver/blob/master/README_zh-cn.md), [繁體中文](https://github.com/yaniswang/jWebDriver/blob/master/README_zh-tw.md)
 3. 更新日誌: [CHANGE](https://github.com/yaniswang/jWebDriver/blob/master/CHANGE.md)
 4. API文檔: [http://jwebdriver.com/api/](http://jwebdriver.com/api/)
-5. 覆蓋率: [http://jwebdriver.com/coverage/](http://jwebdriver.com/coverage/) (81.34%)
+5. 覆蓋率: [http://jwebdriver.com/coverage/](http://jwebdriver.com/coverage/) (81.26%)
 6. 釘釘交流群：11779932(加入驗證：jWebDriver)，下載釘釘：[https://www.dingtalk.com/](https://www.dingtalk.com/)
 
 功能
