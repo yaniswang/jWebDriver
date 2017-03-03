@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>lib\elements.js - jwebdriver</title>
+    <title>lib/elements.js - jwebdriver</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -17,7 +17,7 @@
                 <h1><img src="https://raw.github.com/yaniswang/jWebDriver/master/logo_s.png" title="jwebdriver"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 2.0.0</em>
+            <em>API Docs for: 2.1.1</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -78,7 +78,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: lib\elements.js</h1>
+<h1 class="file-heading">File: lib/elements.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -127,7 +127,7 @@ const Elements = PromiseClass.create({
         if(using === undefined){
             // get current active element
             if(value === &#x27;active&#x27;){
-                return browser.exec(&#x27;getActiveElement&#x27;, function(error, ret){
+                return browser.execCmd(&#x27;getActiveElement&#x27;, function(error, ret){
                     if(error){
                         done(error);
                     }
@@ -150,7 +150,7 @@ const Elements = PromiseClass.create({
             return done();
         }
         else{
-            browser.exec(&#x27;findElements&#x27;, {}, {
+            browser.execCmd(&#x27;findElements&#x27;, {}, {
                 using: using,
                 value: value
             }, function(error, ret){
@@ -168,7 +168,7 @@ const Elements = PromiseClass.create({
                         done();
                     }
                     else{
-                        let message = &#x27;Find elements failed&#x27;;
+                        let message = &#x27;Find elements failed: &#x27; + using + &#x27;, &#x27; + value;
                         self.log(&#x27;ERROR&#x27;, message);
                         done(message);
                     }
@@ -190,7 +190,7 @@ const Elements = PromiseClass.create({
 
     /**
      * execute protocal command with this elements
-     * @method exec
+     * @method execCmd
      * @public
      * @param  {String} cmd protocal command, defined in command.js
      * @param  {Object} [pathData] replace the path parameters, no need to add sessionId
@@ -198,7 +198,7 @@ const Elements = PromiseClass.create({
      * @param  {Function} done callback function
      * @return {Object} the return object from webdriver server
      */
-    exec(cmd, pathData, data, done){
+    execCmd(cmd, pathData, data, done){
         let self = this;
         if(typeof pathData === &#x27;function&#x27;){
             pathData = undefined;
@@ -218,7 +218,7 @@ const Elements = PromiseClass.create({
                     let id = elementIds.shift();
                     if(id !== undefined){
                         pathData.id = id;
-                        browser.exec(cmd, pathData, data, function(error){
+                        browser.execCmd(cmd, pathData, data, function(error){
                             if(error){
                                 done(error);
                             }
@@ -235,7 +235,7 @@ const Elements = PromiseClass.create({
             }
             else{
                 pathData.id = elementIds[0];
-                browser.exec(cmd, pathData, data, function(error, ret){
+                browser.execCmd(cmd, pathData, data, function(error, ret){
                     done(error, ret);
                 });
             }
@@ -333,7 +333,7 @@ const Elements = PromiseClass.create({
      * @return {String}
      */
     tagName(done){
-        this.exec(&#x27;getElementTagName&#x27;, function(error, ret){
+        this.execCmd(&#x27;getElementTagName&#x27;, function(error, ret){
             done(error, ret &amp;&amp; ret.value);
         });
     },
@@ -347,7 +347,7 @@ const Elements = PromiseClass.create({
      * @return {String}
      */
     attr(name, done){
-        this.exec(&#x27;getElementAttribute&#x27;, {
+        this.execCmd(&#x27;getElementAttribute&#x27;, {
             name: name
         }, function(error, ret){
             done(error, ret &amp;&amp; ret.value);
@@ -358,11 +358,25 @@ const Elements = PromiseClass.create({
      * get property value (first element)
      * @method prop
      * @public
+     * @param  {String} name attribute name
      * @param  {Function} done callback function
      * @return {Object} return proerty value
      */
     prop(name, done){
-        this.exec(&#x27;getElementProperty&#x27;, {name: name}, function(error, ret){
+        this.execCmd(&#x27;getElementProperty&#x27;, {name: name}, function(error, ret){
+            done(error, ret &amp;&amp; ret.value);
+        });
+    },
+
+    /**
+     * get rect(first element)
+     * @method prop
+     * @public
+     * @param  {Function} done callback function
+     * @return {Object} return rect info
+     */
+    rect(done){
+        this.execCmd(&#x27;getElementRect&#x27;, function(error, ret){
             done(error, ret &amp;&amp; ret.value);
         });
     },
@@ -376,7 +390,7 @@ const Elements = PromiseClass.create({
      * @return {String}
      */
     css(name, done){
-        this.exec(&#x27;getElementCss&#x27;, {
+        this.execCmd(&#x27;getElementCss&#x27;, {
             propertyName: name
         }, function(error, ret){
             done(error, ret &amp;&amp; ret.value);
@@ -391,7 +405,7 @@ const Elements = PromiseClass.create({
      * @return {String}
      */
     text(done){
-        this.exec(&#x27;getElementText&#x27;, function(error, ret){
+        this.execCmd(&#x27;getElementText&#x27;, function(error, ret){
             done(error, ret &amp;&amp; ret.value);
         });
     },
@@ -404,7 +418,7 @@ const Elements = PromiseClass.create({
      * @return {this}
      */
     clear(done){
-        this.exec(&#x27;!setElementClear&#x27;, done);
+        this.execCmd(&#x27;!setElementClear&#x27;, done);
     },
 
     /**
@@ -422,12 +436,12 @@ const Elements = PromiseClass.create({
         }
         done = getDone(arguments);
         if(isInview){
-            self.exec(&#x27;getElementOffsetInView&#x27;, function(error, ret){
+            self.execCmd(&#x27;getElementOffsetInView&#x27;, function(error, ret){
                 done(error, ret &amp;&amp; ret.value);
             });
         }
         else{
-            self.exec(&#x27;getElementOffset&#x27;, function(error, ret){
+            self.execCmd(&#x27;getElementOffset&#x27;, function(error, ret){
                 done(error, ret &amp;&amp; ret.value);
             });
         }
@@ -441,7 +455,7 @@ const Elements = PromiseClass.create({
      * @return {Object} return {width:1, height:1}
      */
     size(done){
-        this.exec(&#x27;getElementSize&#x27;, function(error, ret){
+        this.execCmd(&#x27;getElementSize&#x27;, function(error, ret){
             done(error, ret &amp;&amp; ret.value);
         });
     },
@@ -454,7 +468,7 @@ const Elements = PromiseClass.create({
      * @return {Boolean}
      */
     displayed(done){
-        this.exec(&#x27;getElementDisplayed&#x27;, function(error, ret){
+        this.execCmd(&#x27;getElementDisplayed&#x27;, function(error, ret){
             done(null, ret &amp;&amp; ret.value);
         });
     },
@@ -467,7 +481,7 @@ const Elements = PromiseClass.create({
      * @return {Boolean}
      */
     enabled(done){
-        this.exec(&#x27;getElementEnabled&#x27;, function(error, ret){
+        this.execCmd(&#x27;getElementEnabled&#x27;, function(error, ret){
             done(null, ret &amp;&amp; ret.value);
         });
     },
@@ -480,7 +494,7 @@ const Elements = PromiseClass.create({
      * @return {Boolean}
      */
     selected(done){
-        this.exec(&#x27;getElementSelected&#x27;, function(error, ret){
+        this.execCmd(&#x27;getElementSelected&#x27;, function(error, ret){
             done(null, ret &amp;&amp; ret.value);
         });
     },
@@ -549,7 +563,7 @@ const Elements = PromiseClass.create({
             let key = Keys[name.toUpperCase()];
             return key?key:all;
         });
-        self.exec(&#x27;!sendElementKeys&#x27;, {}, {
+        self.execCmd(&#x27;!sendElementKeys&#x27;, {}, {
             value: text.split(&#x27;&#x27;)
         }, done);
     },
@@ -610,7 +624,7 @@ const Elements = PromiseClass.create({
             data.xoffset = x;
             data.yoffset = y;
         }
-        self.exec(&#x27;mouseMove&#x27;, {}, data, done);
+        self.execCmd(&#x27;mouseMove&#x27;, {}, data, done);
     },
 
     /**
@@ -629,7 +643,7 @@ const Elements = PromiseClass.create({
             this._browser.click(key, done);
         }
         else{
-            this.exec(&#x27;setElementClick&#x27;, done);
+            this.execCmd(&#x27;setElementClick&#x27;, done);
         }
     },
 
@@ -696,7 +710,7 @@ const Elements = PromiseClass.create({
      * @param  {Function} done callback function
      */
     submit(done){
-        this.exec(&#x27;setElementSubmit&#x27;, done);
+        this.execCmd(&#x27;setElementSubmit&#x27;, done);
     },
 
     /**
@@ -716,6 +730,46 @@ const Elements = PromiseClass.create({
     },
 
     /**
+     * scroll element to x, y
+     * @method scrollTo
+     * @public
+     * @param  {Number|Object} [x]
+     * @param  {Number} [y]
+     * @param  {Function} done callback function
+     */
+    scrollTo(x, y, done){
+        let self = this;
+        if(typeof x === &#x27;function&#x27;){
+            x = undefined;
+            y = undefined;
+        }
+        else if(typeof y === &#x27;function&#x27;){
+            y = undefined;
+        }
+        done = getDone(arguments);
+        let data = {};
+        if(self.length &gt; 0){
+            data.element = self.elementIds[0];
+        }
+        else{
+            return done(&#x27;Elements empty: &#x27;+ self.value+&#x27; (&#x27;+self.using+&#x27;)&#x27;);
+        }
+        if(x !== undefined &amp;&amp; x.x !== undefined){
+            y = x.y;
+            x = x.x;
+        }
+        let script = &#x27;function(elements, x, y){\
+            var element;\
+            for(var i=0,len=elements.length;i&lt;len;i++){\
+                element = elements[i];\
+                element.scrollLeft = x;\
+                element.scrollTop = y;\
+            }\
+        }&#x27;;
+        self._browser.exec(script, self, x, y, done);
+    },
+
+    /**
      * touch click to element
      * @method touchClick
      * @public
@@ -723,7 +777,7 @@ const Elements = PromiseClass.create({
      */
     touchClick(done){
         let self = this;
-        self.exec(&#x27;touchClick&#x27;, {}, {
+        self.execCmd(&#x27;touchClick&#x27;, {}, {
             element: self.elementIds[0]
         }, done);
     },
@@ -736,7 +790,7 @@ const Elements = PromiseClass.create({
      */
     touchDblClick(done){
         let self = this;
-        self.exec(&#x27;touchDoubleClick&#x27;, {}, {
+        self.execCmd(&#x27;touchDoubleClick&#x27;, {}, {
             element: self.elementIds[0]
         }, done);
     },
@@ -759,7 +813,7 @@ const Elements = PromiseClass.create({
      */
     touchLongClick(done){
         let self = this;
-        self.exec(&#x27;touchLongclick&#x27;, {}, {
+        self.execCmd(&#x27;touchLongclick&#x27;, {}, {
             element: self.elementIds[0]
         }, done);
     },
@@ -786,7 +840,7 @@ const Elements = PromiseClass.create({
             y = x.y;
             x = x.x;
         }
-        self.exec(&#x27;touchScroll&#x27;, {}, {
+        self.execCmd(&#x27;touchScroll&#x27;, {}, {
             element: self.elementIds[0],
             xoffset: x,
             yoffset: y,
@@ -820,11 +874,40 @@ const Elements = PromiseClass.create({
             speed = x.speed;
             x = x.x;
         }
-        self.exec(&#x27;touchFlick&#x27;, {}, {
+        self.execCmd(&#x27;touchFlick&#x27;, {}, {
             element: self.elementIds[0],
             xoffset: x,
             yoffset: y,
             speed: speed !== undefined ? speed : 5
+        }, done);
+    },
+
+    /**
+     * send actions from element
+     * @method sendActions
+     * @public
+     * @param  {String} type
+     * @param  {Object} params
+     * @param  {Function} done callback function
+     */
+    sendActions(type, params, done){
+        let self = this;
+        let actions = [];
+        if(done === undefined){
+            actions = Array.isArray(type) ? type : [{
+                type: type
+            }];
+        }
+        else{
+            params.type = type;
+            actions.push(params);
+        }
+        done = getDone(arguments);
+        actions.map(function(action){
+            action.element = self.elementIds[0];
+        });
+        self.execCmd(&#x27;setActions&#x27;, {}, {
+            actions: actions
         }, done);
     },
 
@@ -848,7 +931,7 @@ const Elements = PromiseClass.create({
             value = using;
             using = /^\.?\//.test(value)?&#x27;xpath&#x27;:&#x27;css selector&#x27;;
         }
-        self.exec(&#x27;findChildElements&#x27;, {}, {
+        self.execCmd(&#x27;findChildElements&#x27;, {}, {
             using: using,
             value: value
         }, function(error, ret){
@@ -891,7 +974,7 @@ const Elements = PromiseClass.create({
                 function testNext(){
                     if(i &lt; self.length){
                         let elements = new Elements(self._browser, &#x27;elements&#x27;, [otherElementIds[i]]);
-                        elements.init().exec(&#x27;getElementEquals&#x27;, {
+                        elements.init().execCmd(&#x27;getElementEquals&#x27;, {
                             other: otherElementIds[i]
                         }, function(error, ret){
                             if(error){

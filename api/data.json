@@ -2,13 +2,13 @@
     "project": {
         "name": "jwebdriver",
         "description": "A webdriver client for node.js",
-        "version": "2.0.0",
+        "version": "2.1.1",
         "url": "http://jwebdriver.com/",
         "logo": "https://raw.github.com/yaniswang/jWebDriver/master/logo_s.png"
     },
     "files": {
-        "lib\\browser.js": {
-            "name": "lib\\browser.js",
+        "lib/browser.js": {
+            "name": "lib/browser.js",
             "modules": {},
             "classes": {
                 "Browser": 1
@@ -16,8 +16,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "lib\\elements.js": {
-            "name": "lib\\elements.js",
+        "lib/elements.js": {
+            "name": "lib/elements.js",
             "modules": {},
             "classes": {
                 "Elements": 1
@@ -25,8 +25,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "lib\\jwebdriver.js": {
-            "name": "lib\\jwebdriver.js",
+        "lib/jwebdriver.js": {
+            "name": "lib/jwebdriver.js",
             "modules": {},
             "classes": {
                 "JWebDriver": 1
@@ -45,7 +45,7 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "file": "lib\\browser.js",
+            "file": "lib/browser.js",
             "line": 2,
             "description": "This class is used for control browser."
         },
@@ -57,7 +57,7 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "file": "lib\\elements.js",
+            "file": "lib/elements.js",
             "line": 2,
             "description": "This class is used for control elements."
         },
@@ -69,7 +69,7 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "file": "lib\\jwebdriver.js",
+            "file": "lib/jwebdriver.js",
             "line": 2,
             "description": "A webdriver client for Node.js\n<p>\nYou can use JWebDriver connect to local webdriver or webdriver grid.\n</p>"
         }
@@ -77,7 +77,7 @@
     "elements": {},
     "classitems": [
         {
-            "file": "lib\\browser.js",
+            "file": "lib/browser.js",
             "line": 119,
             "description": "mouse buttons",
             "itemtype": "property",
@@ -87,7 +87,7 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
+            "file": "lib/browser.js",
             "line": 126,
             "description": "keyboard buttons",
             "itemtype": "property",
@@ -97,7 +97,7 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
+            "file": "lib/browser.js",
             "line": 133,
             "description": "init browser instance",
             "itemtype": "method",
@@ -134,7 +134,7 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
+            "file": "lib/browser.js",
             "line": 151,
             "description": "init browser",
             "itemtype": "method",
@@ -151,8 +151,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 237,
+            "file": "lib/browser.js",
+            "line": 238,
             "description": "save log",
             "itemtype": "method",
             "name": "log",
@@ -173,11 +173,11 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 248,
+            "file": "lib/browser.js",
+            "line": 249,
             "description": "execute protocal command with this session",
             "itemtype": "method",
-            "name": "exec",
+            "name": "execCmd",
             "access": "public",
             "tagname": "",
             "params": [
@@ -211,8 +211,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 273,
+            "file": "lib/browser.js",
+            "line": 274,
             "description": "get browser info",
             "itemtype": "method",
             "name": "info",
@@ -225,8 +225,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 283,
+            "file": "lib/browser.js",
+            "line": 284,
             "description": "get capability support",
             "itemtype": "method",
             "name": "support",
@@ -246,8 +246,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 296,
+            "file": "lib/browser.js",
+            "line": 297,
             "description": "sleep sync",
             "itemtype": "method",
             "name": "sleep",
@@ -268,8 +268,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 307,
+            "file": "lib/browser.js",
+            "line": 308,
             "description": "config webdriver options",
             "itemtype": "method",
             "name": "config",
@@ -290,8 +290,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 352,
+            "file": "lib/browser.js",
+            "line": 353,
             "description": "goto url or get url",
             "itemtype": "method",
             "name": "url",
@@ -317,8 +317,40 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 380,
+            "file": "lib/browser.js",
+            "line": 381,
+            "description": "execute script in browser",
+            "itemtype": "method",
+            "name": "exec",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "script",
+                    "description": "function to exec",
+                    "type": "String|Function"
+                },
+                {
+                    "name": "args",
+                    "description": "arguments send to script",
+                    "type": "Array",
+                    "optional": true
+                },
+                {
+                    "name": "done",
+                    "description": "callback function",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "js function returned value",
+                "type": "Any"
+            },
+            "class": "Browser"
+        },
+        {
+            "file": "lib/browser.js",
+            "line": 431,
             "description": "execute script in browser",
             "itemtype": "method",
             "name": "eval",
@@ -349,8 +381,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 430,
+            "file": "lib/browser.js",
+            "line": 445,
             "description": "get current window handle",
             "itemtype": "method",
             "name": "windowHandle",
@@ -375,8 +407,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 462,
+            "file": "lib/browser.js",
+            "line": 477,
             "description": "get all window handles",
             "itemtype": "method",
             "name": "windowHandles",
@@ -396,8 +428,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 475,
+            "file": "lib/browser.js",
+            "line": 490,
             "description": "switch to window",
             "itemtype": "method",
             "name": "switchWindow",
@@ -418,8 +450,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 509,
+            "file": "lib/browser.js",
+            "line": 524,
             "description": "open new window",
             "itemtype": "method",
             "name": "newWindow",
@@ -444,8 +476,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 535,
+            "file": "lib/browser.js",
+            "line": 550,
             "description": "get all frame elements",
             "itemtype": "method",
             "name": "frames",
@@ -465,8 +497,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 546,
+            "file": "lib/browser.js",
+            "line": 561,
             "description": "switch to frame or main page",
             "itemtype": "method",
             "name": "switchFrame",
@@ -487,8 +519,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 576,
+            "file": "lib/browser.js",
+            "line": 591,
             "description": "switch to parent frame",
             "itemtype": "method",
             "name": "switchFrameParent",
@@ -504,8 +536,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 586,
+            "file": "lib/browser.js",
+            "line": 601,
             "description": "close current window",
             "itemtype": "method",
             "name": "closeWindow",
@@ -521,8 +553,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 596,
+            "file": "lib/browser.js",
+            "line": 611,
             "description": "get or set position of window",
             "itemtype": "method",
             "name": "position",
@@ -554,8 +586,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 636,
+            "file": "lib/browser.js",
+            "line": 651,
             "description": "get or set size of window",
             "itemtype": "method",
             "name": "size",
@@ -587,8 +619,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 676,
+            "file": "lib/browser.js",
+            "line": 691,
             "description": "maximize the window",
             "itemtype": "method",
             "name": "maximize",
@@ -604,8 +636,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 692,
+            "file": "lib/browser.js",
+            "line": 707,
             "description": "get screenshot",
             "itemtype": "method",
             "name": "getScreenshot",
@@ -631,8 +663,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 714,
+            "file": "lib/browser.js",
+            "line": 729,
             "description": "get title",
             "itemtype": "method",
             "name": "title",
@@ -652,8 +684,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 727,
+            "file": "lib/browser.js",
+            "line": 742,
             "description": "get source",
             "itemtype": "method",
             "name": "source",
@@ -673,8 +705,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 740,
+            "file": "lib/browser.js",
+            "line": 755,
             "description": "nick name of source",
             "itemtype": "method",
             "name": "html",
@@ -694,8 +726,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 753,
+            "file": "lib/browser.js",
+            "line": 768,
             "description": "refresh the window",
             "itemtype": "method",
             "name": "refresh",
@@ -711,8 +743,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 763,
+            "file": "lib/browser.js",
+            "line": 778,
             "description": "back the window",
             "itemtype": "method",
             "name": "back",
@@ -728,8 +760,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 773,
+            "file": "lib/browser.js",
+            "line": 788,
             "description": "forward the window",
             "itemtype": "method",
             "name": "forward",
@@ -745,8 +777,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 783,
+            "file": "lib/browser.js",
+            "line": 798,
             "description": "get all cookies",
             "itemtype": "method",
             "name": "cookies",
@@ -771,8 +803,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 817,
+            "file": "lib/browser.js",
+            "line": 832,
             "description": "get or set cookie",
             "itemtype": "method",
             "name": "cookie",
@@ -809,8 +841,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 892,
+            "file": "lib/browser.js",
+            "line": 907,
             "description": "remove cookie",
             "itemtype": "method",
             "name": "removeCookie",
@@ -831,8 +863,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 905,
+            "file": "lib/browser.js",
+            "line": 920,
             "description": "clear all cookies",
             "itemtype": "method",
             "name": "clearCookies",
@@ -848,8 +880,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 915,
+            "file": "lib/browser.js",
+            "line": 930,
             "description": "get all local storage keys",
             "itemtype": "method",
             "name": "localStorageKeys",
@@ -869,8 +901,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 928,
+            "file": "lib/browser.js",
+            "line": 943,
             "description": "get or set local storage",
             "itemtype": "method",
             "name": "localStorage",
@@ -901,8 +933,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 958,
+            "file": "lib/browser.js",
+            "line": 973,
             "description": "remove local storage",
             "itemtype": "method",
             "name": "removeLocalStorage",
@@ -923,8 +955,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 971,
+            "file": "lib/browser.js",
+            "line": 986,
             "description": "clear all local storage",
             "itemtype": "method",
             "name": "clearLocalStorages",
@@ -940,8 +972,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 981,
+            "file": "lib/browser.js",
+            "line": 996,
             "description": "get all session storage keys",
             "itemtype": "method",
             "name": "sessionStorageKeys",
@@ -961,8 +993,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 994,
+            "file": "lib/browser.js",
+            "line": 1009,
             "description": "get or set session storage",
             "itemtype": "method",
             "name": "sessionStorage",
@@ -993,8 +1025,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 1024,
+            "file": "lib/browser.js",
+            "line": 1039,
             "description": "remove session storage",
             "itemtype": "method",
             "name": "removeSessionStorage",
@@ -1015,8 +1047,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 1037,
+            "file": "lib/browser.js",
+            "line": 1052,
             "description": "clear all session storage",
             "itemtype": "method",
             "name": "clearSessionStorages",
@@ -1032,8 +1064,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 1047,
+            "file": "lib/browser.js",
+            "line": 1062,
             "description": "get alert text",
             "itemtype": "method",
             "name": "getAlert",
@@ -1053,8 +1085,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 1060,
+            "file": "lib/browser.js",
+            "line": 1075,
             "description": "accept alert or confirm",
             "itemtype": "method",
             "name": "acceptAlert",
@@ -1070,8 +1102,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 1070,
+            "file": "lib/browser.js",
+            "line": 1085,
             "description": "dismiss confirm",
             "itemtype": "method",
             "name": "dismissAlert",
@@ -1087,8 +1119,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 1080,
+            "file": "lib/browser.js",
+            "line": 1095,
             "description": "set text to prompt",
             "itemtype": "method",
             "name": "setAlert",
@@ -1109,8 +1141,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 1093,
+            "file": "lib/browser.js",
+            "line": 1108,
             "description": "send keys to browser",
             "itemtype": "method",
             "name": "sendKeys",
@@ -1131,8 +1163,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 1112,
+            "file": "lib/browser.js",
+            "line": 1127,
             "description": "check sticky key",
             "itemtype": "method",
             "name": "isStickyKey",
@@ -1152,8 +1184,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 1124,
+            "file": "lib/browser.js",
+            "line": 1139,
             "description": "send keydown",
             "itemtype": "method",
             "name": "keyDown",
@@ -1174,8 +1206,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 1143,
+            "file": "lib/browser.js",
+            "line": 1158,
             "description": "send keyup",
             "itemtype": "method",
             "name": "keyUp",
@@ -1196,8 +1228,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 1162,
+            "file": "lib/browser.js",
+            "line": 1177,
             "description": "send mousemove (first element)",
             "itemtype": "method",
             "name": "mouseMove",
@@ -1230,8 +1262,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 1208,
+            "file": "lib/browser.js",
+            "line": 1223,
             "description": "send mousedown",
             "itemtype": "method",
             "name": "mouseDown",
@@ -1253,8 +1285,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 1231,
+            "file": "lib/browser.js",
+            "line": 1246,
             "description": "send mouseup",
             "itemtype": "method",
             "name": "mouseUp",
@@ -1276,8 +1308,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 1254,
+            "file": "lib/browser.js",
+            "line": 1269,
             "description": "send click",
             "itemtype": "method",
             "name": "click",
@@ -1299,8 +1331,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 1277,
+            "file": "lib/browser.js",
+            "line": 1292,
             "description": "send double Click",
             "itemtype": "method",
             "name": "dblClick",
@@ -1316,8 +1348,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 1287,
+            "file": "lib/browser.js",
+            "line": 1302,
             "description": "send double Click",
             "itemtype": "method",
             "name": "doubleClick",
@@ -1333,8 +1365,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 1297,
+            "file": "lib/browser.js",
+            "line": 1312,
             "description": "drag one element to another",
             "itemtype": "method",
             "name": "dragDrop",
@@ -1360,8 +1392,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 1328,
+            "file": "lib/browser.js",
+            "line": 1343,
             "description": "find element",
             "itemtype": "method",
             "name": "find",
@@ -1392,8 +1424,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 1348,
+            "file": "lib/browser.js",
+            "line": 1363,
             "description": "find visible element",
             "itemtype": "method",
             "name": "findVisible",
@@ -1424,8 +1456,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 1407,
+            "file": "lib/browser.js",
+            "line": 1426,
             "description": "wait for element displayed or removed",
             "itemtype": "method",
             "name": "wait",
@@ -1462,8 +1494,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 1489,
+            "file": "lib/browser.js",
+            "line": 1508,
             "description": "scroll to",
             "itemtype": "method",
             "name": "scrollTo",
@@ -1497,8 +1529,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 1554,
+            "file": "lib/browser.js",
+            "line": 1573,
             "description": "upload file to browser machine",
             "itemtype": "method",
             "name": "uploadFileToServer",
@@ -1523,8 +1555,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 1580,
+            "file": "lib/browser.js",
+            "line": 1599,
             "description": "touch down",
             "itemtype": "method",
             "name": "touchDown",
@@ -1550,8 +1582,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 1608,
+            "file": "lib/browser.js",
+            "line": 1627,
             "description": "touch move",
             "itemtype": "method",
             "name": "touchMove",
@@ -1577,8 +1609,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 1636,
+            "file": "lib/browser.js",
+            "line": 1655,
             "description": "touch up",
             "itemtype": "method",
             "name": "touchUp",
@@ -1604,8 +1636,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 1664,
+            "file": "lib/browser.js",
+            "line": 1683,
             "description": "touch scroll",
             "itemtype": "method",
             "name": "touchScroll",
@@ -1631,8 +1663,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 1692,
+            "file": "lib/browser.js",
+            "line": 1711,
             "description": "touch flick",
             "itemtype": "method",
             "name": "touchFlick",
@@ -1658,8 +1690,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 1720,
+            "file": "lib/browser.js",
+            "line": 1739,
             "description": "get or set orientation",
             "itemtype": "method",
             "name": "orientation",
@@ -1685,8 +1717,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 1748,
+            "file": "lib/browser.js",
+            "line": 1767,
             "description": "get or set geolocation",
             "itemtype": "method",
             "name": "geolocation",
@@ -1724,8 +1756,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 1787,
+            "file": "lib/browser.js",
+            "line": 1806,
             "description": "close session",
             "itemtype": "method",
             "name": "close",
@@ -1741,8 +1773,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 1808,
+            "file": "lib/browser.js",
+            "line": 1827,
             "description": "get contexts",
             "itemtype": "method",
             "name": "contexts",
@@ -1756,8 +1788,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 1819,
+            "file": "lib/browser.js",
+            "line": 1838,
             "description": "get or set context",
             "itemtype": "method",
             "name": "context",
@@ -1779,8 +1811,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 1842,
+            "file": "lib/browser.js",
+            "line": 1861,
             "description": "set context to native",
             "itemtype": "method",
             "name": "native",
@@ -1794,8 +1826,8 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 1853,
+            "file": "lib/browser.js",
+            "line": 1872,
             "description": "set context to webview",
             "itemtype": "method",
             "name": "webview",
@@ -1809,39 +1841,23 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\browser.js",
-            "line": 1864,
-            "description": "touch swipe",
+            "file": "lib/browser.js",
+            "line": 1883,
+            "description": "send actions",
             "itemtype": "method",
-            "name": "touchSwipe",
+            "name": "sendActions",
             "access": "public",
             "tagname": "",
             "params": [
                 {
-                    "name": "startX",
+                    "name": "type",
                     "description": "",
-                    "type": "Number"
+                    "type": "String"
                 },
                 {
-                    "name": "startY",
+                    "name": "params",
                     "description": "",
-                    "type": "Number"
-                },
-                {
-                    "name": "endX",
-                    "description": "",
-                    "type": "Number"
-                },
-                {
-                    "name": "endY",
-                    "description": "",
-                    "type": "Number"
-                },
-                {
-                    "name": "duration",
-                    "description": "",
-                    "type": "Number",
-                    "optional": true
+                    "type": "Object"
                 },
                 {
                     "name": "done",
@@ -1852,7 +1868,7 @@
             "class": "Browser"
         },
         {
-            "file": "lib\\elements.js",
+            "file": "lib/elements.js",
             "line": 11,
             "description": "init elements instance",
             "itemtype": "method",
@@ -1880,7 +1896,7 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
+            "file": "lib/elements.js",
             "line": 28,
             "description": "init elements",
             "itemtype": "method",
@@ -1897,7 +1913,7 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
+            "file": "lib/elements.js",
             "line": 96,
             "description": "save log",
             "itemtype": "method",
@@ -1919,11 +1935,11 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
+            "file": "lib/elements.js",
             "line": 107,
             "description": "execute protocal command with this elements",
             "itemtype": "method",
-            "name": "exec",
+            "name": "execCmd",
             "access": "public",
             "tagname": "",
             "params": [
@@ -1957,7 +1973,7 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
+            "file": "lib/elements.js",
             "line": 164,
             "description": "sleep sync",
             "itemtype": "method",
@@ -1979,7 +1995,7 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
+            "file": "lib/elements.js",
             "line": 175,
             "description": "get webdriver ELEMENT object",
             "itemtype": "method",
@@ -2000,7 +2016,7 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
+            "file": "lib/elements.js",
             "line": 196,
             "description": "get element from start to end",
             "itemtype": "method",
@@ -2022,7 +2038,7 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
+            "file": "lib/elements.js",
             "line": 215,
             "description": "get element by index",
             "itemtype": "method",
@@ -2039,7 +2055,7 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
+            "file": "lib/elements.js",
             "line": 225,
             "description": "get first element",
             "itemtype": "method",
@@ -2049,7 +2065,7 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
+            "file": "lib/elements.js",
             "line": 234,
             "description": "get last element",
             "itemtype": "method",
@@ -2059,7 +2075,7 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
+            "file": "lib/elements.js",
             "line": 244,
             "description": "get tagName (first element)",
             "itemtype": "method",
@@ -2080,7 +2096,7 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
+            "file": "lib/elements.js",
             "line": 257,
             "description": "get attribute value (first element)",
             "itemtype": "method",
@@ -2106,7 +2122,7 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
+            "file": "lib/elements.js",
             "line": 273,
             "description": "get property value (first element)",
             "itemtype": "method",
@@ -2114,6 +2130,11 @@
             "access": "public",
             "tagname": "",
             "params": [
+                {
+                    "name": "name",
+                    "description": "attribute name",
+                    "type": "String"
+                },
                 {
                     "name": "done",
                     "description": "callback function",
@@ -2127,8 +2148,29 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
-            "line": 286,
+            "file": "lib/elements.js",
+            "line": 287,
+            "description": "get rect(first element)",
+            "itemtype": "method",
+            "name": "prop",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "done",
+                    "description": "callback function",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "return rect info",
+                "type": "Object"
+            },
+            "class": "Elements"
+        },
+        {
+            "file": "lib/elements.js",
+            "line": 300,
             "description": "get css value (first element)",
             "itemtype": "method",
             "name": "css",
@@ -2153,8 +2195,8 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
-            "line": 302,
+            "file": "lib/elements.js",
+            "line": 316,
             "description": "get text (first element)",
             "itemtype": "method",
             "name": "text",
@@ -2174,8 +2216,8 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
-            "line": 315,
+            "file": "lib/elements.js",
+            "line": 329,
             "description": "clear input or textarea",
             "itemtype": "method",
             "name": "clear",
@@ -2195,8 +2237,8 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
-            "line": 326,
+            "file": "lib/elements.js",
+            "line": 340,
             "description": "get offset of element (first element)",
             "itemtype": "method",
             "name": "offset",
@@ -2222,8 +2264,8 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
-            "line": 352,
+            "file": "lib/elements.js",
+            "line": 366,
             "description": "get size of element (first element)",
             "itemtype": "method",
             "name": "size",
@@ -2243,8 +2285,8 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
-            "line": 365,
+            "file": "lib/elements.js",
+            "line": 379,
             "description": "check element displayed (first element)",
             "itemtype": "method",
             "name": "displayed",
@@ -2264,8 +2306,8 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
-            "line": 378,
+            "file": "lib/elements.js",
+            "line": 392,
             "description": "check element enabled (first element)",
             "itemtype": "method",
             "name": "enabled",
@@ -2285,8 +2327,8 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
-            "line": 391,
+            "file": "lib/elements.js",
+            "line": 405,
             "description": "check element selected (first element)",
             "itemtype": "method",
             "name": "selected",
@@ -2306,8 +2348,8 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
-            "line": 404,
+            "file": "lib/elements.js",
+            "line": 418,
             "description": "select option",
             "itemtype": "method",
             "name": "select",
@@ -2332,8 +2374,8 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
-            "line": 454,
+            "file": "lib/elements.js",
+            "line": 468,
             "description": "send keys to element",
             "itemtype": "method",
             "name": "sendKeys",
@@ -2354,8 +2396,8 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
-            "line": 473,
+            "file": "lib/elements.js",
+            "line": 487,
             "description": "get or set value",
             "itemtype": "method",
             "name": "val",
@@ -2377,8 +2419,8 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
-            "line": 496,
+            "file": "lib/elements.js",
+            "line": 510,
             "description": "send mousemove (first element)",
             "itemtype": "method",
             "name": "mouseMove",
@@ -2406,8 +2448,8 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
-            "line": 532,
+            "file": "lib/elements.js",
+            "line": 546,
             "description": "click to element",
             "itemtype": "method",
             "name": "click",
@@ -2429,8 +2471,8 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
-            "line": 552,
+            "file": "lib/elements.js",
+            "line": 566,
             "description": "double click to element",
             "itemtype": "method",
             "name": "dblClick",
@@ -2446,8 +2488,8 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
-            "line": 565,
+            "file": "lib/elements.js",
+            "line": 579,
             "description": "double click to element",
             "itemtype": "method",
             "name": "doubleClick",
@@ -2463,8 +2505,8 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
-            "line": 578,
+            "file": "lib/elements.js",
+            "line": 592,
             "description": "drag the element drop to another element",
             "itemtype": "method",
             "name": "dragDropTo",
@@ -2497,8 +2539,8 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
-            "line": 608,
+            "file": "lib/elements.js",
+            "line": 622,
             "description": "submit form",
             "itemtype": "method",
             "name": "submit",
@@ -2514,8 +2556,8 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
-            "line": 618,
+            "file": "lib/elements.js",
+            "line": 632,
             "description": "upload file to browser machine, then set to this element",
             "itemtype": "method",
             "name": "uploadFile",
@@ -2536,8 +2578,37 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
-            "line": 634,
+            "file": "lib/elements.js",
+            "line": 648,
+            "description": "scroll element to x, y",
+            "itemtype": "method",
+            "name": "scrollTo",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "",
+                    "type": "Number|Object",
+                    "optional": true
+                },
+                {
+                    "name": "y",
+                    "description": "",
+                    "type": "Number",
+                    "optional": true
+                },
+                {
+                    "name": "done",
+                    "description": "callback function",
+                    "type": "Function"
+                }
+            ],
+            "class": "Elements"
+        },
+        {
+            "file": "lib/elements.js",
+            "line": 688,
             "description": "touch click to element",
             "itemtype": "method",
             "name": "touchClick",
@@ -2553,8 +2624,8 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
-            "line": 647,
+            "file": "lib/elements.js",
+            "line": 701,
             "description": "touch double click to element",
             "itemtype": "method",
             "name": "touchDblClick",
@@ -2570,8 +2641,8 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
-            "line": 660,
+            "file": "lib/elements.js",
+            "line": 714,
             "description": "touch double click to element",
             "itemtype": "method",
             "name": "touchDoublelClick",
@@ -2587,8 +2658,8 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
-            "line": 670,
+            "file": "lib/elements.js",
+            "line": 724,
             "description": "touch long click to element",
             "itemtype": "method",
             "name": "touchLongClick",
@@ -2604,8 +2675,8 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
-            "line": 683,
+            "file": "lib/elements.js",
+            "line": 737,
             "description": "touch scroll from element",
             "itemtype": "method",
             "name": "touchScroll",
@@ -2631,8 +2702,8 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
-            "line": 712,
+            "file": "lib/elements.js",
+            "line": 766,
             "description": "touch flick from element",
             "itemtype": "method",
             "name": "touchFlick",
@@ -2663,8 +2734,35 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
-            "line": 747,
+            "file": "lib/elements.js",
+            "line": 801,
+            "description": "send actions from element",
+            "itemtype": "method",
+            "name": "sendActions",
+            "access": "public",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "type",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "params",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "done",
+                    "description": "callback function",
+                    "type": "Function"
+                }
+            ],
+            "class": "Elements"
+        },
+        {
+            "file": "lib/elements.js",
+            "line": 830,
             "description": "find all child elements",
             "itemtype": "method",
             "name": "find",
@@ -2695,8 +2793,8 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\elements.js",
-            "line": 786,
+            "file": "lib/elements.js",
+            "line": 869,
             "description": "test if two elements refer to the same DOM element.",
             "itemtype": "method",
             "name": "equal",
@@ -2721,7 +2819,7 @@
             "class": "Elements"
         },
         {
-            "file": "lib\\jwebdriver.js",
+            "file": "lib/jwebdriver.js",
             "line": 51,
             "description": "init driver",
             "itemtype": "method",
@@ -2745,7 +2843,7 @@
             "class": "JWebDriver"
         },
         {
-            "file": "lib\\jwebdriver.js",
+            "file": "lib/jwebdriver.js",
             "line": 74,
             "description": "get webdriver server info",
             "itemtype": "method",
@@ -2762,7 +2860,7 @@
             "class": "JWebDriver"
         },
         {
-            "file": "lib\\jwebdriver.js",
+            "file": "lib/jwebdriver.js",
             "line": 86,
             "description": "save log",
             "itemtype": "method",
@@ -2784,7 +2882,7 @@
             "class": "JWebDriver"
         },
         {
-            "file": "lib\\jwebdriver.js",
+            "file": "lib/jwebdriver.js",
             "line": 117,
             "description": "sleep sync",
             "itemtype": "method",
@@ -2806,7 +2904,7 @@
             "class": "JWebDriver"
         },
         {
-            "file": "lib\\jwebdriver.js",
+            "file": "lib/jwebdriver.js",
             "line": 129,
             "description": "request sync",
             "itemtype": "method",
@@ -2832,11 +2930,11 @@
             "class": "JWebDriver"
         },
         {
-            "file": "lib\\jwebdriver.js",
+            "file": "lib/jwebdriver.js",
             "line": 146,
             "description": "execute protocal command",
             "itemtype": "method",
-            "name": "exec",
+            "name": "execCmd",
             "access": "public",
             "tagname": "",
             "params": [
@@ -2870,7 +2968,7 @@
             "class": "JWebDriver"
         },
         {
-            "file": "lib\\jwebdriver.js",
+            "file": "lib/jwebdriver.js",
             "line": 253,
             "description": "get all sessions",
             "itemtype": "method",
@@ -2891,7 +2989,7 @@
             "class": "JWebDriver"
         },
         {
-            "file": "lib\\jwebdriver.js",
+            "file": "lib/jwebdriver.js",
             "line": 290,
             "description": "init new session or attach to a session id",
             "itemtype": "method",

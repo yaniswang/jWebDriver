@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>lib\browser.js - jwebdriver</title>
+    <title>lib/browser.js - jwebdriver</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -17,7 +17,7 @@
                 <h1><img src="https://raw.github.com/yaniswang/jWebDriver/master/logo_s.png" title="jwebdriver"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 2.0.0</em>
+            <em>API Docs for: 2.1.1</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -78,7 +78,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: lib\browser.js</h1>
+<h1 class="file-heading">File: lib/browser.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -298,7 +298,7 @@ const Browser = PromiseClass.create({
             let sessionOptions = {
                 &#x27;desiredCapabilities&#x27;: sessionInfo
             };
-            driver.exec(&#x27;newSession&#x27;, {}, sessionOptions, function(error, ret){
+            driver.execCmd(&#x27;newSession&#x27;, {}, sessionOptions, function(error, ret){
                 if(error){
                     done(error);
                 }
@@ -307,6 +307,7 @@ const Browser = PromiseClass.create({
                     let capabilities = ret.value;
                     self.capabilities = capabilities;
                     self.browserMode = capabilities[&#x27;browserName&#x27;] ? true : false;
+                    self.mobileMode = !self.browserMode;
                     if(self.browserMode){
                         self.browserName = capabilities[&#x27;browserName&#x27;] || self.browserName;
                         self.version = capabilities[&#x27;version&#x27;] || self.version;
@@ -331,7 +332,7 @@ const Browser = PromiseClass.create({
 
     /**
      * execute protocal command with this session
-     * @method exec
+     * @method execCmd
      * @public
      * @param  {String} cmd protocal command, defined in command.js
      * @param  {Object} [pathData] replace the path parameters, no need to add sessionId
@@ -339,7 +340,7 @@ const Browser = PromiseClass.create({
      * @param  {Function} done callback function
      * @return {Object} the return object from webdriver server
      */
-    exec(cmd, pathData, data, done){
+    execCmd(cmd, pathData, data, done){
         let self = this;
         if(typeof pathData === &#x27;function&#x27;){
             pathData = undefined;
@@ -351,7 +352,7 @@ const Browser = PromiseClass.create({
         done = getDone(arguments);
         pathData = pathData || {};
         pathData.sessionId = self.sessionId;
-        self._driver.exec(cmd, pathData, data, done);
+        self._driver.execCmd(cmd, pathData, data, done);
     },
 
     /**
@@ -404,27 +405,27 @@ const Browser = PromiseClass.create({
         let implicitTimeout = options.implicitTimeout;
         Promise.resolve().then(function(){
             if(pageloadTimeout){
-                return self.exec(&#x27;configTimeouts&#x27;, {}, {
+                return self.execCmd(&#x27;configTimeouts&#x27;, {}, {
                     &#x27;type&#x27;: &#x27;page load&#x27;,
                     &#x27;ms&#x27;: pageloadTimeout
                 });
             }
         }).then(function(){
             if(scriptTimeout){
-                return self.exec(&#x27;configTimeouts&#x27;, {}, {
+                return self.execCmd(&#x27;configTimeouts&#x27;, {}, {
                     &#x27;type&#x27;: &#x27;script&#x27;,
                     &#x27;ms&#x27;: scriptTimeout
                 });
             }
         }).then(function(){
             if(asyncScriptTimeout){
-                return self.exec(&#x27;configAsyncScriptTimeout&#x27;, {}, {
+                return self.execCmd(&#x27;configAsyncScriptTimeout&#x27;, {}, {
                     &#x27;ms&#x27;: asyncScriptTimeout
                 });
             }
         }).then(function(){
             if(implicitTimeout){
-                return self.exec(&#x27;configImplicitTimeout&#x27;, {}, {
+                return self.execCmd(&#x27;configImplicitTimeout&#x27;, {}, {
                     &#x27;ms&#x27;: implicitTimeout
                 });
             }
@@ -449,13 +450,13 @@ const Browser = PromiseClass.create({
         done = getDone(arguments);
         // goto url
         if(url){
-            self.exec(&#x27;setUrl&#x27;, {}, {
+            self.execCmd(&#x27;setUrl&#x27;, {}, {
                 &#x27;url&#x27;: url
             }, done);
         }
         // get url
         else{
-            self.exec(&#x27;getUrl&#x27;, function(error, ret){
+            self.execCmd(&#x27;getUrl&#x27;, function(error, ret){
                 done(error, ret &amp;&amp; ret.value);
             });
         }
@@ -463,14 +464,14 @@ const Browser = PromiseClass.create({
 
     /**
      * execute script in browser
-     * @method eval
+     * @method exec
      * @public
-     * @param  {String|Function} script function to eval
+     * @param  {String|Function} script function to exec
      * @param  {Array} [args] arguments send to script
      * @param  {Function} done callback function
      * @return {any} js function returned value
      */
-    eval(script, args, done){
+    exec(script, args, done){
         let self = this;
         if(typeof args === &#x27;function&#x27;){
             args = undefined;
@@ -499,16 +500,30 @@ const Browser = PromiseClass.create({
                 }
                 return arg;
             });
-            self.exec(isAsync?&#x27;evalASync&#x27;:&#x27;eval&#x27;, {}, {
+            self.execCmd(isAsync?&#x27;execASync&#x27;:&#x27;exec&#x27;, {}, {
                 script: script,
                 args: args
             }, function(error, ret){
-                done(error?&#x27;eval timeout&#x27;:null, ret &amp;&amp; ret.value);
+                done(error?&#x27;exec timeout&#x27;:null, ret &amp;&amp; ret.value);
             });
         }
         else{
             done(&#x27;First param must be string or function&#x27;);
         }
+    },
+
+    /**
+     * execute script in browser
+     * @method eval
+     * @public
+     * @param  {String|Function} script function to eval
+     * @param  {Array} [args] arguments send to script
+     * @param  {Function} done callback function
+     * @return {any} js function returned value
+     */
+    eval(script, args, done){
+        //jshint unused:false
+        this.exec.apply(this, arguments);
     },
 
     /**
@@ -530,7 +545,7 @@ const Browser = PromiseClass.create({
             done(null, windowHandle);
         }
         else if(self.browserMode){
-            self.exec(&#x27;getCurrentWindowHandle&#x27;, function(error, ret){
+            self.execCmd(&#x27;getCurrentWindowHandle&#x27;, function(error, ret){
                 if(ret){
                     self._windowHandle = ret.value;
                 }
@@ -551,7 +566,7 @@ const Browser = PromiseClass.create({
      * @return {Array} window handle
      */
     windowHandles(done){
-        this.exec(&#x27;getAllWindowHandles&#x27;, function(error, ret){
+        this.execCmd(&#x27;getAllWindowHandles&#x27;, function(error, ret){
             done(error, ret &amp;&amp; ret.value);
         });
     },
@@ -581,7 +596,7 @@ const Browser = PromiseClass.create({
                 resolve(windowHandle);
             }
         }).then(function(windowHandle){
-            self.exec(&#x27;switchWindow&#x27;, {}, {
+            self.execCmd(&#x27;switchWindow&#x27;, {}, {
                 name: windowHandle
             }, function(error, ret){
                 self._windowHandle = windowHandle;
@@ -609,7 +624,7 @@ const Browser = PromiseClass.create({
         }
         done = getDone(arguments);
         let script = &#x27;function(url, name, features){window.open(url, name, features);}&#x27;;
-        self.eval(script, url, name, features).then(function(){
+        self.exec(script, url, name, features).then(function(){
             return self.windowHandles();
         }).then(function(arrWindowHandles){
             done(null, arrWindowHandles[arrWindowHandles.length-1]);
@@ -651,7 +666,7 @@ const Browser = PromiseClass.create({
                 return frame;
             }
         }).then(function(frame){
-            self.exec(&#x27;switchFrame&#x27;, {}, {
+            self.execCmd(&#x27;switchFrame&#x27;, {}, {
                 id : frame
             }, done);
         });
@@ -664,7 +679,7 @@ const Browser = PromiseClass.create({
      * @param  {Function} done callback function
      */
     switchFrameParent(done){
-        this.exec(&#x27;switchFrameParent&#x27;, done);
+        this.execCmd(&#x27;switchFrameParent&#x27;, done);
     },
 
     /**
@@ -674,7 +689,7 @@ const Browser = PromiseClass.create({
      * @param  {Function} done callback function
      */
     closeWindow(done){
-        this.exec(&#x27;closeWindow&#x27;, done);
+        this.execCmd(&#x27;closeWindow&#x27;, done);
     },
 
     /**
@@ -698,7 +713,7 @@ const Browser = PromiseClass.create({
         done = getDone(arguments);
         Promise.resolve(self.windowHandle(true)).then(function(windowHandle){
             if(x === undefined){
-                return self.exec(&#x27;getWindowPosition&#x27;, {
+                return self.execCmd(&#x27;getWindowPosition&#x27;, {
                     windowHandle: windowHandle
                 }, function(error, ret){
                     done(error, ret &amp;&amp; ret.value);
@@ -708,7 +723,7 @@ const Browser = PromiseClass.create({
                 y = x.y;
                 x = x.x;
             }
-            self.exec(&#x27;setWindowPosition&#x27;, {
+            self.execCmd(&#x27;setWindowPosition&#x27;, {
                 windowHandle: windowHandle
             }, {
                 x: x,
@@ -738,7 +753,7 @@ const Browser = PromiseClass.create({
         done = getDone(arguments);
         Promise.resolve(self.windowHandle(true)).then(function(windowHandle){
             if(width === undefined){
-                return self.exec(&#x27;getWindowSize&#x27;, {
+                return self.execCmd(&#x27;getWindowSize&#x27;, {
                     windowHandle: windowHandle
                 }, function(error, ret){
                     done(error, ret &amp;&amp; ret.value);
@@ -748,7 +763,7 @@ const Browser = PromiseClass.create({
                 height = width.height;
                 width = width.width;
             }
-            self.exec(&#x27;setWindowSize&#x27;, {
+            self.execCmd(&#x27;setWindowSize&#x27;, {
                 windowHandle: windowHandle
             }, {
                 width: width,
@@ -766,7 +781,7 @@ const Browser = PromiseClass.create({
     maximize(done){
         let self = this;
         Promise.resolve(self.windowHandle(true)).then(function(windowHandle){
-            self.exec(&#x27;maximizeWindow&#x27;, {
+            self.execCmd(&#x27;maximizeWindow&#x27;, {
                 windowHandle : windowHandle
             }, done);
         }).catch(done);
@@ -786,7 +801,7 @@ const Browser = PromiseClass.create({
             filename = undefined;
         }
         done = getDone(arguments);
-        this.exec(&#x27;getScreenshot&#x27;, function(error, ret){
+        this.execCmd(&#x27;getScreenshot&#x27;, function(error, ret){
             var png64 = ret &amp;&amp; ret.value;
             if(png64 &amp;&amp; filename){
                 fs.writeFileSync(filename, png64, &#x27;base64&#x27;);
@@ -803,7 +818,7 @@ const Browser = PromiseClass.create({
      * @return {String} return document title
      */
     title(done){
-        this.exec(&#x27;getTitle&#x27;, function(error, ret){
+        this.execCmd(&#x27;getTitle&#x27;, function(error, ret){
             done(error, ret &amp;&amp; ret.value);
         });
     },
@@ -816,7 +831,7 @@ const Browser = PromiseClass.create({
      * @return {String} return source
      */
     source(done){
-        this.exec(&#x27;getSource&#x27;, function(error, ret){
+        this.execCmd(&#x27;getSource&#x27;, function(error, ret){
             done(error, ret &amp;&amp; ret.value);
         });
     },
@@ -829,7 +844,7 @@ const Browser = PromiseClass.create({
      * @return {String} return document html
      */
     html(done){
-        this.exec(&#x27;getSource&#x27;, function(error, ret){
+        this.execCmd(&#x27;getSource&#x27;, function(error, ret){
             done(error, ret &amp;&amp; ret.value);
         });
     },
@@ -841,7 +856,7 @@ const Browser = PromiseClass.create({
      * @param  {Function} done callback function
      */
     refresh(done){
-        this.exec(&#x27;setRefresh&#x27;, done);
+        this.execCmd(&#x27;setRefresh&#x27;, done);
     },
 
     /**
@@ -851,7 +866,7 @@ const Browser = PromiseClass.create({
      * @param  {Function} done callback function
      */
     back(done){
-        this.exec(&#x27;setBack&#x27;, done);
+        this.execCmd(&#x27;setBack&#x27;, done);
     },
 
     /**
@@ -861,7 +876,7 @@ const Browser = PromiseClass.create({
      * @param  {Function} done callback function
      */
     forward(done){
-        this.exec(&#x27;setForward&#x27;, done);
+        this.execCmd(&#x27;setForward&#x27;, done);
     },
 
     /**
@@ -877,7 +892,7 @@ const Browser = PromiseClass.create({
             isArray = undefined;
         }
         done = getDone(arguments);
-        this.exec(&#x27;getAllCookies&#x27;, function(error, ret){
+        this.execCmd(&#x27;getAllCookies&#x27;, function(error, ret){
             if(error){
                 done(error);
             }
@@ -967,7 +982,7 @@ const Browser = PromiseClass.create({
                     done(&#x27;Bad format for expiry: &#x27; + expiry);
                 }
             }
-            self.exec(&#x27;setCookie&#x27;, {}, {
+            self.execCmd(&#x27;setCookie&#x27;, {}, {
                 cookie: cookieInfo
             }, done);
         }
@@ -981,7 +996,7 @@ const Browser = PromiseClass.create({
      * @param  {Function} done callback function
      */
     removeCookie(name, done){
-        this.exec(&#x27;delCookie&#x27;, {
+        this.execCmd(&#x27;delCookie&#x27;, {
             name: name
         }, done);
     },
@@ -993,7 +1008,7 @@ const Browser = PromiseClass.create({
      * @param  {Function} done callback function
      */
     clearCookies(done){
-        this.exec(&#x27;clearAllCookies&#x27;, done);
+        this.execCmd(&#x27;clearAllCookies&#x27;, done);
     },
 
     /**
@@ -1004,7 +1019,7 @@ const Browser = PromiseClass.create({
      * @return {Array} return all local storage keys
      */
     localStorageKeys(done){
-        this.exec(&#x27;getAllLocalStorageKeys&#x27;, function(error, ret){
+        this.execCmd(&#x27;getAllLocalStorageKeys&#x27;, function(error, ret){
             done(error, ret &amp;&amp; ret.value);
         });
     },
@@ -1025,13 +1040,13 @@ const Browser = PromiseClass.create({
         }
         done = getDone(arguments);
         if(value !== undefined){
-            self.exec(&#x27;setLocalStorage&#x27;, {}, {
+            self.execCmd(&#x27;setLocalStorage&#x27;, {}, {
                 key: String(name),
                 value: String(value)
             }, done);
         }
         else{
-            self.exec(&#x27;getLocalStorage&#x27;, {
+            self.execCmd(&#x27;getLocalStorage&#x27;, {
                 key: String(name)
             }, function(error, ret){
                 done(error, ret &amp;&amp; ret.value);
@@ -1047,7 +1062,7 @@ const Browser = PromiseClass.create({
      * @param  {Function} done callback function
      */
     removeLocalStorage(name, done){
-        this.exec(&#x27;deleteLocalStorage&#x27;, {
+        this.execCmd(&#x27;deleteLocalStorage&#x27;, {
             key: name
         }, done);
     },
@@ -1059,7 +1074,7 @@ const Browser = PromiseClass.create({
      * @param  {Function} done callback function
      */
     clearLocalStorages(done){
-        this.exec(&#x27;clearAllLocalStorages&#x27;, done);
+        this.execCmd(&#x27;clearAllLocalStorages&#x27;, done);
     },
 
     /**
@@ -1070,7 +1085,7 @@ const Browser = PromiseClass.create({
      * @return {Array} return all session storage keys
      */
     sessionStorageKeys(done){
-        this.exec(&#x27;getAllSessionStorageKeys&#x27;, function(error, ret){
+        this.execCmd(&#x27;getAllSessionStorageKeys&#x27;, function(error, ret){
             done(error, ret &amp;&amp; ret.value);
         });
     },
@@ -1091,13 +1106,13 @@ const Browser = PromiseClass.create({
         }
         done = getDone(arguments);
         if(value !== undefined){
-            self.exec(&#x27;setSessionStorage&#x27;, {}, {
+            self.execCmd(&#x27;setSessionStorage&#x27;, {}, {
                 key: String(name),
                 value: String(value)
             }, done);
         }
         else{
-            self.exec(&#x27;getSessionStorage&#x27;, {
+            self.execCmd(&#x27;getSessionStorage&#x27;, {
                 key: String(name)
             }, function(error, ret){
                 done(error, ret &amp;&amp; ret.value);
@@ -1113,7 +1128,7 @@ const Browser = PromiseClass.create({
      * @param  {Function} done callback function
      */
     removeSessionStorage(name, done){
-        this.exec(&#x27;deleteSessionStorage&#x27;, {
+        this.execCmd(&#x27;deleteSessionStorage&#x27;, {
             key: name
         }, done);
     },
@@ -1125,7 +1140,7 @@ const Browser = PromiseClass.create({
      * @param  {Function} done callback function
      */
     clearSessionStorages(done){
-        this.exec(&#x27;clearAllSessionStorages&#x27;, done);
+        this.execCmd(&#x27;clearAllSessionStorages&#x27;, done);
     },
 
     /**
@@ -1136,7 +1151,7 @@ const Browser = PromiseClass.create({
      * @return {String}
      */
     getAlert(done){
-        this.exec(&#x27;getAlert&#x27;, function(error, ret){
+        this.execCmd(&#x27;getAlert&#x27;, function(error, ret){
             done(error, ret &amp;&amp; ret.value);
         });
     },
@@ -1148,7 +1163,7 @@ const Browser = PromiseClass.create({
      * @param  {Function} done callback function
      */
     acceptAlert(done){
-        this.exec(&#x27;acceptAlert&#x27;, done);
+        this.execCmd(&#x27;acceptAlert&#x27;, done);
     },
 
     /**
@@ -1158,7 +1173,7 @@ const Browser = PromiseClass.create({
      * @param  {Function} done callback function
      */
     dismissAlert(done){
-        this.exec(&#x27;dismissAlert&#x27;, done);
+        this.execCmd(&#x27;dismissAlert&#x27;, done);
     },
 
     /**
@@ -1169,7 +1184,7 @@ const Browser = PromiseClass.create({
      * @param  {Function} done callback function
      */
     setAlert(text, done){
-        this.exec(&#x27;setAlert&#x27;, {}, {
+        this.execCmd(&#x27;setAlert&#x27;, {}, {
             text: text
         }, done);
     },
@@ -1188,7 +1203,7 @@ const Browser = PromiseClass.create({
             let key = Keys[name.toUpperCase()];
             return key?key:all;
         });
-        self.exec(&#x27;sendKeys&#x27;, {}, {
+        self.execCmd(&#x27;sendKeys&#x27;, {}, {
             value: text.split(&#x27;&#x27;)
         }, done);
     },
@@ -1285,7 +1300,7 @@ const Browser = PromiseClass.create({
                 data.xoffset = x;
                 data.yoffset = y;
             }
-            self.exec(&#x27;mouseMove&#x27;, {}, data, done);
+            self.execCmd(&#x27;mouseMove&#x27;, {}, data, done);
         }).catch(done);
     },
 
@@ -1307,7 +1322,7 @@ const Browser = PromiseClass.create({
             key = key.toUpperCase();
             key = MouseButtons[key] || 0;
         }
-        self.exec(&#x27;mouseDown&#x27;, {}, {
+        self.execCmd(&#x27;mouseDown&#x27;, {}, {
             button: key || 0
         }, done);
     },
@@ -1330,7 +1345,7 @@ const Browser = PromiseClass.create({
             key = key.toUpperCase();
             key = MouseButtons[key] || 0;
         }
-        self.exec(&#x27;mouseUp&#x27;, {}, {
+        self.execCmd(&#x27;mouseUp&#x27;, {}, {
             button: key || 0
         }, done);
     },
@@ -1353,7 +1368,7 @@ const Browser = PromiseClass.create({
             key = key.toUpperCase();
             key = MouseButtons[key] || 0;
         }
-        self.exec(&#x27;click&#x27;, {}, {
+        self.execCmd(&#x27;click&#x27;, {}, {
             button: key || 0
         }, done);
     },
@@ -1365,7 +1380,7 @@ const Browser = PromiseClass.create({
      * @param  {Function} done callback function
      */
     dblClick(done){
-        this.exec(&#x27;doubleClick&#x27;, done);
+        this.execCmd(&#x27;doubleClick&#x27;, done);
     },
 
     /**
@@ -1375,7 +1390,7 @@ const Browser = PromiseClass.create({
      * @param  {Function} done callback function
      */
     doubleClick(done){
-        this.exec(&#x27;doubleClick&#x27;, done);
+        this.execCmd(&#x27;doubleClick&#x27;, done);
     },
 
     /**
@@ -1448,25 +1463,29 @@ const Browser = PromiseClass.create({
             if(elements.length &gt; 0){
                 let json = yield elements.toJSON();
                 // filter visible element
-                let newJson = yield self.eval(&#x27;function(arg1){\
-                    function curCSS(elem, name){\
-                        var curStyle = elem.currentStyle;\
-                        var style = elem.style;\
-                        return (curStyle &amp;&amp; curStyle[name]) || (style &amp;&amp; style[name]);\
-                    }\
-                    function isHidden(elem){\
-                        return ( elem.offsetWidth === 0 &amp;&amp; elem.offsetHeight === 0 ) || (curCSS( elem, &quot;display&quot; ) === &quot;none&quot;);\
-                    }\
-                    var elements = arg1.elements;\
-                    var newElements = [], element;\
-                    for(var i in elements){\
-                        element = elements[i];\
-                        if(!isHidden(element)){\
-                            newElements.push(element);\
+                let newJson = [];
+                try{
+                    newJson = yield self.exec(&#x27;function(arg1){\
+                        function curCSS(elem, name){\
+                            var curStyle = elem.currentStyle;\
+                            var style = elem.style;\
+                            return (curStyle &amp;&amp; curStyle[name]) || (style &amp;&amp; style[name]);\
                         }\
-                    }\
-                    return newElements;\
-                }&#x27;, {elements: json});
+                        function isHidden(elem){\
+                            return ( elem.offsetWidth === 0 &amp;&amp; elem.offsetHeight === 0 ) || (curCSS( elem, &quot;display&quot; ) === &quot;none&quot;);\
+                        }\
+                        var elements = arg1.elements;\
+                        var newElements = [], element;\
+                        for(var i in elements){\
+                            element = elements[i];\
+                            if(!isHidden(element)){\
+                                newElements.push(element);\
+                            }\
+                        }\
+                        return newElements;\
+                    }&#x27;, {elements: json});
+                }
+                catch(e){}
                 if(newJson.length === 0){
                     let message = &#x27;Find visible elements failed&#x27;;
                     self.log(&#x27;ERROR&#x27;, message);
@@ -1485,7 +1504,7 @@ const Browser = PromiseClass.create({
             else{
                 done(error);
             }
-        });
+        }).catch(done);
     },
 
     /**
@@ -1540,7 +1559,7 @@ const Browser = PromiseClass.create({
             done(error, result);
         }
         function waitElement(){
-            self[(self.browserMode &amp;&amp; displayed)?&#x27;findVisible&#x27;:&#x27;find&#x27;](using, value, function(error, elements){
+            self[(!self.mobileMode &amp;&amp; displayed)?&#x27;findVisible&#x27;:&#x27;find&#x27;](using, value, function(error, elements){
                 if(elements){
                     if(removed === true &amp;&amp; elements.length === 0){
                         // removed
@@ -1559,7 +1578,7 @@ const Browser = PromiseClass.create({
                 }
                 // timeout
                 if(new Date().getTime() - startTime &gt; timeout){
-                    let message = &#x27;Wait elelment &#x27;+(removed?&#x27;removed&#x27;:&#x27;displayed&#x27;)+&#x27; timeout: &#x27; + timeout + &#x27;ms&#x27;;
+                    let message = &#x27;Wait elelment &#x27;+(removed?&#x27;removed&#x27;:&#x27;displayed&#x27;)+&#x27; timeout: &#x27;+(using?(using+&#x27; ,&#x27;):&#x27;&#x27;)+value+&#x27; ,&#x27; + timeout + &#x27;ms&#x27;;
                     self.log(&#x27;ERROR&#x27;, message);
                     endWait(message);
                 }
@@ -1599,7 +1618,7 @@ const Browser = PromiseClass.create({
         }).then(function(elements){
             if(elements instanceof Elements){
                 return new Promise(function(resolve){
-                        elements.offset(function(error, offset){
+                    elements.offset(function(error, offset){
                         if(x !== undefined &amp;&amp; x.x !== undefined){
                             y = x.y;
                             x = x.x;
@@ -1631,7 +1650,7 @@ const Browser = PromiseClass.create({
 
         }).then(function(offset){
             let script = &#x27;function(x, y){window.scrollTo(x, y);}&#x27;;
-            self.eval(script, offset.x, offset.y, done);
+            self.exec(script, offset.x, offset.y, done);
         }).catch(done);
     },
 
@@ -1650,7 +1669,7 @@ const Browser = PromiseClass.create({
             let zip = new Zip();
             zip.file(path.basename(localPath), filedata);
             let base64zip = zip.generate({base64:true, compression:&#x27;DEFLATE&#x27;});
-            self.exec(&#x27;uploadFile&#x27;, {}, {
+            self.execCmd(&#x27;uploadFile&#x27;, {}, {
                 file: base64zip
             }, function(error, ret){
                 done(error, ret &amp;&amp; ret.value);
@@ -1683,7 +1702,7 @@ const Browser = PromiseClass.create({
             y = x.y;
             x = x.x;
         }
-        self.exec(&#x27;touchDown&#x27;, {}, {
+        self.execCmd(&#x27;touchDown&#x27;, {}, {
             x: x,
             y: y
         }, done);
@@ -1711,7 +1730,7 @@ const Browser = PromiseClass.create({
             y = x.y;
             x = x.x;
         }
-        self.exec(&#x27;touchMove&#x27;, {}, {
+        self.execCmd(&#x27;touchMove&#x27;, {}, {
             x: x,
             y: y
         }, done);
@@ -1739,7 +1758,7 @@ const Browser = PromiseClass.create({
             y = x.y;
             x = x.x;
         }
-        self.exec(&#x27;touchUp&#x27;, {}, {
+        self.execCmd(&#x27;touchUp&#x27;, {}, {
             x: x,
             y: y
         }, done);
@@ -1767,7 +1786,7 @@ const Browser = PromiseClass.create({
             y = x.y;
             x = x.x;
         }
-        self.exec(&#x27;touchScroll&#x27;, {}, {
+        self.execCmd(&#x27;touchScroll&#x27;, {}, {
             xoffset: x,
             yoffset: y,
         }, done);
@@ -1795,7 +1814,7 @@ const Browser = PromiseClass.create({
             yspeed = xspeed.yspeed;
             xspeed = xspeed.xspeed;
         }
-        self.exec(&#x27;touchFlick&#x27;, {}, {
+        self.execCmd(&#x27;touchFlick&#x27;, {}, {
             xspeed: xspeed,
             yspeed: yspeed,
         }, done);
@@ -1816,14 +1835,14 @@ const Browser = PromiseClass.create({
         }
         done = getDone(arguments);
         if(orientation){
-            self.exec(&#x27;setOrientation&#x27;, {}, {
+            self.execCmd(&#x27;setOrientation&#x27;, {}, {
                 orientation: orientation
             }, function(error, ret){
                 done(error, ret &amp;&amp; ret.value);
             });
         }
         else{
-            self.exec(&#x27;getOrientation&#x27;, function(error, ret){
+            self.execCmd(&#x27;getOrientation&#x27;, function(error, ret){
                 done(error, ret &amp;&amp; ret.value);
             });
         }
@@ -1851,7 +1870,7 @@ const Browser = PromiseClass.create({
             latitude = latitude.latitude;
         }
         if(latitude !== undefined){
-            self.exec(&#x27;setLocation&#x27;, {}, {
+            self.execCmd(&#x27;setLocation&#x27;, {}, {
                 location: {
                     latitude: latitude,
                     longitude: longitude,
@@ -1862,7 +1881,7 @@ const Browser = PromiseClass.create({
             });
         }
         else{
-            self.exec(&#x27;getLocation&#x27;, function(error, ret){
+            self.execCmd(&#x27;getLocation&#x27;, function(error, ret){
                 done(error, ret &amp;&amp; ret.value);
             });
         }
@@ -1876,7 +1895,7 @@ const Browser = PromiseClass.create({
      */
     close(done){
         let self = this;
-        self.exec(&#x27;delSession&#x27;, function(error){
+        self.execCmd(&#x27;delSession&#x27;, function(error){
             let hostsProxy = self._hostsProxy;
             if(hostsProxy){
                 hostsProxy.close(function(){
@@ -1895,7 +1914,7 @@ const Browser = PromiseClass.create({
      * @param  {Function} done callback function
      */
     contexts(done){
-        this.exec(&#x27;getContexts&#x27;, function(error, ret){
+        this.execCmd(&#x27;getContexts&#x27;, function(error, ret){
             done(error, ret &amp;&amp; ret.value);
         });
     },
@@ -1908,7 +1927,7 @@ const Browser = PromiseClass.create({
      * @param  {Function} done callback function
      */
     context(contextId, done){
-        var self = this;
+        let self = this;
         if(typeof contextId === &#x27;function&#x27;){
             contextId = undefined;
         }
@@ -1916,7 +1935,7 @@ const Browser = PromiseClass.create({
         if(contextId){
             self.browserMode = contextId !== &#x27;NATIVE_APP&#x27;;
         }
-        self.exec(contextId ? &#x27;setContext&#x27; : &#x27;getContext&#x27;, {}, {
+        self.execCmd(contextId ? &#x27;setContext&#x27; : &#x27;getContext&#x27;, {}, {
             name: contextId
         }, function(error, ret){
             done(error, ret &amp;&amp; ret.value);
@@ -1946,27 +1965,27 @@ const Browser = PromiseClass.create({
     },
 
     /**
-     * touch swipe
-     * @method touchSwipe
+     * send actions
+     * @method sendActions
      * @public
-     * @param  {Number} startX
-     * @param  {Number} startY
-     * @param  {Number} endX
-     * @param  {Number} endY
-     * @param  {Number} [duration]
+     * @param  {String} type
+     * @param  {Object} params
      * @param  {Function} done callback function
      */
-    touchSwipe(startX, startY, endX, endY, duration, done){
-        if(typeof duration === &#x27;function&#x27;){
-            duration = 20;
+    sendActions(type, params, done){
+        let actions = [];
+        if(done === undefined){
+            actions = Array.isArray(type) ? type : [{
+                type: type
+            }];
+        }
+        else{
+            params.type = type;
+            actions.push(params);
         }
         done = getDone(arguments);
-        this.exec(&#x27;touchSwipe&#x27;, {}, {
-            startX: startX,
-            startY: startY,
-            endX: endX,
-            endY: endY,
-            duration: duration
+        this.execCmd(&#x27;setActions&#x27;, {}, {
+            actions: actions
         }, done);
     }
 
@@ -1983,11 +2002,13 @@ function getDone(args){
 function getLocalIP() {
     let ifaces = os.networkInterfaces();
     for (let dev in ifaces) {
-        let iface = ifaces[dev];
-        for (let i = 0; i &lt; iface.length; i++) {
-            let alias = iface[i];
-            if (alias.family === &#x27;IPv4&#x27; &amp;&amp; alias.address !== &#x27;127.0.0.1&#x27; &amp;&amp; !alias.internal){
-                return alias.address;
+        if(/(VirtualBox|Loopback)/i.test(dev) === false){
+            let iface = ifaces[dev];
+            for (let i = 0; i &lt; iface.length; i++) {
+                let alias = iface[i];
+                if (alias.family === &#x27;IPv4&#x27; &amp;&amp; alias.address !== &#x27;127.0.0.1&#x27; &amp;&amp; !alias.internal){
+                    return alias.address;
+                }
             }
         }
     }

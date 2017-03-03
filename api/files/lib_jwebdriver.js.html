@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>lib\jwebdriver.js - jwebdriver</title>
+    <title>lib/jwebdriver.js - jwebdriver</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -17,7 +17,7 @@
                 <h1><img src="https://raw.github.com/yaniswang/jWebDriver/master/logo_s.png" title="jwebdriver"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 2.0.0</em>
+            <em>API Docs for: 2.1.1</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -78,7 +78,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: lib\jwebdriver.js</h1>
+<h1 class="file-heading">File: lib/jwebdriver.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -162,7 +162,7 @@ const JWebDriver = PromiseClass.create({
      * @param  {Function} done callback function
      */
     info(done){
-        this.exec(&#x27;getStatus&#x27;, function(error, ret){
+        this.execCmd(&#x27;getStatus&#x27;, function(error, ret){
             done(error, ret &amp;&amp; ret.value);
         });
     },
@@ -190,10 +190,10 @@ const JWebDriver = PromiseClass.create({
                 &#x27;INFO&#x27;: colors.white
             };
             if(nocolor === true){
-                console.log(&#x27;[&#x27; + dateString + &#x27;]: &#x27;, type, &#x27;\t&#x27;, message);
+                console.log(&#x27;[ &#x27; + dateString + &#x27; ]: &#x27;, type, &#x27;\t&#x27;, message);
             }
             else{
-                console.log(colors.dkgray +&#x27;[&#x27; + dateString + &#x27;]: &#x27; + colors.reset, mapColors[type] + type + colors.reset, &#x27;\t&#x27;, message);
+                console.log(colors.dkgray +&#x27;[ &#x27; + dateString + &#x27; ]: &#x27; + colors.reset, mapColors[type] + type + colors.reset, &#x27;\t&#x27;, message);
             }
         }
     },
@@ -229,7 +229,7 @@ const JWebDriver = PromiseClass.create({
 
     /**
      * execute protocal command
-     * @method exec
+     * @method execCmd
      * @public
      * @param  {String} cmd protocal command, defined in command.js
      * @param  {Object} [pathData] replace the path parameters
@@ -237,7 +237,7 @@ const JWebDriver = PromiseClass.create({
      * @param  {Function} done callback function
      * @return {Object} the return object from webdriver server
      */
-    exec(cmd, pathData, data, done){
+    execCmd(cmd, pathData, data, done){
         let self = this;
         let config = self.config;
         let cmdInfo = mapCommands[cmd];
@@ -343,7 +343,7 @@ const JWebDriver = PromiseClass.create({
      */
     sessions(done){
         let self = this;
-        self.exec(&#x27;getSessions&#x27;, function(error, ret){
+        self.execCmd(&#x27;getSessions&#x27;, function(error, ret){
             if(error){
                 done(error);
             }
