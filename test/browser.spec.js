@@ -401,7 +401,7 @@ function runBrowserTest(browserName){
                 yield browser.wait('#wait2', 300);
             }
             catch(e){
-                e.should.contain('Wait elelment displayed timeout');
+                e.should.contain('Wait element displayed timeout');
             }
 
             // wait dom
@@ -426,7 +426,7 @@ function runBrowserTest(browserName){
                 });
             }
             catch(e){
-                e.should.contain('Wait elelment removed timeout');
+                e.should.contain('Wait element removed timeout');
             }
 		});
 
