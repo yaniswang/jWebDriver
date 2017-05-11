@@ -40,7 +40,10 @@ function runBrowserTest(browserName){
                     });
                     return Promise.all(arrPromise);
                 }).session({
-                    browserName: browserName
+                    browserName: browserName,
+                    chromeOptions: {
+                        args: ['--enable-automation', '--start-maximized']
+                    }
                 });
                 return browser;
             });
@@ -77,11 +80,11 @@ function runBrowserTest(browserName){
         it('should filter element', function(){
 
             return browser.find('input')
-            .get(0).val('123')
+            .get(0, true).val('123')
             .find('#kw')
             .val().should.equal('123')
             .find('input')
-            .last().val('234')
+            .last(true).val('234')
             .find('#last')
             .val().should.equal('234');
 
@@ -111,12 +114,12 @@ function runBrowserTest(browserName){
         });
 
         after(function(){
-            
+
             browser.close(function(){
                 server.close();
                 chromedriver.stop();
             });
-            
+
         });
     });
 

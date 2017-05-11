@@ -1,6 +1,10 @@
 jWebDriver change log
 ====================
 
+## ver 2.2.0 (2017-5-11)
+
+1. support elements filter for sync mode
+
 ## ver 2.1.1 (2017-3-3)
 
 1. Del: delete swipe api, because swipe is deprecated by macaca

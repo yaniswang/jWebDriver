@@ -44,7 +44,10 @@ function runBrowserTest(browserName){
                     });
                     return Promise.all(arrPromise);
                 }).session({
-                    browserName: browserName
+                    browserName: browserName,
+                    chromeOptions: {
+                        args: ['--enable-automation', '--start-maximized']
+                    }
                 }, function(error, ret){
                     browser = ret;
                 });
@@ -52,43 +55,85 @@ function runBrowserTest(browserName){
 
         });
 
-        it('should filter element', function*(){
+        it('should filter element with promise chain', function*(){
 
             yield browser.url(testPath + 'test1.html');
             yield browser.find('input').then(function(element){
-                return element.get(0).val('123');
+                return element.get(0, true).val('123');
             });
             yield browser.find('#kw').then(function(element){
                 return element.val().should.equal('123');
             });
 
             yield browser.find('input').then(function(element){
-                return element.first().val('234');
+                return element.first(true).val('234');
             });
             yield browser.find('#kw').then(function(element){
                 return element.val().should.equal('234');
             });
 
             yield browser.find('input').then(function(element){
-                return element.last().val('345');
+                return element.last(true).val('345');
             });
             yield browser.find('#last').then(function(element){
                 return element.val().should.equal('345');
             });
 
             yield browser.find('input').then(function(element){
-                return element.slice(0,1).val('456');
+                return element.slice(0, 1, true).val('456');
             });
             yield browser.find('#kw').then(function(element){
                 return element.val().should.equal('456');
             });
 
             yield browser.find('input').then(function(element){
-                return element.slice(6,7).val('456');
+                return element.slice(6, 7, true).val('456');
             });
             yield browser.find('#last').then(function(element){
                 return element.val().should.equal('456');
             });
+
+        });
+
+        it('should filter element with sync mode', function*(){
+
+            yield browser.url(testPath + 'test1.html');
+            var inputs = yield browser.find('input');
+
+            yield inputs.get(0).then(function(element){
+                return element.val('123');
+            });
+            // yield browser.find('#kw').then(function(element){
+            //     return element.val().should.equal('123');
+            // });
+
+            // yield inputs.first().then(function(element){
+            //     return element.val('234');
+            // });
+            // yield browser.find('#kw').then(function(element){
+            //     return element.val().should.equal('234');
+            // });
+
+            // yield inputs.last().then(function(element){
+            //     return element.val('345');
+            // });
+            // yield browser.find('#last').then(function(element){
+            //     return element.val().should.equal('345');
+            // });
+
+            // yield inputs.slice(0, 1).then(function(element){
+            //     return element.val('456');
+            // });
+            // yield browser.find('#kw').then(function(element){
+            //     return element.val().should.equal('456');
+            // });
+
+            // yield inputs.slice(6, 7).then(function(element){
+            //     return element.val('456');
+            // });
+            // yield browser.find('#last').then(function(element){
+            //     return element.val().should.equal('456');
+            // });
 
         });
 

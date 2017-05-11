@@ -510,11 +510,23 @@ jWebDriver 有3个类: Driver, Broswer, Elements
         var elements = yield elements.find('.class'); // find all child element
         var isEqual = yield elements.equal('#bbb a'); // test if two elements refer to the same DOM element.
 
-        elements.get(0).click(); // get element by index
-        elements.first().click(); // get first element
-        elements.last().click(); // get last element
-        elements.slice(1,2).click(); // get element from start to end
+        // elements filter with sync mode
+        var elements = yield elements.get(0); // get element by index
+        var elements = yield elements.first(); // get first element
+        var elements = yield elements.last(); // get last element
+        var elements = yield elements.slice(1, 2); // get element from start to end
 
+        // elements filter for chain promise
+        elements.get(0, true).click(); // get element by index
+        elements.first(0, true).click(); // get first element
+        elements.last(0, true).click(); // get last element
+        elements.slice(1, 2, true).click(); // get element from start to end
+
+        // traversal the elements
+        for(var i=0;i<elements.length;i++){
+            var element = yield elements.get(i);
+            console.log(yield element.text());
+        }
 
         var tagName = yield element.tagName(); // get tagname (first element)
         var value = element.val(); // equal to element.attr('value');

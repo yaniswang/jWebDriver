@@ -48,7 +48,7 @@ function runBrowserTest(browserName){
                 }).session({
                     browserName: browserName,
                     chromeOptions: {
-                        args: ['--start-maximized']
+                        args: ['--enable-automation', '--start-maximized']
                     },
                     hosts: '127.0.0.1 www.alibaba.com'
                 }, function(error, ret){
