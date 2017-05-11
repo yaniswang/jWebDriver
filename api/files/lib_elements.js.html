@@ -17,7 +17,7 @@
                 <h1><img src="https://raw.github.com/yaniswang/jWebDriver/master/logo_s.png" title="jwebdriver"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 2.1.1</em>
+            <em>API Docs for: 2.2.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -278,18 +278,28 @@ const Elements = PromiseClass.create({
     },
 
     /**
-     * get element from start to end
+     * get new element from start to end
      * @method slice
      * @public
      * @param  {Number} start
      * @param  {Number} end
+     * @param  {Boolean} [changeSelf]
      */
-    slice(start, end, done){
+    slice(start, end, changeSelf, done){
         let self = this;
+        if(typeof changeSelf === &#x27;function&#x27;){
+            changeSelf = false;
+        }
+        done = getDone(arguments);
         if(start &gt;= 0 &amp;&amp; start &lt; self.length &amp;&amp; end &gt; start &amp;&amp; end &lt;= self.length){
-            self.elementIds = self.elementIds.slice(start, end);
-            self.length = self.elementIds.length;
-            done();
+            let newElementIds = self.elementIds.slice(start, end);
+            let newElements = new Elements(self._browser, &#x27;elements&#x27;, newElementIds);
+            newElements.init();
+            if(changeSelf){
+                self.elementIds = newElementIds;
+                self.length = newElementIds.length;
+            }
+            done(null, newElements);
         }
         else{
             done(&#x27;Elements slice range error.&#x27;);
@@ -297,32 +307,38 @@ const Elements = PromiseClass.create({
     },
 
     /**
-     * get element by index
+     * get new element by index
      * @method get
      * @public
      * @param  {Number} index
+     * @param  {Boolean} [changeSelf]
      */
-    get(index, done){
-        this.slice(index, index+1, done);
+    get(index, changeSelf, done){
+        done = getDone(arguments);
+        this.slice(index, index+1, changeSelf, done);
     },
 
     /**
-     * get first element
+     * get new first element
      * @method first
      * @public
+     * @param  {Boolean} [changeSelf]
      */
-    first(done){
-        this.get(0, done);
+    first(changeSelf, done){
+        done = getDone(arguments);
+        this.get(0, changeSelf, done);
     },
 
     /**
-     * get last element
+     * get new last element
      * @method last
      * @public
+     * @param  {Boolean} [changeSelf]
      */
-    last(done){
+    last(changeSelf, done){
         var self = this;
-        self.get(self.length-1, done);
+        done = getDone(arguments);
+        self.get(self.length-1, changeSelf, done);
     },
 
     /**
@@ -540,7 +556,7 @@ const Elements = PromiseClass.create({
             }
             else{
                 if( elements.length &gt; 0){
-                    elements.get( type === &#x27;index&#x27; ? value : 0).click(done);
+                    elements.get( type === &#x27;index&#x27; ? value : 0, true).click(done);
                 }
                 else{
                     done(&#x27;&lt;option&gt; no found: &#x27;+value+&#x27; (&#x27;+type+&#x27;)&#x27;);

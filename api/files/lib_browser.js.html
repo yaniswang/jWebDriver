@@ -17,7 +17,7 @@
                 <h1><img src="https://raw.github.com/yaniswang/jWebDriver/master/logo_s.png" title="jwebdriver"></h1>
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 2.1.1</em>
+            <em>API Docs for: 2.2.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -1578,7 +1578,7 @@ const Browser = PromiseClass.create({
                 }
                 // timeout
                 if(new Date().getTime() - startTime &gt; timeout){
-                    let message = &#x27;Wait elelment &#x27;+(removed?&#x27;removed&#x27;:&#x27;displayed&#x27;)+&#x27; timeout: &#x27;+(using?(using+&#x27; ,&#x27;):&#x27;&#x27;)+value+&#x27; ,&#x27; + timeout + &#x27;ms&#x27;;
+                    let message = &#x27;Wait element &#x27;+(removed?&#x27;removed&#x27;:&#x27;displayed&#x27;)+&#x27; timeout: &#x27;+(using?(using+&#x27; ,&#x27;):&#x27;&#x27;)+value+&#x27; ,&#x27; + timeout + &#x27;ms&#x27;;
                     self.log(&#x27;ERROR&#x27;, message);
                     endWait(message);
                 }
@@ -1676,7 +1676,7 @@ const Browser = PromiseClass.create({
             });
         }
         else{
-            done(&#x27;localPath no existed&#x27;);
+            done(&#x27;localPath doesn\&#x27;t exist&#x27;);
         }
     },
 
