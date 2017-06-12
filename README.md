@@ -680,7 +680,9 @@ How to get element screen shot?
 1. Install gm
 
     > `brew install graphicsmagick` (Mac)
+
     > `sudo apt-get install graphicsmagick` (Linux)
+
     > [http://www.graphicsmagick.org/download.html](http://www.graphicsmagick.org/download.html) (Windows)
 
 2. Get shot

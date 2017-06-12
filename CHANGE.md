@@ -1,7 +1,11 @@
 jWebDriver change log
 ====================
 
-## ver 2.2.1 (2017-6-12)
+## ver 2.2.3 (2017-6-12)
+
+1. Fix: catch error when get element screen shot failed
+
+## ver 2.2.2 (2017-6-12)
 
 1. Add: support no throw error when wait dom timeout: `driver.wait('#id', {noerror: true});`
 2. Add: support get element screen shot(require gm)

@@ -681,7 +681,9 @@ jWebDriver 有3个类: Driver, Broswer, Elements
 1. 安装gm组件
 
     > `brew install graphicsmagick` (Mac)
+
     > `sudo apt-get install graphicsmagick` (Linux)
+
     > [http://www.graphicsmagick.org/download.html](http://www.graphicsmagick.org/download.html) (Windows)
 
 2. 获取截图
