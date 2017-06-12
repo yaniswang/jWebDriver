@@ -354,6 +354,13 @@ jWebDriver 有3个类: Driver, Broswer, Elements
         yield browser.maximize();
         var png_base64  = yield browser.getScreenshot();// get the screen shot, base64 type
         var png_base64  = yield browser.getScreenshot('d:/test.png');// get the screen shot, and save to file
+        var png_base64 = yield browser.getScreenshot({
+            elem: '#id'
+        }); // get the element shot, (require install gm)
+        var png_base64 = yield browser.getScreenshot({
+            elem: '#id',
+            filename: 'test.png'
+        }); // get the element shot, and save to file
 
         // ========================== url & title & source ==========================
 
@@ -666,6 +673,22 @@ jWebDriver 有3个类: Driver, Broswer, Elements
         console.log('All done!')
     }).catch(function(error){
         console.log(error);
+    });
+
+如何获取元素的截图？
+------------------------------------------
+
+1. 安装gm组件
+
+    > `brew install graphicsmagick` (Mac)
+    > `sudo apt-get install graphicsmagick` (Linux)
+    > [http://www.graphicsmagick.org/download.html](http://www.graphicsmagick.org/download.html) (Windows)
+
+2. 获取截图
+
+    var png_base64 = yield browser.getScreenshot({
+        elem: '#id',
+        filename: 'test.png'
     });
 
 如何扩展自定义方法？

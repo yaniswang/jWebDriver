@@ -353,6 +353,13 @@ You can search all api here, include all mode of api:
         yield browser.maximize();
         var png_base64  = yield browser.getScreenshot();// get the screen shot, base64 type
         var png_base64  = yield browser.getScreenshot('d:/test.png');// get the screen shot, and save to file
+        var png_base64 = yield browser.getScreenshot({
+            elem: '#id'
+        }); // get the element shot, (require install gm)
+        var png_base64 = yield browser.getScreenshot({
+            elem: '#id',
+            filename: 'test.png'
+        }); // get the element shot, and save to file
 
         // ========================== url & title & source ==========================
 
@@ -665,6 +672,22 @@ You can search all api here, include all mode of api:
         console.log('All done!')
     }).catch(function(error){
         console.log(error);
+    });
+
+How to get element screen shot?
+------------------------------------------
+
+1. Install gm
+
+    > `brew install graphicsmagick` (Mac)
+    > `sudo apt-get install graphicsmagick` (Linux)
+    > [http://www.graphicsmagick.org/download.html](http://www.graphicsmagick.org/download.html) (Windows)
+
+2. Get shot
+
+    var png_base64 = yield browser.getScreenshot({
+        elem: '#id',
+        filename: 'test.png'
     });
 
 How to extend method to driver?

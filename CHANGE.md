@@ -1,6 +1,11 @@
 jWebDriver change log
 ====================
 
+## ver 2.2.1 (2017-6-12)
+
+1. Add: support no throw error when wait dom timeout: `driver.wait('#id', {noerror: true});`
+2. Add: support get element screen shot(require gm)
+
 ## ver 2.2.0 (2017-5-11)
 
 1. support elements filter for sync mode

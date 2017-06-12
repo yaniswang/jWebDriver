@@ -107,6 +107,13 @@ co(function*(){
     yield browser.maximize();
     var png_base64  = yield browser.getScreenshot();// get the screen shot, base64 type
     var png_base64  = yield browser.getScreenshot('d:/test.png');// get the screen shot, and save to file
+    var png_base64 = yield browser.getScreenshot({
+        elem: '#id'
+    }); // get the element shot, (require install gm)
+    var png_base64 = yield browser.getScreenshot({
+        elem: '#id',
+        filename: 'test.png'
+    }); // get the element shot, and save to file
 
     // ========================== url & title & source ==========================
 

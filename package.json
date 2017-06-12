@@ -1,6 +1,6 @@
 {
   "name": "jwebdriver",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "A webdriver client for node.js",
   "homepage": "http://jwebdriver.com/",
   "main": "./index",
@@ -25,7 +25,8 @@
     "istanbul-coveralls": "1.0.3",
     "mocha": "3.2.0",
     "mocha-generators": "2.0.0",
-    "chromedriver": "2.29.0"
+    "chromedriver": "2.29.0",
+    "gm": "1.23.0"
   },
   "scripts": {
     "test": "mocha"

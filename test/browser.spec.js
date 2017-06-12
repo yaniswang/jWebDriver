@@ -428,6 +428,13 @@ function runBrowserTest(browserName){
             catch(e){
                 e.should.contain('Wait element removed timeout');
             }
+
+            // wait noerror
+            yield browser.wait('#wait3111', {
+                timeout: 100,
+                noerror: true
+            }).should.have.length(0);
+
 		});
 
         it('should dragdrop element', function*(){
