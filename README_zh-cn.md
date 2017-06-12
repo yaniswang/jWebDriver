@@ -753,4 +753,5 @@ jWebDriver 基于 MIT 协议发布:
 * request: [https://github.com/request/request](https://github.com/request/request)
 * co: [https://github.com/tj/co](https://github.com/tj/co)
 * PhantomJs: [https://github.com/Medium/phantomjs](https://github.com/Medium/phantomjs)
+* GraphicsMagick: [http://www.graphicsmagick.org/](http://www.graphicsmagick.org/)
 * GitHub: [https://github.com/](https://github.com/)
