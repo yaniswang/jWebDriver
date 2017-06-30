@@ -1,6 +1,10 @@
 jWebDriver change log
 ====================
 
+## ver 2.2.4 (2017-6-30)
+
+1. Add: support get element screenshot for mobile
+
 ## ver 2.2.3 (2017-6-12)
 
 1. Fix: catch error when get element screen shot failed
