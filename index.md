@@ -317,6 +317,10 @@ You can search all api here, include all mode of api:
         yield browser.close(); // close session
         yield browser.sleep(1000); // sleep
 
+        // get webdriver log
+        var logTypes = yield browser.logTypes();
+        var logs = yield browser.logs('browser');
+
         // ========================== window ==========================
 
         var curWindowHandle = yield browser.windowHandle(); // get current window handle
