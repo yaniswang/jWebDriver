@@ -1,6 +1,10 @@
 jWebDriver change log
 ====================
 
+## ver 2.2.5 (2017-9-1)
+
+1. Add: support get webdriver logs: `browser.logTypes();`, `browser.logs('browser');`
+
 ## ver 2.2.4 (2017-6-30)
 
 1. Add: support get element screenshot for mobile
