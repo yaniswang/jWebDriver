@@ -375,15 +375,17 @@ function runBrowserTest(browserName){
 		});
 
 		it('should wait element', function*(){
-
+            var message = '';
             yield browser.url(testPath + 'test1.html');
             // wait displayed
             try{
                 yield browser.find('#wait1');
             }
             catch(e){
-                e.should.equal('Find elements failed: css selector, #wait1');
+                message = e;
             }
+            message.should.equal('Find elements failed: css selector, #wait1');
+
             yield browser.eval(function(){
                 setTimeout(function(){
                     document.body.innerHTML='<input type="text" id="wait1">';
@@ -397,12 +399,14 @@ function runBrowserTest(browserName){
                     document.body.innerHTML='<input type="text" id="wait2" style="display:none">';
                 }, 100);
             });
+            message = '';
             try{
                 yield browser.wait('#wait2', 300);
             }
             catch(e){
-                e.should.contain('Wait element displayed timeout');
+                message = e;
             }
+            message.should.contain('Wait element displayed timeout');
 
             // wait dom
             yield browser.eval(function(){
@@ -418,16 +422,18 @@ function runBrowserTest(browserName){
             yield browser.eval(function(){
                 setTimeout(function(){
                     document.body.innerHTML='all removed';
-                }, 100);
+                }, 1000);
             });
+            message = '';
             try{
                 yield browser.wait('#wait3', {
-                    removed: true
+                    removed: true,
                 });
             }
             catch(e){
-                e.should.contain('Wait element removed timeout');
+                message = e;
             }
+            message.should.equal('');
 
             // wait noerror
             yield browser.wait('#wait3111', {

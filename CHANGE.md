@@ -1,6 +1,10 @@
 jWebDriver change log
 ====================
 
+## ver 2.2.6 (2018-5-30)
+
+1. Fix: fix wait removed issue
+
 ## ver 2.2.5 (2017-9-1)
 
 1. Add: support get webdriver logs: `browser.logTypes();`, `browser.logs('browser');`
