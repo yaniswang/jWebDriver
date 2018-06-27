@@ -1,8 +1,8 @@
 {
-  "name": "jwebdriver",
+  "name": "jwebdriver2",
   "version": "2.2.5",
   "description": "A webdriver client for node.js",
-  "homepage": "http://jwebdriver.com/",
+  "homepage": "",
   "main": "./index",
   "dependencies": {
     "node-zip": "1.1.1",
@@ -52,7 +52,7 @@
     "await",
     "hosts"
   ],
-  "author": "Yanis Wang",
+  "author": "Luke Kende",
   "license": "MIT",
   "engines": {
     "node": ">= 4"
