@@ -1,6 +1,6 @@
 {
   "name": "jwebdriver2",
-  "version": "1.0",
+  "version": "1.0.0",
   "description": "A webdriver client for node.js",
   "homepage": "https://github.com/lkende/jWebDriver2#readme",
   "main": "./index",
