@@ -2,7 +2,7 @@
   "name": "jwebdriver2",
   "version": "1.0",
   "description": "A webdriver client for node.js",
-  "homepage": "",
+  "homepage": "https://github.com/lkende/jWebDriver#readme",
   "main": "./index",
   "dependencies": {
     "node-zip": "1.1.1",
