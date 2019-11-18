@@ -1,5 +1,7 @@
 jWebDriver change log
 ====================
+## ver 2.3.2 (2019-11-18)
+1. Feat: support custom configuration
 
 ## ver 2.2.6 (2018-5-30)
 
